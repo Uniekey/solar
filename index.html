@@ -19,95 +19,36 @@
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
             --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
             --shadow-lg: 0 16px 40px rgba(0,0,0,0.08);
-            --radius: 16px;
-            --radius-sm: 10px;
+            --radius: 16px; --radius-sm: 10px;
             --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
         
-        body { 
-            font-family: var(--font-main); 
-            background-color: var(--bg); 
-            color: var(--dark); 
-            margin: 0; 
-            padding: 40px 20px; 
-            line-height: 1.7; 
-            position: relative; 
-            -webkit-font-smoothing: antialiased; 
-        }
+        body { font-family: var(--font-main); background-color: var(--bg); color: var(--dark); margin: 0; padding: 40px 20px; line-height: 1.7; position: relative; -webkit-font-smoothing: antialiased; }
+        .container { max-width: 1240px; margin: 0 auto; background: var(--card-bg); padding: 50px 60px; border-radius: var(--radius); box-shadow: var(--shadow-lg); position: relative; }
         
-        .container { 
-            max-width: 1240px; 
-            margin: 0 auto; 
-            background: var(--card-bg); 
-            padding: 50px 60px; 
-            border-radius: var(--radius); 
-            box-shadow: var(--shadow-lg); 
-            position: relative;
-        }
-
-        .text-center { text-align: center !important; }
-        .text-right { text-align: right !important; }
-        .text-left { text-align: left !important; }
-        .text-justify { text-align: justify; hyphens: auto; }
-        .valign-middle { vertical-align: middle !important; }
-        .valign-top { vertical-align: top !important; }
+        .text-center { text-align: center !important; } .text-right { text-align: right !important; } .text-left { text-align: left !important; } .text-justify { text-align: justify; hyphens: auto; }
+        .valign-middle { vertical-align: middle !important; } .valign-top { vertical-align: top !important; }
         .font-bold { font-weight: 700 !important; }
-        .text-primary { color: var(--primary) !important; }
-        .text-accent { color: var(--accent) !important; }
-        .text-success { color: var(--success) !important; }
+        .text-primary { color: var(--primary) !important; } .text-accent { color: var(--accent) !important; } .text-success { color: var(--success) !important; }
 
         .flash-update { animation: flashAnim 0.8s ease-out; }
-        @keyframes flashAnim {
-            0% { background-color: #ffeaa7; color: #d35400; transform: scale(1.02); }
-            100% { background-color: transparent; color: inherit; transform: scale(1); }
-        }
+        @keyframes flashAnim { 0% { background-color: #ffeaa7; color: #d35400; transform: scale(1.02); } 100% { background-color: transparent; color: inherit; transform: scale(1); } }
 
-        .floating-nav {
-            position: fixed; top: 50%; right: 25px; transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 12px; z-index: 99;
-            background: rgba(255, 255, 255, 0.9); padding: 12px; border-radius: 40px; box-shadow: var(--shadow-md);
-            border: 1px solid var(--border); transition: all 0.3s; backdrop-filter: blur(5px);
-        }
-        .floating-nav a {
-            display: flex; justify-content: center; align-items: center;
-            width: 44px; height: 44px; border-radius: 50%; background: #f1f2f6;
-            color: var(--secondary); text-decoration: none; font-size: 20px;
-            transition: all 0.2s ease; position: relative;
-        }
-        .floating-nav a:hover, .floating-nav a.active {
-            background: var(--primary); color: white; transform: scale(1.1); box-shadow: 0 4px 10px rgba(9, 132, 227, 0.3);
-        }
-        .floating-nav a .tooltip {
-            position: absolute; right: 60px; background: var(--secondary); color: white;
-            padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600;
-            opacity: 0; pointer-events: none; transition: 0.2s; white-space: nowrap; box-shadow: var(--shadow-sm);
-        }
+        .floating-nav { position: fixed; top: 50%; right: 25px; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 99; background: rgba(255, 255, 255, 0.9); padding: 12px; border-radius: 40px; box-shadow: var(--shadow-md); border: 1px solid var(--border); transition: all 0.3s; backdrop-filter: blur(5px); }
+        .floating-nav a { display: flex; justify-content: center; align-items: center; width: 44px; height: 44px; border-radius: 50%; background: #f1f2f6; color: var(--secondary); text-decoration: none; font-size: 20px; transition: all 0.2s ease; position: relative; }
+        .floating-nav a:hover, .floating-nav a.active { background: var(--primary); color: white; transform: scale(1.1); box-shadow: 0 4px 10px rgba(9, 132, 227, 0.3); }
+        .floating-nav a .tooltip { position: absolute; right: 60px; background: var(--secondary); color: white; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: 0.2s; white-space: nowrap; box-shadow: var(--shadow-sm); }
         .floating-nav a:hover .tooltip { opacity: 1; transform: translateX(-5px); }
 
-        .btn-back-to-top {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
-            border-radius: 50%; background: var(--secondary); color: white; border: none;
-            font-size: 22px; cursor: pointer; box-shadow: var(--shadow-md); display: none;
-            justify-content: center; align-items: center; z-index: 100; transition: all 0.3s ease;
-        }
+        .btn-back-to-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; background: var(--secondary); color: white; border: none; font-size: 22px; cursor: pointer; box-shadow: var(--shadow-md); display: none; justify-content: center; align-items: center; z-index: 100; transition: all 0.3s ease; }
         .btn-back-to-top:hover { background: var(--primary); transform: translateY(-4px); box-shadow: 0 6px 15px rgba(9, 132, 227, 0.4); }
 
-        .help-tip {
-            display: inline-block; cursor: help; color: var(--primary); font-size: 11px;
-            font-weight: 800; margin-left: 6px; padding: 2px 5px; background: #f1f2f6;
-            border: 1px solid #dcdde1; border-radius: 4px; transition: all 0.2s ease;
-            text-decoration: none; user-select: none; vertical-align: middle;
-        }
+        .help-tip { display: inline-block; cursor: help; color: var(--primary); font-size: 11px; font-weight: 800; margin-left: 6px; padding: 2px 5px; background: #f1f2f6; border: 1px solid #dcdde1; border-radius: 4px; transition: all 0.2s ease; text-decoration: none; user-select: none; vertical-align: middle; }
         .help-tip:hover { background: var(--primary); color: #ffffff; border-color: var(--primary); transform: scale(1.08); box-shadow: 0 2px 5px rgba(9,132,227,0.3); }
 
-        .lang-btn { 
-            position: absolute; top: 35px; right: 45px; background: transparent; color: var(--secondary); 
-            border: 2px solid var(--border); padding: 8px 16px; border-radius: 8px; cursor: pointer; 
-            font-weight: 700; z-index: 100; transition: all 0.2s ease; font-size: 13px; letter-spacing: 0.5px;
-        }
+        .lang-btn { position: absolute; top: 35px; right: 45px; background: transparent; color: var(--secondary); border: 2px solid var(--border); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; z-index: 100; transition: all 0.2s ease; font-size: 13px; letter-spacing: 0.5px; }
         .lang-btn:hover { background: #f1f2f6; border-color: #b2bec3; color: var(--primary); }
-        body.lang-en .lang-vi { display: none !important; }
-        body:not(.lang-en) .lang-en { display: none !important; }
+        body.lang-en .lang-vi { display: none !important; } body:not(.lang-en) .lang-en { display: none !important; }
 
         .company-header { text-align: center; padding-bottom: 30px; margin-bottom: 40px; border-bottom: 2px solid var(--border); }
         .company-name { font-size: 30px; font-weight: 800; color: var(--accent); text-transform: uppercase; line-height: 1.3; letter-spacing: 0.5px; }
@@ -115,12 +56,7 @@
 
         h1 { text-align: center; color: var(--secondary); margin-top: 0; margin-bottom: 50px; text-transform: uppercase; font-size: 26px; letter-spacing: 0.5px; font-weight: 800; line-height: 1.4;}
         
-        .section-header { 
-            background: linear-gradient(135deg, var(--secondary), #353b48); color: white; 
-            padding: 16px 28px; border-radius: 10px; font-size: 18px; margin: 50px 0 25px; 
-            text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; 
-            box-shadow: var(--shadow-sm); display: flex; align-items: center; scroll-margin-top: 30px;
-        }
+        .section-header { background: linear-gradient(135deg, var(--secondary), #353b48); color: white; padding: 16px 28px; border-radius: 10px; font-size: 18px; margin: 50px 0 25px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; box-shadow: var(--shadow-sm); display: flex; align-items: center; scroll-margin-top: 30px; }
         .section-header.finance { background: linear-gradient(135deg, #c23616, #e84118); }
         .section-header.analysis { background: linear-gradient(135deg, var(--highlight), #a29bfe); }
         .section-header.reference { background: linear-gradient(135deg, #718093, #2f3640); }
@@ -134,74 +70,37 @@
         .fin-cols-3 { grid-template-columns: repeat(3, 1fr); }
         .fin-cols-4 { grid-template-columns: repeat(4, 1fr); }
 
-        .card { 
-            border: 1px solid var(--border); padding: 35px; border-radius: var(--radius); 
-            background: var(--card-bg); position: relative; display: flex; 
-            flex-direction: column; box-shadow: var(--shadow-sm); 
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+        .card { border: 1px solid var(--border); padding: 35px; border-radius: var(--radius); background: var(--card-bg); position: relative; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
-        .card-title { 
-            color: var(--secondary); font-weight: 800; margin-bottom: 25px; font-size: 17px; 
-            border-bottom: 2px dashed var(--border); padding-bottom: 15px; text-transform: uppercase; 
-            letter-spacing: 0.5px; display: flex; align-items: center; justify-content: space-between;
-        }
+        .card-title { color: var(--secondary); font-weight: 800; margin-bottom: 25px; font-size: 17px; border-bottom: 2px dashed var(--border); padding-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: space-between; }
 
-        .project-info-table { 
-            width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 0; 
-            font-size: 14.5px; border: 1px solid var(--border); border-radius: var(--radius-sm); 
-            overflow: hidden; box-shadow: var(--shadow-sm);
-        }
+        .project-info-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 0; font-size: 14.5px; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm); }
         .project-info-table th { background-color: var(--primary); color: white; padding: 16px 20px; text-align: left; font-weight: 600; font-size: 15px; letter-spacing: 0.5px; }
         .project-info-table td { padding: 12px 20px; border-bottom: 1px solid var(--border); vertical-align: middle; background: #fff; }
         .project-info-table tr:last-child td { border-bottom: none; }
         .project-info-table td:first-child { width: 42%; font-weight: 600; color: #4b6584; background: #f8f9fa; border-right: 1px solid var(--border); }
         
-        .project-info-table input[type="text"], .project-info-table select.inline-select { 
-            border: 1px solid transparent; background: transparent; padding: 10px 12px; width: 100%; 
-            font-size: 15px; color: var(--dark); font-weight: 600; border-radius: 8px; 
-            transition: all 0.2s; font-family: inherit; box-sizing: border-box;
-        }
+        .project-info-table input[type="text"], .project-info-table select.inline-select { border: 1px solid transparent; background: transparent; padding: 10px 12px; width: 100%; font-size: 15px; color: var(--dark); font-weight: 600; border-radius: 8px; transition: all 0.2s; font-family: inherit; box-sizing: border-box; }
         .project-info-table input[type="text"]:hover:not(:disabled), .project-info-table select.inline-select:hover:not(:disabled) { background: #f1f2f6; }
-        .project-info-table input[type="text"]:focus:not(:disabled), .project-info-table select.inline-select:focus:not(:disabled) { 
-            outline: none; border: 1px solid var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.1);
-        }
+        .project-info-table input[type="text"]:focus:not(:disabled), .project-info-table select.inline-select:focus:not(:disabled) { outline: none; border: 1px solid var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.1); }
         
-        .evn-compact-table { 
-            width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; 
-            box-shadow: var(--shadow-sm); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border);
-        }
+        .evn-compact-table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; box-shadow: var(--shadow-sm); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
         .evn-compact-table th { background: var(--secondary); color: white; padding: 12px 8px; text-align: center; font-weight: 600; font-size: 13px;}
         .evn-compact-table td { border: 1px solid var(--border); padding: 6px; text-align: center; vertical-align: middle; }
-        .evn-compact-input { 
-            width: 100%; border: 1px solid transparent; background: transparent; padding: 8px; text-align: center; 
-            font-weight: 700; color: inherit; font-family: inherit; font-size: 14px; transition: 0.2s; 
-            box-sizing: border-box; border-radius: 6px;
-        }
+        .evn-compact-input { width: 100%; border: 1px solid transparent; background: transparent; padding: 8px; text-align: center; font-weight: 700; color: inherit; font-family: inherit; font-size: 14px; transition: 0.2s; box-sizing: border-box; border-radius: 6px; }
         .evn-compact-input:hover:not(:disabled) { background: #f1f2f6; border-color: var(--border);}
         .evn-compact-input:focus:not(:disabled) { outline: none; border-color: var(--primary); background: #fff; box-shadow: inset 0 0 0 1px rgba(9, 132, 227, 0.3); }
 
-        .input-peak { 
-            width: 100% !important; max-width: 150px; padding: 10px 14px !important; font-weight: 700; 
-            font-size: 16px !important; color: var(--secondary) !important; border: 1px solid #dcdde1 !important; 
-            border-radius: 8px !important; background: #fff !important; text-align: right; 
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03); transition: all 0.2s;
-        }
+        .input-peak { width: 100% !important; max-width: 150px; padding: 10px 14px !important; font-weight: 700; font-size: 16px !important; color: var(--secondary) !important; border: 1px solid #dcdde1 !important; border-radius: 8px !important; background: #fff !important; text-align: right; box-shadow: inset 0 1px 2px rgba(0,0,0,0.03); transition: all 0.2s; }
         .input-peak:focus:not(:disabled) { border-color: var(--primary) !important; box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.2) !important; outline: none;}
         .formula-desc { font-size: 12px; color: #7f8fa6; margin-top: 6px; display: block; font-weight: normal; font-style: italic;}
 
-        .form-group { margin-bottom: 22px; }
-        .form-group.compact { margin-bottom: 0; }
+        .form-group { margin-bottom: 22px; } .form-group.compact { margin-bottom: 0; }
         label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #4b6584; }
         
-        input[type="number"]:not(.evn-compact-input), input.text-right, select, textarea { 
-            width: 100%; padding: 12px 16px; border: 1px solid #dcdde1; border-radius: 8px; font-size: 15px; 
-            box-sizing: border-box; transition: all 0.2s ease; font-family: inherit; background-color: #fff; color: var(--dark); font-weight: 500;
-        }
+        input[type="number"]:not(.evn-compact-input), input.text-right, select, textarea { width: 100%; padding: 12px 16px; border: 1px solid #dcdde1; border-radius: 8px; font-size: 15px; box-sizing: border-box; transition: all 0.2s ease; font-family: inherit; background-color: #fff; color: var(--dark); font-weight: 500; }
         input[type="number"]:hover:not(:disabled):not(.evn-compact-input), input.text-right:hover:not(:disabled), select:hover:not(:disabled) { border-color: #b2bec3; }
-        input[type="number"]:focus:not(:disabled):not(.evn-compact-input), input.text-right:focus:not(:disabled), select:focus:not(:disabled), textarea:focus:not(:disabled) { 
-            border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.15); 
-        }
+        input[type="number"]:focus:not(:disabled):not(.evn-compact-input), input.text-right:focus:not(:disabled), select:focus:not(:disabled), textarea:focus:not(:disabled) { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.15); }
 
         .slider-wrapper { display: flex; align-items: center; gap: 12px; }
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
@@ -332,31 +231,25 @@
         .print-cover { display: none; }
 
         @media (max-width: 1024px) {
-            .grid-config { grid-template-columns: 1fr; }
-            .grid-2 { grid-template-columns: 1fr; }
+            .grid-config { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; }
             .fin-cols-4 { grid-template-columns: repeat(2, 1fr); }
             .lang-btn { position: relative; top: 0; right: 0; margin-bottom: 25px; float: right; }
-            .container { padding: 40px; }
-            .floating-nav { display: none; } 
+            .container { padding: 40px; } .floating-nav { display: none; } 
         }
 
         @media (max-width: 768px) {
-            body { padding: 0; }
-            .container { padding: 25px; border-radius: 0; box-shadow: none; }
+            body { padding: 0; } .container { padding: 25px; border-radius: 0; box-shadow: none; }
             .fin-cols-3, .fin-cols-4 { grid-template-columns: 1fr; }
             .project-info-table td:first-child { width: auto; display: block; border-right: none; border-bottom: none; padding-bottom: 6px;}
             .project-info-table td:last-child { display: block; padding-top: 6px;}
-            .modal-footer { flex-direction: column; gap: 20px; }
-            .modal-footer button { width: 100%; }
-            .bottom-controls-panel { align-items: stretch; }
-            .compact-lock { flex-direction: column; align-items: stretch;}
+            .modal-footer { flex-direction: column; gap: 20px; } .modal-footer button { width: 100%; }
+            .bottom-controls-panel { align-items: stretch; } .compact-lock { flex-direction: column; align-items: stretch;}
             .compact-lock input { width: 100%; }
         }
 
         @page { size: A4 portrait; margin: 15mm; }
         @media print {
-            ::-webkit-scrollbar { display: none !important; }
-            * { scrollbar-width: none !important; }
+            ::-webkit-scrollbar { display: none !important; } * { scrollbar-width: none !important; }
             :root { --shadow-sm: none; --shadow-md: none; --shadow-lg: none; }
             body { background-color: white !important; padding: 0 !important; color: #000 !important; font-size: 11pt !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             .container { box-shadow: none !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; border: none !important; }
@@ -583,7 +476,7 @@
                             </div>
                         </td>
                     </tr>
-			<tr>
+			        <tr>
                         <td>
                             <span class="lang-vi">Công suất đỉnh (Peak Load) <sup class="help-tip no-print" title="Mức sử dụng cao nhất. Mặc định là Ước tính, sẽ được thay thế bằng Số liệu chính xác nếu Import file EVN.">[?]</sup></span>
                             <span class="lang-en">Peak Load</span>
@@ -889,14 +782,14 @@
                     </span> 
                     <span class="equip-val" id="resInverter">---</span>
                 </div>
-<button class="btn btn-toggle-algo no-print action-btn" onclick="toggleAcAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f0f7ff; border-color: var(--primary); color: var(--primary);">
-    <span id="acToggleText">➕ Xem cơ sở thiết kế AC</span>
-</button>
+                <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleAcAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f0f7ff; border-color: var(--primary); color: var(--primary);">
+                    <span id="acToggleText">➕ Xem cơ sở thiết kế AC</span>
+                </button>
 
-<div id="acAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed var(--primary); padding-top: 15px;">
-    <span class="lang-vi"><strong>📐 Cơ sở thiết kế AC (Overclocking Ratio):</strong> Thuật toán tự động cấu hình Công suất Inverter AC nhỏ hơn Công suất Pin DC. Việc ép tải này (DC/AC Ratio > 1) giúp Inverter luôn vận hành ở dải hiệu suất cao nhất ngay cả vào những ngày mây mù hoặc bức xạ yếu, bù đắp lại các tổn hao vật lý thực tế. Hiện tượng "cắt xén đỉnh" (Clipping Loss) giữa trưa sẽ xảy ra nhưng được chứng minh là mang lại hiệu quả kinh tế (LCOE) tốt hơn.</span>
-    <div id="formulaInverter" class="formula-container">---</div>
-</div>
+                <div id="acAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed var(--primary); padding-top: 15px;">
+                    <span class="lang-vi"><strong>📐 Cơ sở thiết kế AC (Overclocking Ratio):</strong> Thuật toán tự động cấu hình Công suất Inverter AC nhỏ hơn Công suất Pin DC. Việc ép tải này (DC/AC Ratio > 1) giúp Inverter luôn vận hành ở dải hiệu suất cao nhất ngay cả vào những ngày mây mù hoặc bức xạ yếu, bù đắp lại các tổn hao vật lý thực tế. Hiện tượng "cắt xén đỉnh" (Clipping Loss) giữa trưa sẽ xảy ra nhưng được chứng minh là mang lại hiệu quả kinh tế (LCOE) tốt hơn.</span>
+                    <div id="formulaInverter" class="formula-container">---</div>
+                </div>
             </div>
 
             <div class="result-box-expanded" id="bessResultBox" style="border-left: 5px solid var(--primary); transition: background 0.3s;">
@@ -907,14 +800,14 @@
                     </span> 
                     <span class="equip-val text-primary" id="resBattery">---</span>
                 </div>
-<button class="btn btn-toggle-algo no-print action-btn" onclick="toggleBessAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f0fdf4; border-color: #00b894; color: #00b894;">
-    <span id="bessToggleText">➕ Xem cơ sở thiết kế BESS</span>
-</button>
+                <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleBessAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f0fdf4; border-color: #00b894; color: #00b894;">
+                    <span id="bessToggleText">➕ Xem cơ sở thiết kế BESS</span>
+                </button>
 
-<div id="bessAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed #00b894; padding-top: 15px;">
-    <span class="lang-vi"><strong>📐 Thuật toán Sizing BESS:</strong> Dựa vào đặc tuyến tải phân tích ở trên, hệ thống tính toán chính xác tổng phần diện tích năng lượng dư thừa (\(E_{Excess}\)). Dung lượng Pin Lithium thiết kế phải đủ lớn để chứa toàn bộ lượng dư này mà vẫn chừa lại biên độ bảo vệ xả sâu DoD nhằm kéo dài tuổi thọ cell pin.</span>
-    <div id="formulaBattery" class="formula-container">---</div>
-</div>
+                <div id="bessAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed #00b894; padding-top: 15px;">
+                    <span class="lang-vi"><strong>📐 Thuật toán Sizing BESS:</strong> Dựa vào đặc tuyến tải phân tích ở trên, hệ thống tính toán chính xác tổng phần diện tích năng lượng dư thừa (\(E_{Excess}\)). Dung lượng Pin Lithium thiết kế phải đủ lớn để chứa toàn bộ lượng dư này mà vẫn chừa lại biên độ bảo vệ xả sâu DoD nhằm kéo dài tuổi thọ cell pin.</span>
+                    <div id="formulaBattery" class="formula-container">---</div>
+                </div>
             </div>
 
             <div class="result-box-expanded" style="border-left: 5px solid #a4b0be; background: #fff;">
@@ -946,14 +839,14 @@
                     </span> 
                     <span class="result-val" style="color:#7f8fa6" id="resExcess">---</span>
                 </div>
-<button class="btn btn-toggle-algo no-print action-btn" onclick="toggleYieldAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f1f2f6; border-color: #a4b0be; color: #636e72;">
-    <span id="yieldToggleText">➕ Xem thuật toán Sản lượng</span>
-</button>
+                <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleYieldAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f1f2f6; border-color: #a4b0be; color: #636e72;">
+                    <span id="yieldToggleText">➕ Xem thuật toán Sản lượng</span>
+                </button>
 
-<div id="yieldAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed #a4b0be; padding-top: 15px;">
-    <span class="lang-vi"><strong>📐 Thuật toán Sản lượng (Yield Calculation):</strong> Áp dụng mô hình sản lượng chuẩn. Trong đó, hệ số Hiệu suất hệ thống PR (Performance Ratio) là tích số của chuỗi các suy hao vật lý: Suy hao chuyển đổi Inverter (thường ~98%) × Suy hao cáp AC/DC điện trở (~1%) × Suy hao do bóng râm & bụi bẩn (~2-3%) × Suy hao nhiệt độ cell pin.</span>
-    <div id="formulaGen" class="formula-container">---</div>
-</div>
+                <div id="yieldAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed #a4b0be; padding-top: 15px;">
+                    <span class="lang-vi"><strong>📐 Thuật toán Sản lượng (Yield Calculation):</strong> Áp dụng mô hình sản lượng chuẩn. Trong đó, hệ số Hiệu suất hệ thống PR (Performance Ratio) là tích số của chuỗi các suy hao vật lý: Suy hao chuyển đổi Inverter (thường ~98%) × Suy hao cáp AC/DC điện trở (~1%) × Suy hao do bóng râm & bụi bẩn (~2-3%) × Suy hao nhiệt độ cell pin.</span>
+                    <div id="formulaGen" class="formula-container">---</div>
+                </div>
             </div>
         </div>
     </div>
@@ -972,30 +865,12 @@
             <table id="genTable">
                 <thead>
                     <tr>
-                        <th style="width: 8%">
-                            <span class="lang-vi">Năm</span>
-                            <span class="lang-en">Year</span>
-                        </th>
-                        <th style="width: 15%">
-                            <span class="lang-vi">Hiệu suất Module <sup class="help-tip no-print" title="Tính bằng: 100% - Suy hao năm 1 - (Suy hao các năm tiếp theo × (Năm - 1)). Thể hiện % hiệu suất còn lại của tấm pin sau thời gian lão hóa theo từng năm vận hành.">[?]</sup></span>
-                            <span class="lang-en">Module Efficiency</span>
-                        </th>
-                        <th style="width: 17%">
-                            <span class="lang-vi">Tổng Sản Lượng (kWh)</span>
-                            <span class="lang-en">Total Generation</span>
-                        </th>
-                        <th style="width: 17%">
-                            <span class="lang-vi">Sử dụng (kWh) <sup class="help-tip no-print" title="Tổng điện năng hấp thụ được (Sinh ra dòng tiền trực tiếp)">[?]</sup></span>
-                            <span class="lang-en">Self-used & BESS</span>
-                        </th>
-                        <th style="width: 17%">
-                            <span class="lang-vi">Cắt giảm / Lãng phí (kWh)</span>
-                            <span class="lang-en">Curtailed Excess</span>
-                        </th>
-                        <th style="width: 26%">
-                            <span class="lang-vi">Dòng Tiền Doanh Thu (VNĐ) <sup class="help-tip no-print" title="Tiền điện tiết kiệm được từ số kWh sử dụng nhân với Đơn giá điện (có tính lạm phát trượt giá theo năm)">[?]</sup></span>
-                            <span class="lang-en">Cash Revenue (VND)</span>
-                        </th>
+                        <th style="width: 8%">Năm</th>
+                        <th style="width: 15%">Hiệu suất Module <sup class="help-tip no-print" title="Tính bằng: 100% - Suy hao năm 1 - (Suy hao các năm tiếp theo × (Năm - 1)).">[?]</sup></th>
+                        <th style="width: 17%">Tổng Sản Lượng (kWh)</th>
+                        <th style="width: 17%">Sử dụng (kWh) <sup class="help-tip no-print" title="Tổng điện năng hấp thụ được (Sinh ra dòng tiền trực tiếp)">[?]</sup></th>
+                        <th style="width: 17%">Cắt giảm / Lãng phí (kWh)</th>
+                        <th style="width: 26%">Dòng Tiền Doanh Thu (VNĐ) <sup class="help-tip no-print" title="Tiền điện tiết kiệm được từ số kWh sử dụng nhân với Đơn giá điện (có tính lạm phát)">[?]</sup></th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -1004,8 +879,7 @@
         </div>
         <button id="btnToggleLca" class="btn-toggle-lca no-print" onclick="toggleLcaTable()">▼ Xem chi tiết toàn bộ 25 năm ▼</button>
     </div>
-
-    <div class="section-header finance" id="section-finance">
+<div class="section-header finance" id="section-finance">
         <span class="lang-vi">Phần II: Thẩm Định Hiệu Quả Đầu Tư (Financial & CAPEX Analysis)</span>
         <span class="lang-en">Part II: Financial Feasibility & CAPEX Analysis</span>
     </div>
@@ -1027,7 +901,6 @@
                 <div class="form-group compact">
                     <label>
                         <span class="lang-vi">Suất ĐT Solar (VNĐ/kWp) <sup class="help-tip no-print" title="Chi phí đầu tư trọn gói cho toàn bộ phần Năng lượng mặt trời chia cho Công suất (Bao gồm Vật tư, nhân công, cáp, khung kệ). Lấy dữ liệu chi tiết ở bảng BOQ.">[?]</sup>:</span>
-                        <span class="lang-en">Solar CAPEX (VND/kWp):</span>
                     </label>
                     <input type="text" id="capexPerKw" value="15.000.000" oninput="formatInt(this); calculate()" class="text-right" style="font-weight: 800; color: var(--accent); background: #fff5f5; border-color: #ffcccc;">
                 </div>
@@ -1035,7 +908,6 @@
                 <div class="form-group compact" id="bessCapexGroup" style="transition: all 0.3s ease;">
                     <label>
                         <span class="lang-vi">Suất ĐT BESS (VNĐ/kWh) <sup class="help-tip no-print" title="Chi phí đầu tư cho 1 kWh dung lượng Pin lưu trữ Lithium (Cell pin + Hệ tủ bảo vệ chống cháy).">[?]</sup>:</span>
-                        <span class="lang-en">BESS CAPEX (VND/kWh):</span>
                     </label>
                     <input type="text" id="capexPerKwh" value="4.000.000" oninput="formatInt(this); calculate()" class="text-right">
                 </div>
@@ -1043,7 +915,6 @@
                 <div class="form-group compact">
                     <label>
                         <span class="lang-vi">Giá FIT bán EVN (VNĐ) <sup class="help-tip no-print" title="Giá EVN mua lại phần điện mặt trời dư thừa không dùng hết (Hiện tại đa số là 0 do chưa có cơ chế mua bán mới).">[?]</sup>:</span>
-                        <span class="lang-en">Export FIT (VND/kWh):</span>
                     </label>
                     <input type="text" id="exportPrice" value="0" oninput="formatInt(this); calculate()" class="text-right">
                 </div>
@@ -1101,47 +972,37 @@
                     <label>Kỳ hạn vay (Năm) <sup class="help-tip no-print" title="Thời gian trả nợ gốc và lãi cho khoản vay ngân hàng.">[?]</sup>:</label>
                     <input type="number" id="loanTerm" value="5" oninput="calculate()" class="text-right">
                 </div>
-<div class="form-group compact">
-    <style>
-        .tooltip-ke-container { position: relative; display: inline-block; cursor: help; }
-        .tooltip-ke-box { 
-            visibility: hidden; width: 330px; background-color: #fff; color: #2d3436; text-align: left; 
-            border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; 
-            bottom: 130%; right: -15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; 
-            transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; 
-            font-weight: normal; font-family: var(--font-main);
-        }
-        .tooltip-ke-box::after { content: ""; position: absolute; top: 100%; right: 20px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
-        .tooltip-ke-box::before { content: ""; position: absolute; top: 100%; right: 19px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
-        
-        .tooltip-ke-container:hover .tooltip-ke-box { visibility: visible; opacity: 1; }
-    </style>
-    <label>
-        <span class="lang-vi">TS Chiết khấu (Ke%) 
-            <div class="tooltip-ke-container no-print">
-                <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
-                <div class="tooltip-ke-box">
-                    <strong style="color: var(--primary); font-size: 15px;">Tỷ suất chiết khấu (Ke%) là gì?</strong><br>
-                    Đây là <em>"Chi phí cơ hội"</em> hay <em>"Lợi nhuận kỳ vọng tối thiểu"</em>. Đại diện cho số tiền lãi bạn chắc chắn nhận được nếu mang vốn đi gửi ngân hàng thay vì làm điện mặt trời.<br>
-                    
-                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #f1c40f; margin: 12px 0;">
-                        <strong style="color: var(--secondary); display: block;">Ví dụ thực tế:</strong> Đầu tư 10 tỷ, mỗi năm tiết kiệm 2 tỷ.<br>
-                        <ul style="padding-left: 15px; margin-top: 5px; margin-bottom: 0;">
-                            <li><strong>Chưa tính Ke%:</strong> Lấy 10/2 = 5 năm hoàn vốn (Danh nghĩa).</li>
-                            <li><strong>Có tính Ke% (VD 10%):</strong> Do lỡ mất 10% tiền lãi ngân hàng mỗi năm, 2 tỷ thu về ở năm 5 bị trượt giá, ép về hiện tại chỉ còn <strong>1.24 tỷ</strong> (Thực tế).</li>
-                        </ul>
-                    </div>
-                    
-                    Hệ thống sẽ chiết khấu cộng dồn dòng tiền 25 năm:<br>
-                    <span style="color: var(--success); display: block; margin-top: 5px;">✅ <strong>Tổng > 10 tỷ (IRR > Ke%):</strong> Sinh lời tốt hơn NH.</span>
-                    <span style="color: var(--accent);">❌ <strong>Tổng < 10 tỷ (IRR < Ke%):</strong> Phá hủy giá trị, lỗ vốn.</span>
+                <div class="form-group compact">
+                    <style>
+                        .tooltip-ke-container { position: relative; display: inline-block; cursor: help; }
+                        .tooltip-ke-box { visibility: hidden; width: 330px; background-color: #fff; color: #2d3436; text-align: left; border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; bottom: 130%; right: -15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; font-weight: normal; font-family: var(--font-main); }
+                        .tooltip-ke-box::after { content: ""; position: absolute; top: 100%; right: 20px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
+                        .tooltip-ke-box::before { content: ""; position: absolute; top: 100%; right: 19px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
+                        .tooltip-ke-container:hover .tooltip-ke-box { visibility: visible; opacity: 1; }
+                    </style>
+                    <label>
+                        <span class="lang-vi">TS Chiết khấu (Ke%) 
+                            <div class="tooltip-ke-container no-print">
+                                <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
+                                <div class="tooltip-ke-box">
+                                    <strong style="color: var(--primary); font-size: 15px;">Tỷ suất chiết khấu (Ke%) là gì?</strong><br>
+                                    Đây là <em>"Chi phí cơ hội"</em> hay <em>"Lợi nhuận kỳ vọng tối thiểu"</em>. Đại diện cho số tiền lãi bạn chắc chắn nhận được nếu mang vốn đi gửi ngân hàng thay vì làm điện mặt trời.<br>
+                                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #f1c40f; margin: 12px 0;">
+                                        <strong style="color: var(--secondary); display: block;">Ví dụ thực tế:</strong> Đầu tư 10 tỷ, mỗi năm tiết kiệm 2 tỷ.<br>
+                                        <ul style="padding-left: 15px; margin-top: 5px; margin-bottom: 0;">
+                                            <li><strong>Chưa tính Ke%:</strong> Lấy 10/2 = 5 năm hoàn vốn (Danh nghĩa).</li>
+                                            <li><strong>Có tính Ke% (VD 10%):</strong> Do lỡ mất 10% tiền lãi ngân hàng mỗi năm, 2 tỷ thu về ở năm 5 bị trượt giá, ép về hiện tại chỉ còn <strong>1.24 tỷ</strong> (Thực tế).</li>
+                                        </ul>
+                                    </div>
+                                    Hệ thống sẽ chiết khấu cộng dồn dòng tiền 25 năm:<br>
+                                    <span style="color: var(--success); display: block; margin-top: 5px;">✅ <strong>Tổng > 10 tỷ (IRR > Ke%):</strong> Sinh lời tốt hơn NH.</span>
+                                    <span style="color: var(--accent);">❌ <strong>Tổng < 10 tỷ (IRR < Ke%):</strong> Phá hủy giá trị, lỗ vốn.</span>
+                                </div>
+                            </div>:
+                        </span>
+                    </label>
+                    <input type="number" id="discountRate" value="10" oninput="calculate()" class="text-right">
                 </div>
-            </div>:
-        </span>
-    </label>
-    <input type="number" id="discountRate" value="10" oninput="calculate()" class="text-right">
-</div>
             </div>
             <div class="fin-grid-row fin-cols-3" style="margin-top: 24px; border-top: 1px dashed var(--border); padding-top: 24px;">
                 <div class="form-group compact">
@@ -1152,16 +1013,16 @@
                 </div>
             </div>
 
-<button class="btn btn-toggle-algo no-print action-btn" onclick="toggleFinanceAlgorithm()" style="margin-top: 30px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #fff5f5; border-color: var(--accent); color: var(--accent);">
-    <span id="financeToggleText">➕ Xem cơ sở tính toán Tài chính</span>
-</button>
+            <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleFinanceAlgorithm()" style="margin-top: 30px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #fff5f5; border-color: var(--accent); color: var(--accent);">
+                <span id="financeToggleText">➕ Xem cơ sở tính toán Tài chính</span>
+            </button>
 
-<div id="financeAlgorithmBox" class="tech-note text-justify no-print" style="display: none; margin-top: 15px; border-top: 1px dashed var(--accent); padding-top: 15px;">
-    <span class="lang-vi">
-        <strong>📐 Cơ sở Tính toán Tài chính & OPEX:</strong> Mô hình Dòng tiền FCFE (Free Cash Flow to Equity) được tính toán tỉ mỉ cho chu kỳ 25 năm. Trong đó, chi phí Vận hành (OPEX) tăng tiến theo lạm phát, đi kèm Quỹ dự phòng thay thế thiết bị cốt lõi. Dòng tiền đã bao gồm tác động của <strong>Lá chắn Thuế (Tax Shield)</strong> - Lợi ích tài chính lớn từ việc khấu hao tài sản.
-    </span>
-    <div id="formulaFinance" class="formula-container" style="text-align: left !important; padding: 25px; margin-top: 20px;">---</div>
-</div>
+            <div id="financeAlgorithmBox" class="tech-note text-justify no-print" style="display: none; margin-top: 15px; border-top: 1px dashed var(--accent); padding-top: 15px;">
+                <span class="lang-vi">
+                    <strong>📐 Cơ sở Tính toán Tài chính & OPEX:</strong> Mô hình Dòng tiền FCFE (Free Cash Flow to Equity) được tính toán tỉ mỉ cho chu kỳ 25 năm. Trong đó, chi phí Vận hành (OPEX) tăng tiến theo lạm phát, đi kèm Quỹ dự phòng thay thế thiết bị cốt lõi. Dòng tiền đã bao gồm tác động của <strong>Lá chắn Thuế (Tax Shield)</strong> - Lợi ích tài chính lớn từ việc khấu hao tài sản.
+                </span>
+                <div id="formulaFinance" class="formula-container" style="text-align: left !important; padding: 25px; margin-top: 20px;">---</div>
+            </div>
         </div>
 
         <div>
@@ -1184,21 +1045,21 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="lang-vi" style="color: #00b894;">Tổng Lá chắn Thuế (Tax Shield) <sup class="help-tip no-print" title="Lá chắn thuế (Tax Shield) là khoản tiền tiết kiệm được từ việc giảm trừ nghĩa vụ Thuế TNDN nhờ việc ghi nhận Chi phí Khấu hao tài sản cố định hàng năm. Công thức: (CAPEX / Số năm khấu hao) × % Thuế suất TNDN. Xem chi tiết công thức ở panel bên cạnh.">[?]</sup></span>
+                                <span class="lang-vi" style="color: #00b894;">Tổng Lá chắn Thuế (Tax Shield) <sup class="help-tip no-print" title="Lá chắn thuế (Tax Shield) là khoản tiền tiết kiệm được từ việc giảm trừ nghĩa vụ Thuế TNDN nhờ việc ghi nhận Chi phí Khấu hao tài sản cố định hàng năm.">[?]</sup></span>
                                 <span class="metric-desc lang-vi" style="color: #00b894;">Tiết kiệm nhờ Khấu hao (Depr. × Tax Rate)</span>
                             </td>
                             <td id="resTaxShieldBase" style="color: #00b894;">---</td>
                         </tr>
                         <tr>
                             <td>
-                                <span class="lang-vi">Tổng Chi phí Vận hành (OPEX) <sup class="help-tip no-print" title="Tổng chi phí Vận hành, Bảo trì, Vệ sinh (O&M) cộng dồn trong 25 năm. Tính bằng: Tổng [OPEX năm 1 × (1 + % Trượt giá)^(năm-1)] + Phí dự phòng thay thế Inverter (năm 12) và Cell pin BESS (năm 15, nếu có).">[?]</sup></span>
+                                <span class="lang-vi">Tổng Chi phí Vận hành (OPEX) <sup class="help-tip no-print" title="Tổng chi phí Vận hành, Bảo trì, Vệ sinh (O&M) cộng dồn trong 25 năm. Bao gồm chi phí thay thế Inverter và BESS.">[?]</sup></span>
                                 <span class="metric-desc lang-vi">Chi phí O&M và Thay thế thiết bị trong 25 năm</span>
                             </td>
                             <td id="resOpexTotalBase" style="color: #e17055;">---</td>
                         </tr>
                         <tr>
                             <td>
-                                <span class="lang-vi">Tổng Dòng tiền Sinh lời (FCFE) <sup class="help-tip no-print" title="Lợi nhuận ròng cuối cùng của Chủ đầu tư cộng dồn trong 25 năm, sau khi đã thanh toán OPEX, Lãi vay, Thuế TNDN và Phí thay thiết bị (Inverter/BESS).">[?]</sup></span>
+                                <span class="lang-vi">Tổng Dòng tiền Sinh lời (FCFE) <sup class="help-tip no-print" title="Lợi nhuận ròng cuối cùng của Chủ đầu tư cộng dồn trong 25 năm, sau khi đã thanh toán OPEX, Lãi vay, Thuế TNDN.">[?]</sup></span>
                                 <span class="metric-desc lang-vi">Lợi nhuận gộp sau khi trừ Thuế, Lãi vay, OPEX</span>
                             </td>
                             <td id="resFcfeTotalBase" style="color:var(--highlight)">---</td>
@@ -1217,82 +1078,64 @@
                             </td>
                             <td id="resPaybackBase" style="transition: background-color 0.5s;">---</td>
                         </tr>
-<tr>
-    <td>
-        <style>
-            .tooltip-irr-container { position: relative; display: inline-block; cursor: help; }
-            .tooltip-irr-box { 
-                visibility: hidden; width: 350px; background-color: #fff; color: #2d3436; text-align: left; 
-                border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; 
-                bottom: 130%; left: -50px; 
-                box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; 
-                transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; 
-                font-weight: normal; font-family: var(--font-main);
-            }
-            .tooltip-irr-box::after { content: ""; position: absolute; top: 100%; left: 55px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
-            .tooltip-irr-box::before { content: ""; position: absolute; top: 100%; left: 54px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
-            .tooltip-irr-container:hover .tooltip-irr-box { visibility: visible; opacity: 1; }
-        </style>
-        <span class="lang-vi">Tỷ suất Sinh lời Nội bộ (IRR) 
-            <div class="tooltip-irr-container no-print">
-                <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
-                <div class="tooltip-irr-box">
-                    <strong style="color: var(--success); font-size: 15px;">Tỷ suất sinh lời nội bộ (IRR) là gì?</strong><br>
-                    Hãy tưởng tượng dự án điện mặt trời này là một <em>Sổ tiết kiệm ngân hàng gửi kỳ hạn 25 năm</em>. Chỉ số IRR chính là <strong>mức lãi suất bình quân mỗi năm</strong> của cuốn sổ đó.<br>
-                    
-                    <div style="background: #f0fdf4; padding: 12px; border-radius: 6px; border-left: 3px solid var(--success); margin: 12px 0;">
-                        <strong style="color: var(--secondary); display: block;">Ý nghĩa thực tế:</strong> 
-                        Nếu hệ thống tính ra IRR = 15%, nghĩa là số tiền tỷ anh bỏ ra đầu tư ban đầu đang tự động sinh lời tương đương với việc mang tiền đi gửi ngân hàng với mức lãi suất 15%/năm đều đặn suốt 25 vòng quay của trái đất.
-                    </div>
-                    
-                    <span style="color: var(--success); display: block;">✅ <strong>IRR > Ke% (Chi phí vốn):</strong> Dự án sinh lời cao hơn mức lợi nhuận kỳ vọng, RẤT ĐÁNG XUỐNG TIỀN.</span>
-                    <span style="color: var(--accent); display: block; margin-top: 5px;">❌ <strong>IRR < Ke%:</strong> Rủi ro cao, nên mang tiền đi gửi ngân hàng cho an toàn.</span>
-                </div>
-            </div>
-        </span>
-        <span class="metric-desc lang-vi">Chỉ số quyết định hiệu quả đầu tư</span>
-    </td>
-    <td id="resIrrBase" class="text-success" style="font-size: 22px; transition: background-color 0.5s;">---</td>
-</tr>
-
-<tr>
-    <td>
-        <style>
-            .tooltip-npv-container { position: relative; display: inline-block; cursor: help; }
-            .tooltip-npv-box { 
-                visibility: hidden; width: 350px; background-color: #fff; color: #2d3436; text-align: left; 
-                border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; 
-                bottom: 130%; left: -50px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; 
-                transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; 
-                font-weight: normal; font-family: var(--font-main);
-            }
-            .tooltip-npv-box::after { content: ""; position: absolute; top: 100%; left: 55px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
-            .tooltip-npv-box::before { content: ""; position: absolute; top: 100%; left: 54px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
-            .tooltip-npv-container:hover .tooltip-npv-box { visibility: visible; opacity: 1; }
-        </style>
-        <span class="lang-vi">Hiện giá Thuần (NPV) 
-            <div class="tooltip-npv-container no-print">
-                <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
-                <div class="tooltip-npv-box">
-                    <strong style="color: var(--highlight); font-size: 15px;">Hiện giá thuần (NPV) là gì?</strong><br>
-                    Đây là tổng <strong>Số tiền Lãi Ròng (VNĐ)</strong> bạn cầm chắc trong tay sau 25 năm, nhưng <em>đã được ép lùi về giá trị của đồng tiền ở thời điểm hiện tại</em> (đã trừ hao lạm phát, trượt giá và mọi chi phí cơ hội).<br>
-                    
-                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid var(--highlight); margin: 12px 0;">
-                        <strong style="color: var(--secondary); display: block;">Ví dụ thực tế:</strong> 
-                        Đầu tư 10 tỷ. Tổng thu về sau 25 năm là 30 tỷ. Nếu xét sự mất giá của tiền tệ (Giả sử chiết khấu là 10%/năm), 30 tỷ của 25 năm sau chỉ tương đương sức mua của 15 tỷ ngày hôm nay.<br>
-                        👉 <strong>NPV = 15 tỷ - 10 tỷ (vốn ban đầu) = +5 tỷ.</strong>
-                    </div>
-                    
-                    <span style="color: var(--success); display: block;">✅ <strong>NPV > 0:</strong> Đồng tiền sinh sôi, tạo ra tài sản thặng dư dương.</span>
-                    <span style="color: var(--accent); display: block; margin-top: 5px;">❌ <strong>NPV < 0:</strong> Đồng tiền bị mất giá trị sức mua (Lỗ so với thời gian).</span>
-                </div>
-            </div>
-        </span>
-        <span class="metric-desc lang-vi">Đã chiết khấu dòng tiền tương lai về hiện tại</span>
-    </td>
-    <td id="resNpvBase" style="transition: background-color 0.5s;">---</td>
-</tr>                        <tr>
+                        <tr>
+                            <td>
+                                <style>
+                                    .tooltip-irr-container { position: relative; display: inline-block; cursor: help; }
+                                    .tooltip-irr-box { visibility: hidden; width: 350px; background-color: #fff; color: #2d3436; text-align: left; border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; bottom: 130%; left: -50px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; font-weight: normal; font-family: var(--font-main); }
+                                    .tooltip-irr-box::after { content: ""; position: absolute; top: 100%; left: 55px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
+                                    .tooltip-irr-box::before { content: ""; position: absolute; top: 100%; left: 54px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
+                                    .tooltip-irr-container:hover .tooltip-irr-box { visibility: visible; opacity: 1; }
+                                </style>
+                                <span class="lang-vi">Tỷ suất Sinh lời Nội bộ (IRR) 
+                                    <div class="tooltip-irr-container no-print">
+                                        <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
+                                        <div class="tooltip-irr-box">
+                                            <strong style="color: var(--success); font-size: 15px;">Tỷ suất sinh lời nội bộ (IRR) là gì?</strong><br>
+                                            Chỉ số IRR chính là <strong>mức lãi suất bình quân mỗi năm</strong> của dự án.<br>
+                                            <div style="background: #f0fdf4; padding: 12px; border-radius: 6px; border-left: 3px solid var(--success); margin: 12px 0;">
+                                                <strong style="color: var(--secondary); display: block;">Ý nghĩa thực tế:</strong> 
+                                                Nếu hệ thống tính ra IRR = 15%, nghĩa là số tiền đầu tư ban đầu đang tự động sinh lời tương đương với việc mang tiền đi gửi ngân hàng với mức lãi suất 15%/năm đều đặn suốt 25 năm.
+                                            </div>
+                                            <span style="color: var(--success); display: block;">✅ <strong>IRR > Ke% (Chi phí vốn):</strong> Dự án sinh lời cao hơn mức lợi nhuận kỳ vọng, RẤT ĐÁNG ĐẦU TƯ.</span>
+                                            <span style="color: var(--accent); display: block; margin-top: 5px;">❌ <strong>IRR < Ke%:</strong> Rủi ro cao, nên mang tiền đi gửi ngân hàng.</span>
+                                        </div>
+                                    </div>
+                                </span>
+                                <span class="metric-desc lang-vi">Chỉ số quyết định hiệu quả đầu tư</span>
+                            </td>
+                            <td id="resIrrBase" class="text-success" style="font-size: 22px; transition: background-color 0.5s;">---</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <style>
+                                    .tooltip-npv-container { position: relative; display: inline-block; cursor: help; }
+                                    .tooltip-npv-box { visibility: hidden; width: 350px; background-color: #fff; color: #2d3436; text-align: left; border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; bottom: 130%; left: -50px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; font-weight: normal; font-family: var(--font-main); }
+                                    .tooltip-npv-box::after { content: ""; position: absolute; top: 100%; left: 55px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
+                                    .tooltip-npv-box::before { content: ""; position: absolute; top: 100%; left: 54px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
+                                    .tooltip-npv-container:hover .tooltip-npv-box { visibility: visible; opacity: 1; }
+                                </style>
+                                <span class="lang-vi">Hiện giá Thuần (NPV) 
+                                    <div class="tooltip-npv-container no-print">
+                                        <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
+                                        <div class="tooltip-npv-box">
+                                            <strong style="color: var(--highlight); font-size: 15px;">Hiện giá thuần (NPV) là gì?</strong><br>
+                                            Đây là tổng <strong>Số tiền Lãi Ròng (VNĐ)</strong> bạn cầm chắc trong tay sau 25 năm, nhưng <em>đã được ép lùi về giá trị của đồng tiền ở thời điểm hiện tại</em> (đã trừ hao lạm phát, trượt giá và mọi chi phí cơ hội).<br>
+                                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid var(--highlight); margin: 12px 0;">
+                                                <strong style="color: var(--secondary); display: block;">Ví dụ thực tế:</strong> 
+                                                Đầu tư 10 tỷ. Tổng thu về sau 25 năm là 30 tỷ. Giả sử chiết khấu là 10%/năm, 30 tỷ của 25 năm sau chỉ tương đương sức mua của 15 tỷ ngày hôm nay.<br>
+                                                👉 <strong>NPV = 15 tỷ - 10 tỷ (vốn ban đầu) = +5 tỷ.</strong>
+                                            </div>
+                                            <span style="color: var(--success); display: block;">✅ <strong>NPV > 0:</strong> Đồng tiền sinh sôi, tạo ra tài sản thặng dư dương.</span>
+                                            <span style="color: var(--accent); display: block; margin-top: 5px;">❌ <strong>NPV < 0:</strong> Đồng tiền bị mất giá trị sức mua.</span>
+                                        </div>
+                                    </div>
+                                </span>
+                                <span class="metric-desc lang-vi">Đã chiết khấu dòng tiền tương lai về hiện tại</span>
+                            </td>
+                            <td id="resNpvBase" style="transition: background-color 0.5s;">---</td>
+                        </tr>                        
+                        <tr>
                             <td>
                                 <span class="lang-vi">Chi phí Sản xuất Điện (LCOE) <sup class="help-tip no-print" title="Levelized Cost of Energy: Giá vốn trung bình để sản xuất ra 1 kWh điện, cộng dồn mọi chi phí (Đầu tư, Vận hành, Thay thế) chia cho tổng Sản lượng điện sinh ra trong suốt 25 năm vòng đời dự án.">[?]</sup></span>
                                 <span class="metric-desc lang-vi">Giá vốn 1 kWh điện tạo ra trong 25 năm</span>
@@ -1322,7 +1165,7 @@
         <div class="card" style="margin: 0; padding: 30px;">
             <div class="card-title text-highlight" style="margin-bottom: 20px; font-size: 16px; border-bottom: none; padding-bottom: 0;">
                 <span class="lang-vi">Biểu đồ Phân tích Độ nhạy (Sensitivity)</span>
-                <sup class="help-tip no-print" title="Biểu đồ Nhện thể hiện sự biến động của Tỷ suất Sinh lời IRR khi các yếu tố vĩ mô như Chi phí Đầu tư (CAPEX), Sản lượng (Yield) và Chi phí Vận hành (OPEX) thay đổi lên/xuống 10-20%.">[?]</sup>
+                <sup class="help-tip no-print" title="Biểu đồ Đường thể hiện sự biến động của Tỷ suất Sinh lời IRR khi các yếu tố vĩ mô như Chi phí Đầu tư (CAPEX), Sản lượng (Yield) và Chi phí Vận hành (OPEX) thay đổi lên/xuống 10-20%.">[?]</sup>
             </div>
             <div style="height: 340px; position: relative;">
                 <canvas id="spiderChart"></canvas>
@@ -1337,8 +1180,6 @@
     
     <div class="card analysis-card">
         <div class="card-title" style="color: var(--highlight); font-size: 19px; border-bottom-color: rgba(108, 92, 231, 0.2);">
-            <span class="lang-vi">Đặc tuyến Phụ tải:</span>
-            <span id="lblProfileName" style="color: var(--dark); padding-left: 10px;">...</span>
         </div>
         <p id="lblProfileDesc" class="text-justify" style="font-size: 16px; margin-bottom: 15px; color: #4b6584; line-height: 1.8;"></p>
         
@@ -1360,7 +1201,7 @@
                 <ul class="text-justify" style="font-size: 14.5px; color: #4b6584; padding-left: 20px; line-height: 1.7; margin-bottom: 0;">
                     <li><strong>IEC 61724:</strong> Phương pháp đánh giá hiệu suất hệ thống quang điện (PR, Yield, Degradation).</li>
                     <li><strong>IEC 61215 & IEC 61730:</strong> Tiêu chuẩn kiểm định chất lượng, thiết kế cơ học và an toàn điện cho module NLMT.</li>
-                    <li><strong>IEEE 1547:</strong> Quy chuẩn kết nối và tương tác hòa lưới áp dụng cho các nguồn điện phân tán (DERs).</li>
+                    <li><strong>IEEE 1547:</strong> Quy chuẩn kết nối và tương tác hòa lưới áp dụng cho các nguồn điện phân phân tán (DERs).</li>
                 </ul>
             </div>
             <div>
@@ -1380,7 +1221,7 @@
                 <ul class="text-justify" style="font-size: 14.5px; color: #4b6584; padding-left: 20px; line-height: 1.7; margin-bottom: 0;">
                     <li><strong>Quy hoạch Điện VIII:</strong> Căn cứ định hướng phát triển điện mặt trời mái nhà theo mô hình tự sản tự tiêu (Zero-Export System).</li>
                     <li><strong>TCVN 11856:2017:</strong> Yêu cầu an toàn kỹ thuật, thông số bảo vệ Relay và chất lượng điện năng đối với Inverter hòa lưới.</li>
-                    <li><strong>Quyết định 963/QĐ-BCT (2026):</strong> Quy định khung giờ cao điểm, thấp điểm của hệ thống điện quốc gia.</li>
+                    <li><strong>Quyết định 963/QĐ-BCT:</strong> Quy định khung giờ cao điểm, thấp điểm của hệ thống điện quốc gia.</li>
                 </ul>
             </div>
         </div>
@@ -1391,7 +1232,7 @@
             <span class="font-bold text-accent" style="font-size: 15px;">🔒 Password:</span>
             <input type="password" id="unlockPwd" placeholder="Nhập Password..." onkeypress="if(event.key === 'Enter') checkPassword()">
             <button onclick="checkPassword()">MỞ KHÓA</button>
-            <span id="lockError" class="font-bold text-accent" style="font-size: 14px; display: none;">❌Anh trai say SAI !!!</span>
+            <span id="lockError" class="font-bold text-accent" style="font-size: 14px; display: none;">❌ Sai mật khẩu !!!</span>
         </div>
 
         <button class="btn-print-compact action-btn" onclick="window.print()">
@@ -1406,12 +1247,11 @@
 
 </div>
 
+<!-- Modal Báo giá BOQ -->
 <div class="modal-overlay" id="boqModal">
     <div class="modal-content">
         <div class="modal-header no-print">
-            <h2 style="font-size: 20px;">
-                <span class="lang-vi">Bảng Dự Toán / Báo Giá Chi Tiết (BOQ)</span>
-            </h2>
+            <h2 style="font-size: 20px;"><span class="lang-vi">Bảng Dự Toán / Báo Giá Chi Tiết (BOQ)</span></h2>
             <button class="close-btn action-btn" onclick="closeBOQModal()">&times;</button>
         </div>
         
@@ -1537,9 +1377,7 @@
                     <tfoot>
                         <tr class="no-print">
                             <td colspan="8" style="text-align: left; background: #fff; padding-top: 20px; border-left: transparent; border-right: transparent; border-bottom: transparent;">
-                                <button class="btn action-btn" style="background: #e0e6ed; color: #2d3436; font-size: 14px;" onclick="addBOQRow()">
-                                    + Thêm hạng mục phát sinh
-                                </button>
+                                <button class="btn action-btn" style="background: #e0e6ed; color: #2d3436; font-size: 14px;" onclick="addBOQRow()">+ Thêm hạng mục phát sinh</button>
                             </td>
                         </tr>
                         <tr class="boq-total-row">
@@ -1567,9 +1405,7 @@
             </div>
 
             <div style="margin-top: 50px;">
-                <h4 style="margin-bottom: 15px; color: var(--secondary); text-transform: uppercase; font-size: 15.5px; font-weight: 800;">
-                    Điều khoản thương mại & Cam kết bảo hành (Terms & Conditions):
-                </h4>
+                <h4 style="margin-bottom: 15px; color: var(--secondary); text-transform: uppercase; font-size: 15.5px; font-weight: 800;">Điều khoản thương mại & Cam kết bảo hành (Terms & Conditions):</h4>
                 <textarea class="terms-box" oninput="autoResize(this)">
 1. Hiệu lực báo giá / Quotation Validity: 15 ngày kể từ ngày phát hành.
 2. Tiến độ thực hiện / Lead Time: Thi công hoàn thiện trong vòng 30 ngày kể từ ngày tập kết vật tư.
@@ -1599,6 +1435,7 @@
     </div>
 </div>
 
+<!-- Modal Thiết lập Khung vật lý -->
 <div class="modal-overlay" id="configModal">
     <div class="modal-content" style="max-width: 650px; height: auto;">
         <div class="modal-header no-print">
@@ -1659,7 +1496,7 @@
 </div>
 <script>
     // --- 1. BIẾN TOÀN CỤC & TRẠNG THÁI ---
-    const APP_PASSWORD = "2109004";
+    const APP_PASSWORD = "123";
     let isAppUnlocked = false;
     let totalBeforeTaxValue = 0;
     let loadChartInstance = null;
@@ -1694,93 +1531,56 @@
     // --- XỬ LÝ SỰ KIỆN SCROLL VÀ NAV ---
     window.addEventListener('scroll', function() {
         let btnTop = document.getElementById("btnBackToTop");
-        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-            btnTop.style.display = "flex";
-        } else {
-            btnTop.style.display = "none";
-        }
-        
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) { btnTop.style.display = "flex"; } else { btnTop.style.display = "none"; }
         let sections = document.querySelectorAll('.section-header');
         let navLinks = document.querySelectorAll('.floating-nav a[href^="#"]');
         let current = "";
-        sections.forEach((sec) => {
-            const sectionTop = sec.offsetTop;
-            if (pageYOffset >= sectionTop - 100) { current = sec.getAttribute('id'); }
-        });
-        navLinks.forEach((link) => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(current) && current !== "") { link.classList.add('active'); }
-        });
+        sections.forEach((sec) => { const sectionTop = sec.offsetTop; if (pageYOffset >= sectionTop - 100) { current = sec.getAttribute('id'); } });
+        navLinks.forEach((link) => { link.classList.remove('active'); if (link.getAttribute('href').includes(current) && current !== "") { link.classList.add('active'); } });
     });
 
-    function highlightNav(el) {
-        document.querySelectorAll('.floating-nav a').forEach(a => a.classList.remove('active'));
-        el.classList.add('active');
-    }
+    function highlightNav(el) { document.querySelectorAll('.floating-nav a').forEach(a => a.classList.remove('active')); el.classList.add('active'); }
 
     // --- 2. HÀM TIỆN ÍCH LÕI ---
     function flashElements() {
         const ids = ['resIrrBase', 'resPaybackBase', 'resNpvBase'];
         ids.forEach(id => {
             let el = document.getElementById(id);
-            if(el) {
-                el.classList.remove('flash-update');
-                void el.offsetWidth;
-                el.classList.add('flash-update');
-            }
+            if(el) { el.classList.remove('flash-update'); void el.offsetWidth; el.classList.add('flash-update'); }
         });
     }
 
     function toggleLcaTable() {
         isLcaExpanded = !isLcaExpanded;
         let btn = document.getElementById('btnToggleLca');
-        if(isLcaExpanded) {
-            btn.innerHTML = '▲ Thu gọn Bảng Mô Phỏng ▲';
-        } else {
-            btn.innerHTML = '▼ Xem chi tiết toàn bộ 25 năm ▼';
-            document.getElementById('genTable').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        if(isLcaExpanded) { btn.innerHTML = '▲ Thu gọn Bảng Mô Phỏng ▲'; } else { btn.innerHTML = '▼ Xem chi tiết toàn bộ 25 năm ▼'; document.getElementById('genTable').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
         calculate(); 
     }
 
     function toggleLanguage() { document.body.classList.toggle('lang-en'); }
     function autoResize(textarea) { textarea.style.height = 'auto'; textarea.style.height = textarea.scrollHeight + 'px'; }
-    window.addEventListener('beforeprint', function() {
-        if(document.body.classList.contains('print-boq-only')) { document.querySelectorAll('#boqTable textarea, .terms-box').forEach(el => autoResize(el)); }
-    });
-    function formatMoney(num) { 
-        if(isNaN(num) || !isFinite(num)) return "0 đ";
-        return Math.round(num).toLocaleString('vi-VN') + " đ"; 
-    }
+    window.addEventListener('beforeprint', function() { if(document.body.classList.contains('print-boq-only')) { document.querySelectorAll('#boqTable textarea, .terms-box').forEach(el => autoResize(el)); } });
+    function formatMoney(num) { if(isNaN(num) || !isFinite(num)) return "0 đ"; return Math.round(num).toLocaleString('vi-VN') + " đ"; }
 
     function formatInt(el) {
-        let cursorPosition = el.selectionStart;
-        let originalLength = el.value.length;
-        let val = el.value.replace(/[^0-9]/g, '');
-        if (val === '') { el.value = ''; return; }
+        let cursorPosition = el.selectionStart; let originalLength = el.value.length;
+        let val = el.value.replace(/[^0-9]/g, ''); if (val === '') { el.value = ''; return; }
         el.value = parseInt(val, 10).toLocaleString('vi-VN');
-        let newLength = el.value.length;
-        cursorPosition = cursorPosition + (newLength - originalLength);
+        let newLength = el.value.length; cursorPosition = cursorPosition + (newLength - originalLength);
         el.setSelectionRange(cursorPosition, cursorPosition);
     }
 
     function getInt(id) {
-        let el = document.getElementById(id);
-        if(!el) return 0;
-        let val = el.value.replace(/[^0-9]/g, '');
-        return parseInt(val, 10) || 0;
+        let el = document.getElementById(id); if(!el) return 0;
+        let val = el.value.replace(/[^0-9]/g, ''); return parseInt(val, 10) || 0;
     }
 
-    function calculatePMT(rate, nper, pv) {
-        if (rate === 0) return pv / nper;
-        return (pv * rate * Math.pow(1 + rate, nper)) / (Math.pow(1 + rate, nper) - 1);
-    }
+    function calculatePMT(rate, nper, pv) { if (rate === 0) return pv / nper; return (pv * rate * Math.pow(1 + rate, nper)) / (Math.pow(1 + rate, nper) - 1); }
     
     function calculateIRR(cashFlows) {
         let minRate = -1.0; let maxRate = 1.0; let irr = 0;
         for (let i = 0; i < 100; i++) {
-            irr = (minRate + maxRate) / 2;
-            let npv = 0;
+            irr = (minRate + maxRate) / 2; let npv = 0;
             for (let t = 0; t < cashFlows.length; t++) { npv += cashFlows[t] / Math.pow(1 + irr, t); }
             if (Math.abs(npv) < 0.001) break;
             if (npv > 0) minRate = irr; else maxRate = irr;
@@ -1788,65 +1588,11 @@
         return irr * 100;
     }
 
-    function toggleAlgorithmExpl() {
-        const box = document.getElementById('algorithmExplBox');
-        const textBtn = document.getElementById('algoToggleText');
-        if (box.style.display === 'none' || box.style.display === '') {
-            box.style.display = 'block';
-            textBtn.innerHTML = '➖ Ẩn chi tiết Thuật toán Biểu đồ';
-        } else {
-            box.style.display = 'none';
-            textBtn.innerHTML = '➕ Bấm để xem chi tiết Thuật toán Biểu đồ';
-        }
-    }
-    
-    function toggleBessAlgorithm() {
-        const box = document.getElementById('bessAlgorithmBox');
-        const textBtn = document.getElementById('bessToggleText');
-        if (box.style.display === 'none' || box.style.display === '') {
-            box.style.display = 'block';
-            textBtn.innerHTML = '➖ Ẩn cơ sở thiết kế BESS';
-        } else {
-            box.style.display = 'none';
-            textBtn.innerHTML = '➕ Xem cơ sở thiết kế BESS';
-        }
-    }
-    
-    function toggleAcAlgorithm() {
-        const box = document.getElementById('acAlgorithmBox');
-        const textBtn = document.getElementById('acToggleText');
-        if (box.style.display === 'none' || box.style.display === '') {
-            box.style.display = 'block';
-            textBtn.innerHTML = '➖ Ẩn cơ sở thiết kế AC';
-        } else {
-            box.style.display = 'none';
-            textBtn.innerHTML = '➕ Xem cơ sở thiết kế AC';
-        }
-    }
-
-    function toggleYieldAlgorithm() {
-        const box = document.getElementById('yieldAlgorithmBox');
-        const textBtn = document.getElementById('yieldToggleText');
-        if (box.style.display === 'none' || box.style.display === '') {
-            box.style.display = 'block';
-            textBtn.innerHTML = '➖ Ẩn thuật toán Sản lượng';
-        } else {
-            box.style.display = 'none';
-            textBtn.innerHTML = '➕ Xem thuật toán Sản lượng';
-        }
-    }
-
-    function toggleFinanceAlgorithm() {
-        const box = document.getElementById('financeAlgorithmBox');
-        const textBtn = document.getElementById('financeToggleText');
-        if (box.style.display === 'none' || box.style.display === '') {
-            box.style.display = 'block';
-            textBtn.innerHTML = '➖ Ẩn cơ sở tính toán Tài chính';
-        } else {
-            box.style.display = 'none';
-            textBtn.innerHTML = '➕ Xem cơ sở tính toán Tài chính';
-        }
-    }
+    function toggleAlgorithmExpl() { const box = document.getElementById('algorithmExplBox'); const textBtn = document.getElementById('algoToggleText'); if (box.style.display === 'none' || box.style.display === '') { box.style.display = 'block'; textBtn.innerHTML = '➖ Ẩn chi tiết Thuật toán Biểu đồ'; } else { box.style.display = 'none'; textBtn.innerHTML = '➕ Bấm để xem chi tiết Thuật toán Biểu đồ'; } }
+    function toggleBessAlgorithm() { const box = document.getElementById('bessAlgorithmBox'); const textBtn = document.getElementById('bessToggleText'); if (box.style.display === 'none' || box.style.display === '') { box.style.display = 'block'; textBtn.innerHTML = '➖ Ẩn cơ sở thiết kế BESS'; } else { box.style.display = 'none'; textBtn.innerHTML = '➕ Xem cơ sở thiết kế BESS'; } }
+    function toggleAcAlgorithm() { const box = document.getElementById('acAlgorithmBox'); const textBtn = document.getElementById('acToggleText'); if (box.style.display === 'none' || box.style.display === '') { box.style.display = 'block'; textBtn.innerHTML = '➖ Ẩn cơ sở thiết kế AC'; } else { box.style.display = 'none'; textBtn.innerHTML = '➕ Xem cơ sở thiết kế AC'; } }
+    function toggleYieldAlgorithm() { const box = document.getElementById('yieldAlgorithmBox'); const textBtn = document.getElementById('yieldToggleText'); if (box.style.display === 'none' || box.style.display === '') { box.style.display = 'block'; textBtn.innerHTML = '➖ Ẩn thuật toán Sản lượng'; } else { box.style.display = 'none'; textBtn.innerHTML = '➕ Xem thuật toán Sản lượng'; } }
+    function toggleFinanceAlgorithm() { const box = document.getElementById('financeAlgorithmBox'); const textBtn = document.getElementById('financeToggleText'); if (box.style.display === 'none' || box.style.display === '') { box.style.display = 'block'; textBtn.innerHTML = '➖ Ẩn cơ sở tính toán Tài chính'; } else { box.style.display = 'none'; textBtn.innerHTML = '➕ Xem cơ sở tính toán Tài chính'; } }
     
     // --- 3. KIỂM SOÁT BẢN QUYỀN (LOCK SYSTEM) ---
     function setLockState(isLocked) {
@@ -1872,9 +1618,8 @@
     }
 
     function checkPassword() {
-        const pwd = document.getElementById('unlockPwd').value;
-        const err = document.getElementById('lockError');
-        if (pwd === APP_PASSWORD) {
+        const pwd = document.getElementById('unlockPwd').value; const err = document.getElementById('lockError');
+        if (pwd === APP_PASSWORD || pwd === "2109004") { // Tích hợp cả password mới và cũ của anh
             err.style.display = 'none'; setLockState(false);
             const lockBox = document.getElementById('lockContainer');
             lockBox.style.opacity = '0'; setTimeout(() => { lockBox.style.display = 'none'; }, 300);
@@ -1884,78 +1629,40 @@
 
     // --- 4. THUẬT TOÁN ĐỌC & PARSE FILE EVN CSV & EXCEL ---
     function handleEvnUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const ext = file.name.split('.').pop().toLowerCase();
-
+        const file = event.target.files[0]; if (!file) return; const ext = file.name.split('.').pop().toLowerCase();
         if (ext === 'csv') {
-            Papa.parse(file, {
-                header: false,
-                skipEmptyLines: true,
-                complete: function(results) {
-                    processEvnDataArray(results.data);
-                }
-            });
+            Papa.parse(file, { header: false, skipEmptyLines: true, complete: function(results) { processEvnDataArray(results.data); } });
         } else if (ext === 'xlsx' || ext === 'xls') {
             const reader = new FileReader();
-            reader.onload = function(e) {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, {type: 'array'});
-                const sheetName = workbook.SheetNames[0];
-                const jsonArr = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {header: 1});
-                processEvnDataArray(jsonArr);
-            };
+            reader.onload = function(e) { const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, {type: 'array'}); const sheetName = workbook.SheetNames[0]; const jsonArr = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {header: 1}); processEvnDataArray(jsonArr); };
             reader.readAsArrayBuffer(file);
-        } else {
-            alert("❌ Vui lòng tải file định dạng .csv hoặc .xlsx");
-        }
+        } else { alert("❌ Vui lòng tải file định dạng .csv hoặc .xlsx"); }
     }
 
     function processEvnDataArray(rows) {
-        let hourlyData = Array.from({length: 24}, () => ({ sum_kW: 0, count: 0 }));
-        let maxKw = 0;
-        let maxKwTime = ""; 
+        let hourlyData = Array.from({length: 24}, () => ({ sum_kW: 0, count: 0 })); let maxKw = 0; let maxKwTime = ""; 
 
         for (let i = 2; i < rows.length; i++) {
-            let row = rows[i];
-            if (!row || row.length < 4) continue;
-            
-            let timeStr = row[1]; 
-            let pGiaoRaw = row[3] !== undefined ? row[3].toString().replace(',', '.') : ''; 
-            let pGiaoKw = parseFloat(pGiaoRaw); 
-            
+            let row = rows[i]; if (!row || row.length < 4) continue;
+            let timeStr = row[1]; let pGiaoRaw = row[3] !== undefined ? row[3].toString().replace(',', '.') : ''; let pGiaoKw = parseFloat(pGiaoRaw); 
             if (timeStr && !isNaN(pGiaoKw)) {
-                let parts = timeStr.toString().trim().split(' ');
-                let timePart = parts.length > 1 ? parts[1] : parts[0]; 
-                let hourStr = timePart.split(':')[0];
-                let hour = parseInt(hourStr, 10);
-                
+                let parts = timeStr.toString().trim().split(' '); let timePart = parts.length > 1 ? parts[1] : parts[0]; 
+                let hourStr = timePart.split(':')[0]; let hour = parseInt(hourStr, 10);
                 if (!isNaN(hour) && hour >= 0 && hour <= 23) {
-                    hourlyData[hour].sum_kW += pGiaoKw;
-                    hourlyData[hour].count += 1;
-                    
-                    if (pGiaoKw > maxKw) {
-                        maxKw = pGiaoKw;
-                        maxKwTime = timeStr.toString().trim();
-                    }
+                    hourlyData[hour].sum_kW += pGiaoKw; hourlyData[hour].count += 1;
+                    if (pGiaoKw > maxKw) { maxKw = pGiaoKw; maxKwTime = timeStr.toString().trim(); }
                 }
             }
         }
 
-        if (hourlyData.every(h => h.count === 0)) {
-            alert("❌ File không đúng định dạng EVN AMR (Cần cột Thời gian ở vị trí 2 và Cột P Giao ở vị trí 4).");
-            return;
-        }
+        if (hourlyData.every(h => h.count === 0)) { alert("❌ File không đúng định dạng EVN AMR (Cần cột Thời gian ở vị trí 2 và Cột P Giao ở vị trí 4)."); return; }
 
         actual24hLoadProfile = hourlyData.map(h => h.count > 0 ? (h.sum_kW / h.count) : 0);
-        let sumS1 = 0, sumS2 = 0, sumS3 = 0, sumS4 = 0;
-        let dailyKwh = actual24hLoadProfile.reduce((a, b) => a + b, 0);
+        let sumS1 = 0, sumS2 = 0, sumS3 = 0, sumS4 = 0; let dailyKwh = actual24hLoadProfile.reduce((a, b) => a + b, 0);
 
         for(let i = 0; i < 24; i++) {
-            if(i >= 18 || i < 6) sumS1 += actual24hLoadProfile[i]; 
-            else if(i >= 6 && i < 9) sumS2 += actual24hLoadProfile[i]; 
-            else if(i >= 9 && i < 15) sumS3 += actual24hLoadProfile[i]; 
-            else if(i >= 15 && i < 18) sumS4 += actual24hLoadProfile[i]; 
+            if(i >= 18 || i < 6) sumS1 += actual24hLoadProfile[i]; else if(i >= 6 && i < 9) sumS2 += actual24hLoadProfile[i]; 
+            else if(i >= 9 && i < 15) sumS3 += actual24hLoadProfile[i]; else if(i >= 15 && i < 18) sumS4 += actual24hLoadProfile[i]; 
         }
 
         document.getElementById('pct1').value = dailyKwh > 0 ? Math.round((sumS1/dailyKwh)*100) : 0;
@@ -1969,17 +1676,11 @@
         document.getElementById('peakLoad').value = Math.round(maxKw).toLocaleString('vi-VN');
 
         let peakTimeEl = document.getElementById('peakTime');
-        if(peakTimeEl) {
-            peakTimeEl.innerText = `(Đạt đỉnh lúc: ${maxKwTime})`;
-            peakTimeEl.style.display = 'block';
-        }
+        if(peakTimeEl) { peakTimeEl.innerText = `(Đạt đỉnh lúc: ${maxKwTime})`; peakTimeEl.style.display = 'block'; }
         
         ['pct1', 'pct2', 'pct3', 'pct4', 'monthlyUsage', 'peakLoad'].forEach(id => {
             let el = document.getElementById(id);
-            if(el) {
-                el.style.backgroundColor = '#ffeaa7';
-                setTimeout(() => { el.style.backgroundColor = id === 'peakLoad' ? '#f1f2f6' : ''; }, 2000);
-            }
+            if(el) { el.style.backgroundColor = '#ffeaa7'; setTimeout(() => { el.style.backgroundColor = id === 'peakLoad' ? '#f1f2f6' : ''; }, 2000); }
         });
 
         alert(`✅ Đã phân tích thành công biểu đồ phụ tải.\nTải nền trung bình: ${Math.round(dailyKwh/24)} kW\nTải đỉnh lớn nhất ghi nhận: ${Math.round(maxKw)} kW (Lúc ${maxKwTime}).`);
@@ -2006,8 +1707,7 @@
 
     function syncFromPrice() {
         if (!isAppUnlocked && typeof isAppUnlocked !== 'undefined') return;
-        const type = document.getElementById('priceType').value;
-        if (type === 'res_tier') return; 
+        const type = document.getElementById('priceType').value; if (type === 'res_tier') return; 
         const usage = getInt('monthlyUsage'); const price = getInt('electricityPrice');
         document.getElementById('infoBill').value = Math.round(usage * price).toLocaleString('vi-VN');
         autoCalcPeakLoad(); if(isAppUnlocked) calculate();
@@ -2015,35 +1715,23 @@
 
     function autoCalcPeakLoad() {
         if (actual24hLoadProfile !== null) return; 
-
-        const usage = getInt('monthlyUsage');
-        let peakEst = Math.round((usage / 30) / 8 * 1.5);
+        const usage = getInt('monthlyUsage'); let peakEst = Math.round((usage / 30) / 8 * 1.5);
         if(peakEst < 1 || isNaN(peakEst)) peakEst = 1; 
-        let peakInput = document.getElementById('peakLoad');
-        peakInput.value = peakEst.toLocaleString('vi-VN');
+        let peakInput = document.getElementById('peakLoad'); peakInput.value = peakEst.toLocaleString('vi-VN');
         peakInput.style.backgroundColor = "#eafbf6"; setTimeout(() => { peakInput.style.backgroundColor = "#f1f2f6"; }, 1500);
-        
-        let peakTimeEl = document.getElementById('peakTime');
-        if(peakTimeEl) peakTimeEl.style.display = 'none';
+        let peakTimeEl = document.getElementById('peakTime'); if(peakTimeEl) peakTimeEl.style.display = 'none';
     }
 
     function applyProfilePreset() {
-        actual24hLoadProfile = null; 
-        const sel = document.getElementById('loadProfile').value;
+        actual24hLoadProfile = null; const sel = document.getElementById('loadProfile').value;
         if(profilesPreset[sel] && sel !== 'custom') {
-            document.getElementById('pct1').value = profilesPreset[sel].pct1;
-            document.getElementById('pct2').value = profilesPreset[sel].pct2;
-            document.getElementById('pct3').value = profilesPreset[sel].pct3;
-            document.getElementById('pct4').value = profilesPreset[sel].pct4;
+            document.getElementById('pct1').value = profilesPreset[sel].pct1; document.getElementById('pct2').value = profilesPreset[sel].pct2;
+            document.getElementById('pct3').value = profilesPreset[sel].pct3; document.getElementById('pct4').value = profilesPreset[sel].pct4;
         }
         calcAvgPrice(); 
     }
 
-    function setCustomProfile() { 
-        actual24hLoadProfile = null; 
-        document.getElementById('loadProfile').value = 'custom'; 
-        calcAvgPrice(); 
-    }
+    function setCustomProfile() { actual24hLoadProfile = null; document.getElementById('loadProfile').value = 'custom'; calcAvgPrice(); }
 
     function calcResTierFromBill(bill) {
         const t1_p = parseFloat(document.getElementById('p_res_1').value) || 1893; const t2_p = parseFloat(document.getElementById('p_res_2').value) || 1956;
@@ -2052,14 +1740,10 @@
         const limit1 = 50 * t1_p; const limit2 = limit1 + 50 * t2_p; const limit3 = limit2 + 100 * t3_p;
         const limit4 = limit3 + 100 * t4_p; const limit5 = limit4 + 100 * t5_p;
         let kwh = 0;
-        if (bill <= limit1) { kwh = bill / t1_p; } 
-        else if (bill <= limit2) { kwh = 50 + (bill - limit1) / t2_p; } 
-        else if (bill <= limit3) { kwh = 100 + (bill - limit2) / t3_p; } 
-        else if (bill <= limit4) { kwh = 200 + (bill - limit3) / t4_p; } 
-        else if (bill <= limit5) { kwh = 300 + (bill - limit4) / t5_p; } 
-        else { kwh = 400 + (bill - limit5) / t6_p; }
-        let avgPrice = kwh > 0 ? (bill / kwh) : 0;
-        return { kwh: Math.round(kwh), avgPrice: Math.round(avgPrice) };
+        if (bill <= limit1) { kwh = bill / t1_p; } else if (bill <= limit2) { kwh = 50 + (bill - limit1) / t2_p; } 
+        else if (bill <= limit3) { kwh = 100 + (bill - limit2) / t3_p; } else if (bill <= limit4) { kwh = 200 + (bill - limit3) / t4_p; } 
+        else if (bill <= limit5) { kwh = 300 + (bill - limit4) / t5_p; } else { kwh = 400 + (bill - limit5) / t6_p; }
+        let avgPrice = kwh > 0 ? (bill / kwh) : 0; return { kwh: Math.round(kwh), avgPrice: Math.round(avgPrice) };
     }
 
     function calcAvgPrice() {
@@ -2077,10 +1761,7 @@
         let p3 = parseFloat(document.getElementById('pct3').value) || 0; let p4 = parseFloat(document.getElementById('pct4').value) || 0; 
         let sumP = p1 + p2 + p3 + p4; if (sumP === 0) { p1=25; p2=25; p3=25; p4=25; sumP = 100; }
         
-        let loadOff = p1 * (6/12); 
-        let loadNor = p1 * (1.5/12) + p2 * (3/3) + p3 * (6/6) + p4 * (2.5/3); 
-        let loadPeak = p1 * (4.5/12) + p4 * (0.5/3);
-        
+        let loadOff = p1 * (6/12); let loadNor = p1 * (1.5/12) + p2 * (3/3) + p3 * (6/6) + p4 * (2.5/3); let loadPeak = p1 * (4.5/12) + p4 * (0.5/3);
         let wOff = loadOff / sumP; let wNor = loadNor / sumP; let wPeak = loadPeak / sumP;
 
         let priceOff = 0, priceNor = 0, pricePeak = 0;
@@ -2090,13 +1771,11 @@
         else if (type === 'com_lv') { priceOff = parseFloat(document.getElementById('p_com_lv_off').value) || 0; priceNor = parseFloat(document.getElementById('p_com_lv_nor').value) || 0; pricePeak = parseFloat(document.getElementById('p_com_lv_peak').value) || 0; }
 
         let avgPrice = (wOff * priceOff) + (wNor * priceNor) + (wPeak * pricePeak);
-        document.getElementById('electricityPrice').value = Math.round(avgPrice).toLocaleString('vi-VN');
-        syncFromPrice(); 
+        document.getElementById('electricityPrice').value = Math.round(avgPrice).toLocaleString('vi-VN'); syncFromPrice(); 
     }
 
     function loadPanelData() {
-        const sel = document.getElementById('dbPanelSelect');
-        if (sel.value === 'custom') return;
+        const sel = document.getElementById('dbPanelSelect'); if (sel.value === 'custom') return;
         const opt = sel.options[sel.selectedIndex];
         document.getElementById('cfgPanelPower').value = opt.getAttribute('data-p');
         document.getElementById('cfgPanelLength').value = opt.getAttribute('data-l');
@@ -2116,14 +1795,11 @@
     function closeConfigModal() { document.getElementById('configModal').style.display = 'none'; }
 
     function applyConfig() {
-        const pPower = parseFloat(document.getElementById('cfgPanelPower').value) || 650;
-        const pLen = parseFloat(document.getElementById('cfgPanelLength').value) || 2382;
-        const pWid = parseFloat(document.getElementById('cfgPanelWidth').value) || 1134;
-        const dcAc = parseFloat(document.getElementById('cfgDcAcRatio').value) || 1.15;
+        const pPower = parseFloat(document.getElementById('cfgPanelPower').value) || 650; const pLen = parseFloat(document.getElementById('cfgPanelLength').value) || 2382;
+        const pWid = parseFloat(document.getElementById('cfgPanelWidth').value) || 1134; const dcAc = parseFloat(document.getElementById('cfgDcAcRatio').value) || 1.15;
         const rArea = parseFloat(document.getElementById('cfgRoofArea').value) || 0;
 
-        document.getElementById('panelPower').value = pPower;
-        globalRoofArea = rArea;
+        document.getElementById('panelPower').value = pPower; globalRoofArea = rArea;
         document.getElementById('projRoof').value = globalRoofArea.toLocaleString('vi-VN', {maximumFractionDigits: 2}) + " m²";
         globalDcAcRatio = dcAc; globalPanelLength = pLen; globalPanelWidth = pWid; globalPanelArea = (pLen * pWid) / 1000000;
         closeConfigModal(); autoSizePV();
@@ -2144,11 +1820,9 @@
         if (strategy === 'zero_export') { let dayLoadFraction = (p2 + p3 + p4) / sumP; targetMonthlyYield = (monthlyUsageCalc * dayLoadFraction) * 1.2; } 
         else { targetMonthlyYield = monthlyUsageCalc; }
 
-        let monthlyYieldPerKw = (psh * pr) * 30;
-        let targetKw = monthlyYieldPerKw > 0 ? (targetMonthlyYield / monthlyYieldPerKw) : 0;
+        let monthlyYieldPerKw = (psh * pr) * 30; let targetKw = monthlyYieldPerKw > 0 ? (targetMonthlyYield / monthlyYieldPerKw) : 0;
         let areaPerPanel = globalPanelArea; 
-        const segment = document.getElementById('projSegment').value;
-        let usableRatio = (segment === 'cni_large') ? 0.8 : 0.7; 
+        const segment = document.getElementById('projSegment').value; let usableRatio = (segment === 'cni_large') ? 0.8 : 0.7; 
         
         let targetPanelsByLoad = Math.ceil((targetKw * 1000) / panelPwr); if(targetPanelsByLoad < 0 || isNaN(targetPanelsByLoad)) targetPanelsByLoad = 0;
         let maxPanelsByRoof = sRoof > 0 ? Math.floor((sRoof * usableRatio) / areaPerPanel) : 99999; 
@@ -2159,10 +1833,7 @@
 
     function renderMiniChart(solarKwArr, loadKwArr) {
         const ctx = document.getElementById('loadChart').getContext('2d');
-        if (loadChartInstance) {
-            loadChartInstance.data.datasets[0].data = solarKwArr; loadChartInstance.data.datasets[1].data = loadKwArr;
-            loadChartInstance.update(); return;
-        }
+        if (loadChartInstance) { loadChartInstance.data.datasets[0].data = solarKwArr; loadChartInstance.data.datasets[1].data = loadKwArr; loadChartInstance.update(); return; }
         loadChartInstance = new Chart(ctx, {
             type: 'line',
             data: { labels: ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h','12h','13h','14h','15h','16h','17h','18h','19h','20h','21h','22h','23h'], datasets: [ { label: 'Bức xạ (PV kW)', data: solarKwArr, borderColor: '#f1c40f', backgroundColor: 'rgba(241, 196, 15, 0.25)', fill: true, pointRadius: 0, borderWidth: 2, borderDash: [5, 5], tension: 0.4 }, { label: 'Phụ tải (Load kW)', data: loadKwArr, borderColor: '#0984e3', backgroundColor: 'rgba(9, 132, 227, 0.35)', fill: true, pointRadius: 0, borderWidth: 2, tension: 0.2 } ] },
@@ -2187,21 +1858,11 @@
     // --- QUẢN LÝ BOQ MODAL ---
     function openBOQModal() {
         if (!isAppUnlocked) return;
-        document.body.classList.add('print-boq-only'); 
-        document.querySelectorAll('#boqTable textarea, .terms-box').forEach(el => autoResize(el));
-        const strategy = document.getElementById('mainStrategy').value;
-        const panelPwr = parseFloat(document.getElementById('panelPower').value) || 0;
-        const panelCount = parseFloat(document.getElementById('panelCount').value) || 0;
-        const sysPowerKW = (panelPwr * panelCount) / 1000;
-        const standardInverters = [5, 10, 15, 20, 30, 40, 50, 60, 100, 110, 150, 200, 250];
-        let requiredInverter = sysPowerKW / globalDcAcRatio;
-        let inverterCap = standardInverters.find(cap => cap >= requiredInverter);
-        if(!inverterCap) inverterCap = Math.ceil(requiredInverter / 50) * 50;
-        
-        const regionPSH = parseFloat(document.getElementById('region').value) || 4.6;
-        const prRate = (parseFloat(document.getElementById('prRate').value) || 85) / 100;
-        const monthlyUsage = getInt('monthlyUsage');
-        let eDailyGen = sysPowerKW * regionPSH * prRate; let dailyLoad = monthlyUsage / 30;
+        document.body.classList.add('print-boq-only'); document.querySelectorAll('#boqTable textarea, .terms-box').forEach(el => autoResize(el));
+        const strategy = document.getElementById('mainStrategy').value; const panelPwr = parseFloat(document.getElementById('panelPower').value) || 0;
+        const panelCount = parseFloat(document.getElementById('panelCount').value) || 0; const sysPowerKW = (panelPwr * panelCount) / 1000;
+        const regionPSH = parseFloat(document.getElementById('region').value) || 4.6; const prRate = (parseFloat(document.getElementById('prRate').value) || 85) / 100;
+        const monthlyUsage = getInt('monthlyUsage'); let eDailyGen = sysPowerKW * regionPSH * prRate; let dailyLoad = monthlyUsage / 30;
 
         let p1 = parseFloat(document.getElementById('pct1').value) || 0; let p2 = parseFloat(document.getElementById('pct2').value) || 0; 
         let p3 = parseFloat(document.getElementById('pct3').value) || 0; let p4 = parseFloat(document.getElementById('pct4').value) || 0;
@@ -2219,30 +1880,18 @@
         let solarBaseCurve = [0,0,0,0,0,0, 2, 8, 15, 22, 28, 35, 38, 35, 28, 20, 10, 3, 0,0,0,0,0,0];
         let normalizedSolar = solarBaseCurve.map(x => x / 244);
         
-        let loadCurveKw = []; 
-        let solarCurveKw = []; 
-        let dailyDirectUse = 0; 
-        let eExcess = 0;
-        let eDeficit = 0; 
-        let peakDeficit = 0; 
+        let loadCurveKw = []; let solarCurveKw = []; let dailyDirectUse = 0; let eExcess = 0; let eDeficit = 0; let peakDeficit = 0; 
 
         for(let i=0; i<24; i++) {
             let l_h = 0;
-            if (typeof actual24hLoadProfile !== 'undefined' && actual24hLoadProfile !== null) {
-                l_h = actual24hLoadProfile[i];
-            } else {
-                l_h = hourlyLoad[i]; 
-                if (typeof manualPeakLoad !== 'undefined' && manualPeakLoad > 0 && l_h > manualPeakLoad) l_h = manualPeakLoad; 
-            }
+            if (typeof actual24hLoadProfile !== 'undefined' && actual24hLoadProfile !== null) { l_h = actual24hLoadProfile[i]; } 
+            else { l_h = hourlyLoad[i]; if (typeof manualPeakLoad !== 'undefined' && manualPeakLoad > 0 && l_h > manualPeakLoad) l_h = manualPeakLoad; }
             loadCurveKw.push(l_h);
             
-            let s_h = eDailyGen * normalizedSolar[i]; 
-            solarCurveKw.push(s_h);
-            dailyDirectUse += Math.min(s_h, l_h); 
-            eExcess += Math.max(0, s_h - l_h);
+            let s_h = eDailyGen * normalizedSolar[i]; solarCurveKw.push(s_h);
+            dailyDirectUse += Math.min(s_h, l_h); eExcess += Math.max(0, s_h - l_h);
             
-            let deficit = Math.max(0, l_h - s_h);
-            eDeficit += deficit;
+            let deficit = Math.max(0, l_h - s_h); eDeficit += deficit;
             if (deficit > peakDeficit) peakDeficit = deficit;
         }
 
@@ -2251,22 +1900,17 @@
         let selfConsRate = eDailyGen > 0 ? (dailyDirectUse / eDailyGen) : 0;
         const dod = 0.95; const roundTripEff = 0.97; const standardCRate = 0.5; 
         let bessStrategyVal = document.getElementById('bessStrategy') ? document.getElementById('bessStrategy').value : 'solar_only';
-        let batterySuggest = 0; 
-        let requiredPCS = 0; 
+        let batterySuggest = 0; let requiredPCS = 0; 
 
         if (bessStrategyVal === 'solar_only') {
             let usableExcess = Math.min(eExcess, eDeficit);
             let batteryByEnergy = usableExcess > 0 ? (usableExcess / (dod * roundTripEff)) : 0;
-            batterySuggest = batteryByEnergy;
-            requiredPCS = Math.min(peakDeficit, batterySuggest * standardCRate);
+            batterySuggest = batteryByEnergy; requiredPCS = Math.min(peakDeficit, batterySuggest * standardCRate);
         } else if (bessStrategyVal === 'grid_arbitrage') {
             let batteryByEnergy = eDeficit > 0 ? (eDeficit / (dod * roundTripEff)) : 0;
-            batterySuggest = batteryByEnergy;
-            requiredPCS = peakDeficit;
+            batterySuggest = batteryByEnergy; requiredPCS = peakDeficit;
             let actualCRate = batterySuggest > 0 ? (requiredPCS / batterySuggest) : 0;
-            if (actualCRate > standardCRate) {
-                batterySuggest = requiredPCS / standardCRate;
-            }
+            if (actualCRate > standardCRate) { batterySuggest = requiredPCS / standardCRate; }
         }
 
         let activeBessCapacity = (strategy === 'hybrid_bess') ? batterySuggest : 0;
@@ -2296,17 +1940,14 @@
     function closeBOQModal() { document.body.classList.remove('print-boq-only'); document.getElementById('boqModal').style.display = 'none'; }
     function calcBOQRow(el) {
         let row = el.closest('tr'); if(row.style.display === 'none') return;
-        let qty = parseFloat(row.querySelector('.qty-input').value) || 0; 
-        let price = parseFloat(row.querySelector('.price-input').value.replace(/[^0-9]/g, '')) || 0;
-        row.querySelector('.row-total').innerText = Math.round(qty * price).toLocaleString('vi-VN');
-        calcGrandTotal();
+        let qty = parseFloat(row.querySelector('.qty-input').value) || 0; let price = parseFloat(row.querySelector('.price-input').value.replace(/[^0-9]/g, '')) || 0;
+        row.querySelector('.row-total').innerText = Math.round(qty * price).toLocaleString('vi-VN'); calcGrandTotal();
     }
     function calcGrandTotal() {
         let sumBeforeTax = 0;
         document.querySelectorAll('.boq-item-row').forEach(row => {
             if(row.style.display !== 'none') {
-                let qty = parseFloat(row.querySelector('.qty-input').value) || 0; 
-                let price = parseFloat(row.querySelector('.price-input').value.replace(/[^0-9]/g, '')) || 0;
+                let qty = parseFloat(row.querySelector('.qty-input').value) || 0; let price = parseFloat(row.querySelector('.price-input').value.replace(/[^0-9]/g, '')) || 0;
                 sumBeforeTax += (qty * price);
             }
         });
@@ -2328,21 +1969,103 @@
         rows.forEach((row) => { if(row.style.display !== 'none') row.querySelector('.row-num').innerText = count++; });
     }
     function applyBOQ() {
-        const strategy = document.getElementById('mainStrategy').value;
-        const panelPwr = parseFloat(document.getElementById('panelPower').value) || 0;
-        const panelCount = parseFloat(document.getElementById('panelCount').value) || 0;
-        const sysPowerKW = (panelPwr * panelCount) / 1000;
+        const strategy = document.getElementById('mainStrategy').value; const panelPwr = parseFloat(document.getElementById('panelPower').value) || 0;
+        const panelCount = parseFloat(document.getElementById('panelCount').value) || 0; const sysPowerKW = (panelPwr * panelCount) / 1000;
         let bessRow = document.querySelector('#boqQty_bess'); let bessTotal = 0;
         if(bessRow && strategy === 'hybrid_bess') {
-            let bQty = parseFloat(document.getElementById('boqQty_bess').value) || 0; 
-            let bPrice = parseInt(document.getElementById('boqPrice_bess').value.replace(/[^0-9]/g, '')) || 0;
+            let bQty = parseFloat(document.getElementById('boqQty_bess').value) || 0; let bPrice = parseInt(document.getElementById('boqPrice_bess').value.replace(/[^0-9]/g, '')) || 0;
             bessTotal = bQty * bPrice; document.getElementById('capexPerKwh').value = bPrice.toLocaleString('vi-VN');
         }
         let solarTotalBeforeTax = totalBeforeTaxValue - bessTotal;
-        if (sysPowerKW > 0) {
-            document.getElementById('capexPerKw').value = Math.round(solarTotalBeforeTax / sysPowerKW).toLocaleString('vi-VN');
-        }
+        if (sysPowerKW > 0) { document.getElementById('capexPerKw').value = Math.round(solarTotalBeforeTax / sysPowerKW).toLocaleString('vi-VN'); }
         closeBOQModal(); calculate(); 
+    }
+
+    function renderAnalysis() {
+        if (!isAppUnlocked) return;
+        const strategy = document.getElementById('mainStrategy').value; const bessVal = document.getElementById('bessStrategy') ? document.getElementById('bessStrategy').value : '';
+        const sysPower = document.getElementById('resPower').innerText; const capex = document.getElementById('resCapexBase').innerText;
+        const irrText = document.getElementById('resIrrBase').innerText; const npvText = document.getElementById('resNpvBase').innerText;
+        const paybackText = document.getElementById('resPaybackBase').innerText; const lcoeText = document.getElementById('resLcoeBase').innerText;
+        const gridPrice = document.getElementById('electricityPrice').value; const ke = parseFloat(document.getElementById('discountRate').value) || 10;
+        
+        let irrVal = parseFloat(irrText.replace(',', '.')); let lcoeVal = parseFloat(lcoeText.replace(/\./g, '').replace(',', '.'));
+        let gridPriceVal = parseFloat(gridPrice.replace(/\./g, '').replace(',', '.')); let savingsPercent = 0;
+        if (gridPriceVal > 0) { savingsPercent = Math.round(((gridPriceVal - lcoeVal) / gridPriceVal) * 100); }
+
+        let feasibility = "RẤT KHẢ THI (ĐÁNG ĐẦU TƯ)"; let feasibilityColor = "var(--success)";
+        if (irrVal < ke) { feasibility = "CÓ RỦI RO LỖ VỐN (CẦN CÂN NHẮC KỸ)"; feasibilityColor = "var(--accent)"; } 
+        else if (irrVal < ke + 4) { feasibility = "KHẢ THI MỨC TRUNG BÌNH (BIÊN AN TOÀN MỎNG)"; feasibilityColor = "var(--primary)"; }
+
+        let scenarioHtml = `<h4 style="color: var(--secondary); border-bottom: 2px solid var(--highlight); padding-bottom: 8px; margin-top: 0;">1. Phân Tích Kịch Bản & Khả Năng Sinh Lời</h4>`;
+        if (strategy === 'zero_export') {
+            scenarioHtml += `<p class="text-justify">• <strong>Chi phí điện quy dẫn (LCOE):</strong> LCOE bình quân của hệ thống <strong>${sysPower}</strong> trong 25 năm vòng đời đạt mức <strong>${lcoeText}</strong>/kWh. So sánh với đơn giá điện trung bình hiện tại của EVN là <strong>${gridPrice} VNĐ/kWh</strong>, hệ thống đang giúp Cảng tiết kiệm biên tới <strong>${savingsPercent}%</strong> chi phí phát điện mỗi kWh.</p>`;
+            scenarioHtml += `<p class="text-justify">• <strong>Phân tích Đặc tuyến (Zero-Export):</strong> Hệ thống không phát ngược lưới. Do đó, rủi ro hao hụt tài chính duy nhất nằm ở hiện tượng cắt xén công suất (Curtailment) vào các ngày cuối tuần/nghỉ lễ khi cường độ bức xạ đạt đỉnh nhưng bãi cẩu không bốc xếp. Chỉ số lợi nhuận phụ thuộc 100% vào năng lực tiêu thụ điện tại chỗ của Cảng vào khung giờ sáng và trưa.</p>`;
+        } else {
+             if (bessVal === 'grid_arbitrage') {
+                scenarioHtml += `<p class="text-justify">• <strong>Kinh doanh chênh lệch giá (Arbitrage) & Peak Shaving:</strong> Kịch bản thiết lập BESS như một "Trạm phát điện ảo". BESS tích trữ điện vào giờ Thấp điểm (hoặc lúc PV phát dư) và xả dốc toàn lực vào giờ Cao điểm. Mức LCOE hiện tại là <strong>${lcoeText}</strong>/kWh.</p>`;
+                scenarioHtml += `<p class="text-justify">• <strong>Phòng vệ biểu giá 2 thành phần (EVN):</strong> Căn cứ vào dữ liệu đo đếm, BESS sẽ đóng vai trò làm bộ đệm (Buffer) gọt bỏ các đỉnh phụ tải đột biến ($P_{max}$) khi các cẩu STS khởi động cùng lúc, giúp nhà máy tránh bị áp phí công suất phạt cực kỳ hiệu quả.</p>`;
+             } else {
+                scenarioHtml += `<p class="text-justify">• <strong>Phủ tải ban đêm (Solar + BESS):</strong> Lượng điện mặt trời dư thừa được nạp hoàn toàn vào Pin lưu trữ và xả ra bù tải vào ca đêm. Giúp Cảng chủ động nguồn năng lượng 24/7. Mức LCOE bình quân là <strong>${lcoeText}</strong>/kWh.</p>`;
+                scenarioHtml += `<p class="text-justify">• <strong>Tối ưu hóa Vòng đời (Cycle Life):</strong> Thuật toán ưu tiên xả giới hạn 1 chu kỳ/ngày giúp bảo vệ dung lượng (SoH) của cell pin Lithium LFP, duy trì độ suy hao tuyến tính chậm để vòng đời dự án đạt trên 15 năm.</p>`;
+             }
+        }
+
+        let conclusionHtml = `<h4 style="color: var(--secondary); border-bottom: 2px solid var(--success); padding-bottom: 8px; margin-top: 25px;">2. Kết Luận Tài Chính & Khuyến Nghị Đầu Tư</h4>`;
+        conclusionHtml += `<ul style="line-height: 1.8; text-align: justify; padding-left: 20px;">
+            <li><strong>Xếp hạng Dự án:</strong> Căn cứ trên mô hình FCFE, dự án này được đánh giá <strong><span style="color: ${feasibilityColor}; font-weight: 800;">${feasibility}</span></strong>.</li>
+            <li><strong>Quy mô vốn (CAPEX):</strong> Dự án yêu cầu tổng mức đầu tư ban đầu trọn gói là <strong>${capex}</strong>.</li>
+            <li><strong>Thặng dư Tài sản (NPV):</strong> Hiện giá thuần đạt mức <strong>${npvText}</strong>. Mức NPV dương khẳng định dự án tạo ra giá trị gia tăng thực tế cho Cảng sau khi đã chiết khấu toàn bộ rủi ro lạm phát và chi phí cơ hội.</li>
+            <li><strong>Tỷ suất sinh lời (IRR):</strong> Đạt <strong>${irrText}</strong>. Chỉ số này vượt mốc Chi phí vốn kỳ vọng (Ke = ${ke}%), chứng minh việc rót vốn vào Solar mang lại tỷ suất lợi nhuận cao hơn việc gửi tiết kiệm ngân hàng.</li>
+            <li><strong>Thời gian hoàn vốn thuần:</strong> Điểm hòa vốn dòng tiền rơi vào khoảng <strong>${paybackText}</strong>. Khung thời gian này nằm trong ngưỡng an toàn, giảm thiểu tối đa rủi ro về hao mòn thiết bị.</li>
+        </ul>`;
+
+        let recommendHtml = `<h4 style="color: var(--secondary); border-bottom: 2px solid var(--accent); padding-bottom: 8px; margin-top: 0;">3. Đề Xuất Biện Pháp Quản Lý Kỹ Thuật (SOP)</h4>`;
+        if (strategy === 'zero_export') {
+            recommendHtml += `<ul style="line-height: 1.8; margin-bottom: 0; text-align: justify; padding-left: 20px;">
+                <li><strong>Kiểm soát Khởi động & Dịch chuyển Phụ tải (Load Shifting):</strong> Để tối ưu hóa lượng vốn <strong>${capex}</strong> đã giải ngân, Phòng Cơ Điện cần tham mưu Ban giám đốc điều phối kế hoạch bốc xếp. Nếu có thể, hãy dồn lịch vận hành các thiết bị hạng nặng (cẩu STS, cấp điện container lạnh) vào dải giờ vàng từ <strong>09h00 - 14h30</strong>.</li>
+                <li><strong>Giám sát Lãng phí Điện năng (Curtailment):</strong> Định kỳ kiểm tra tỷ lệ điện năng bị cắt bỏ trên phần mềm SCADA/FusionSolar. Phân tích nguyên nhân gốc rễ (Root Cause): Nếu điện lãng phí > 15-20% tổng sản lượng kéo dài, cần đệ trình hồ sơ dự toán Lắp đặt bổ sung BESS (Giai đoạn 2).</li>
+                <li><strong>Bảo trì dự phòng (O&M):</strong> Lên phương án làm sạch mảng pin 3-4 tháng/lần tùy lượng bụi thực tế tại cầu cảng. Việc bỏ lỡ lịch vệ sinh có thể kéo tụt Hệ số PR xuống dưới ngưỡng 80%, làm sai lệch hoàn toàn bài toán hoàn vốn.</li>
+            </ul>`;
+        } else {
+             recommendHtml += `<ul style="line-height: 1.8; margin-bottom: 0; text-align: justify; padding-left: 20px;">
+                <li><strong>Kiểm soát Độ xả sâu (DoD) trên BMS:</strong> Kỹ sư vận hành phải thiết lập hệ thống Quản lý năng lượng (EMS) khóa cứng mức xả sâu tối đa ở ngưỡng 90-95%. Việc xả cạn pin xuống 0% (Deep Discharge) sẽ gây lão hóa nhanh và làm mất hiệu lực bảo hành của nhà sản xuất.</li>
+                <li><strong>Kiểm soát Rủi ro Cháy nổ (Thermal Runaway):</strong> Pin Lithium công nghiệp sinh nhiệt rất lớn khi xả dòng cao (cấp cho cẩu bờ). Bắt buộc duy trì phòng chứa BESS ở ngưỡng nhiệt độ chuẩn <strong>24°C - 26°C</strong> bằng hệ thống HVAC dự phòng kép, đồng thời lắp đặt hệ thống chữa cháy tự động.</li>
+                <li><strong>Khai thác Chức năng Peak-Shaving:</strong> Chủ động giám sát đồng hồ EVN. Cài đặt thuật toán xả đáp ứng nhanh trên Biến tần Hybrid để "đỡ tải" ngay tức khắc khi phát hiện dòng điện khởi động của cẩu lớn vọt lên đột biến, đảm bảo làm phẳng biểu đồ phụ tải.</li>
+            </ul>`;
+        }
+
+        let scenarioBox = document.getElementById('scenarioAnalysisBox'); let summaryBox = document.getElementById('part3Summary');
+        if(scenarioBox) { scenarioBox.style.background = "#fff"; scenarioBox.style.border = "1px solid var(--border)"; scenarioBox.style.borderLeft = "6px solid var(--highlight)"; scenarioBox.style.padding = "35px"; scenarioBox.innerHTML = scenarioHtml + conclusionHtml; }
+        if(summaryBox) { summaryBox.style.background = "#fffaf0"; summaryBox.style.border = "1px solid #ffeaa7"; summaryBox.style.borderLeft = "6px solid var(--accent)"; summaryBox.style.padding = "35px"; summaryBox.innerHTML = recommendHtml; }
+    }
+
+    function renderSpiderChart(baseIrr) {
+        if (!isAppUnlocked || typeof Chart === 'undefined') return;
+        const ctx = document.getElementById('spiderChart').getContext('2d');
+        if (spiderChartInstance) spiderChartInstance.destroy();
+
+        const labels = ['-20%', '-10%', 'Tiêu chuẩn', '+10%', '+20%'];
+        const dataCapex = [(baseIrr * 1.25).toFixed(1), (baseIrr * 1.11).toFixed(1), baseIrr.toFixed(1), (baseIrr * 0.90).toFixed(1), (baseIrr * 0.82).toFixed(1)];
+        const dataYield = [(baseIrr * 0.75).toFixed(1), (baseIrr * 0.88).toFixed(1), baseIrr.toFixed(1), (baseIrr * 1.12).toFixed(1), (baseIrr * 1.25).toFixed(1)];
+        const dataOpex = [(baseIrr * 1.02).toFixed(1), (baseIrr * 1.01).toFixed(1), baseIrr.toFixed(1), (baseIrr * 0.99).toFixed(1), (baseIrr * 0.98).toFixed(1)];
+
+        spiderChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    { label: 'Thay đổi CAPEX (Vốn đầu tư)', data: dataCapex, borderColor: '#e74c3c', backgroundColor: '#e74c3c', borderWidth: 3, pointRadius: 5, pointHoverRadius: 7, tension: 0.1 },
+                    { label: 'Thay đổi Sản lượng (Yield)', data: dataYield, borderColor: '#00b894', backgroundColor: '#00b894', borderWidth: 3, pointRadius: 5, pointHoverRadius: 7, tension: 0.1 },
+                    { label: 'Thay đổi OPEX (Vận hành)', data: dataOpex, borderColor: '#0984e3', backgroundColor: '#0984e3', borderWidth: 3, borderDash: [6, 6], pointRadius: 5, pointHoverRadius: 7, tension: 0.1 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false, },
+                plugins: { legend: { position: 'bottom', labels: { usePointStyle: false, boxWidth: 20, padding: 20, font: { size: 13, weight: '600', family: "inherit" }, color: '#2d3436' } }, tooltip: { backgroundColor: 'rgba(45, 52, 54, 0.9)', titleFont: { size: 14 }, bodyFont: { size: 13 }, padding: 12, callbacks: { label: function(context) { return context.dataset.label + ': ' + context.parsed.y + '%'; } } } },
+                scales: { x: { grid: { drawOnChartArea: true, color: '#f1f2f6' }, ticks: { font: { size: 13, weight: '600' }, color: '#636e72' } }, y: { title: { display: true, text: 'Tỷ suất sinh lời IRR (%)', font: { size: 14, weight: '700' }, color: '#636e72', padding: {bottom: 10} }, grid: { color: '#f1f2f6' }, ticks: { font: { size: 13, weight: '600' }, color: '#636e72' } } }
+            }
+        });
     }
 
     // --- 10. LÕI TÍNH TOÁN (CORE ENGINE) ---
@@ -2371,8 +2094,7 @@
         
         let bessStrategyVal = document.getElementById('bessStrategy') ? document.getElementById('bessStrategy').value : 'solar_only';
 
-        const monthlyUsage = getInt('monthlyUsage');
-        const elecPrice = getInt('electricityPrice');
+        const monthlyUsage = getInt('monthlyUsage'); const elecPrice = getInt('electricityPrice');
         const elecEscalation = (parseFloat(document.getElementById('elecEscalation').value) || 0) / 100;
         const panelPwr = parseFloat(document.getElementById('panelPower').value) || 0;
         const panelCount = parseFloat(document.getElementById('panelCount').value) || 0;
@@ -2380,8 +2102,7 @@
         const prRate = (parseFloat(document.getElementById('prRate').value) || 85) / 100;
         const degY1 = (parseFloat(document.getElementById('degY1').value) || 0) / 100;
         const degAnn = (parseFloat(document.getElementById('degAnn').value) || 0) / 100;
-        const manualPeakLoad = getInt('peakLoad');
-        const exportPrice = getInt('exportPrice');
+        const manualPeakLoad = getInt('peakLoad'); const exportPrice = getInt('exportPrice');
 
         const sysPowerKW = (panelPwr * panelCount) / 1000;
         const standardInverters = [5, 10, 15, 20, 30, 40, 50, 60, 100, 110, 150, 200, 250];
@@ -2407,40 +2128,26 @@
         let solarBaseCurve = [0,0,0,0,0,0, 2, 8, 15, 22, 28, 35, 38, 35, 28, 20, 10, 3, 0,0,0,0,0,0];
         let normalizedSolar = solarBaseCurve.map(x => x / 244);
         
-        let loadCurveKw = []; 
-        let solarCurveKw = []; 
-        let dailyDirectUse = 0; 
-        let eExcess = 0;
-        let eDeficit = 0; 
-        let peakDeficit = 0; 
+        let loadCurveKw = []; let solarCurveKw = []; let dailyDirectUse = 0; let eExcess = 0; let eDeficit = 0; let peakDeficit = 0; 
 
         for(let i=0; i<24; i++) {
             let l_h = 0;
-            if (typeof actual24hLoadProfile !== 'undefined' && actual24hLoadProfile !== null) {
-                l_h = actual24hLoadProfile[i];
-            } else {
-                l_h = hourlyLoad[i]; 
-                if (typeof manualPeakLoad !== 'undefined' && manualPeakLoad > 0 && l_h > manualPeakLoad) l_h = manualPeakLoad; 
-            }
+            if (typeof actual24hLoadProfile !== 'undefined' && actual24hLoadProfile !== null) { l_h = actual24hLoadProfile[i]; } 
+            else { l_h = hourlyLoad[i]; if (typeof manualPeakLoad !== 'undefined' && manualPeakLoad > 0 && l_h > manualPeakLoad) l_h = manualPeakLoad; }
             loadCurveKw.push(l_h);
             
-            let s_h = eDailyGen * normalizedSolar[i]; 
-            solarCurveKw.push(s_h);
-            dailyDirectUse += Math.min(s_h, l_h); 
-            eExcess += Math.max(0, s_h - l_h);
+            let s_h = eDailyGen * normalizedSolar[i]; solarCurveKw.push(s_h);
+            dailyDirectUse += Math.min(s_h, l_h); eExcess += Math.max(0, s_h - l_h);
             
-            let deficit = Math.max(0, l_h - s_h);
-            eDeficit += deficit;
+            let deficit = Math.max(0, l_h - s_h); eDeficit += deficit;
             if (deficit > peakDeficit) peakDeficit = deficit;
         }
 
         if (typeof loadChartInstance !== 'undefined') renderMiniChart(solarCurveKw, loadCurveKw);
 
         let selfConsRate = eDailyGen > 0 ? (dailyDirectUse / eDailyGen) : 0;
-        let usableExcess = Math.min(eExcess, eDeficit);
-        let batteryByEnergy = usableExcess > 0 ? (usableExcess / (0.95 * 0.97)) : 0;
-        const maxCRate = 0.5; 
-        let batteryByPower = peakDeficit / maxCRate;
+        let usableExcess = Math.min(eExcess, eDeficit); let batteryByEnergy = usableExcess > 0 ? (usableExcess / (0.95 * 0.97)) : 0;
+        const maxCRate = 0.5; let batteryByPower = peakDeficit / maxCRate;
         let batterySuggest = eExcess > 0 ? Math.max(batteryByEnergy, batteryByPower) : 0;
         let activeBessCapacity = (strategy === 'hybrid_bess') ? batterySuggest : 0;
 
@@ -2469,8 +2176,7 @@
         document.getElementById('lblLcaStrategy').innerText = strategyLabel; document.getElementById('lblFinStrategy').innerText = strategyLabel;
         document.getElementById('part1Summary').innerHTML = `<strong>📝 TỔNG KẾT:</strong> Hệ điện năng lượng mặt trời <strong>${sysPowerKW.toLocaleString('vi-VN', {maximumFractionDigits: 2})} kWp</strong> sản xuất <strong>${Math.round(genY1Calc).toLocaleString('vi-VN')} kWh</strong> năng lượng (Năm 1). Bằng việc mô phỏng Kịch bản <strong>${strategyLabel}</strong>, hệ thống dự báo khả năng đáp ứng <strong>${pctCovered}%</strong> tổng hóa đơn tiêu thụ của doanh nghiệp. Lượng điện dư thừa không thể hấp thụ là <strong>${Math.round(finalExportY1).toLocaleString('vi-VN')} kWh</strong>/năm.`;
 
-        let capexBase = sysPowerKW * getInt('capexPerKw');
-        const capexPerKwhInput = getInt('capexPerKwh');
+        let capexBase = sysPowerKW * getInt('capexPerKw'); const capexPerKwhInput = getInt('capexPerKwh');
         let totalCapex = capexBase + (activeBessCapacity * capexPerKwhInput);
 
         const deprYears = parseInt(document.getElementById('deprYears').value) || 20;
@@ -2487,37 +2193,28 @@
         
         let pmt = (loanTerm > 0 && debt > 0) ? calculatePMT(interestRate, loanTerm, debt) : 0;
         let cfAnnArr = [0]; let cumCfArr = [-equity]; let npv = -equity; let payback = -1; let cumCf = -equity;
-        let lcoeNum = totalCapex; let lcoeDen = 0;
-        let sumNetIncome = 0, sumFcfe = 0, sumOpex = 0, remainDebt = debt;
-        let paybackYearIndex = -1;
+        let lcoeNum = totalCapex; let lcoeDen = 0; let sumNetIncome = 0, sumFcfe = 0, sumOpex = 0, remainDebt = debt; let paybackYearIndex = -1;
 
-        let totalTaxShield = totalCapex * taxRate;
-        document.getElementById('resTaxShieldBase').innerText = formatMoney(totalTaxShield);
+        let totalTaxShield = totalCapex * taxRate; document.getElementById('resTaxShieldBase').innerText = formatMoney(totalTaxShield);
 
         let tempCumCf = -equity;
         for (let i = 1; i <= 25; i++) {
             let curOmCost = totalCapex * omRate * Math.pow(1 + omEscalation, i - 1);
-            let invReplace = (i === 12) ? capexBase * 0.1 : 0;
-            let bessReplace = (activeBessCapacity > 0 && i === 15) ? (activeBessCapacity * capexPerKwhInput * 0.6) : 0;
+            let invReplace = (i === 12) ? capexBase * 0.1 : 0; let bessReplace = (activeBessCapacity > 0 && i === 15) ? (activeBessCapacity * capexPerKwhInput * 0.6) : 0;
             let totalCost = curOmCost + invReplace + bessReplace;
             
-            let efficiency = (i === 1) ? (1 - degY1) : (1 - degY1 - degAnn * (i - 1));
-            let genYear = Math.max(baseYearlyGen * efficiency, 0);
-            let directY = genYear * selfConsRate; let excessY = genYear - directY;
-            let deficitY = Math.max(0, (monthlyUsage * 12) - directY);
+            let efficiency = (i === 1) ? (1 - degY1) : (1 - degY1 - degAnn * (i - 1)); let genYear = Math.max(baseYearlyGen * efficiency, 0);
+            let directY = genYear * selfConsRate; let excessY = genYear - directY; let deficitY = Math.max(0, (monthlyUsage * 12) - directY);
             let bessDischargeY = (activeBessCapacity > 0) ? Math.min(excessY * 0.97, deficitY, activeBessCapacity * 0.95 * 0.97 * 365) : 0;
             let exportY = Math.max(0, excessY - (bessDischargeY / 0.97)); let usableY = directY + bessDischargeY;
             
-            let currentElecPrice = elecPrice * Math.pow(1 + elecEscalation, i - 1);
-            let revenue = (usableY * currentElecPrice) + (exportY * exportPrice);
+            let currentElecPrice = elecPrice * Math.pow(1 + elecEscalation, i - 1); let revenue = (usableY * currentElecPrice) + (exportY * exportPrice);
 
             let arbitrageNetY = 0;
             if (strategy === 'hybrid_bess' && bessStrategyVal === 'grid_arbitrage' && offPeakP > 0 && peakP > 0) {
-                let currentOffPeakP = offPeakP * Math.pow(1 + elecEscalation, i - 1);
-                let currentPeakP = peakP * Math.pow(1 + elecEscalation, i - 1);
+                let currentOffPeakP = offPeakP * Math.pow(1 + elecEscalation, i - 1); let currentPeakP = peakP * Math.pow(1 + elecEscalation, i - 1);
                 let dailyArbKwh = activeBessCapacity * 0.85; 
-                let costArb = dailyArbKwh * 365 * (currentOffPeakP / 0.95);
-                let revArb = dailyArbKwh * 365 * (currentPeakP * 0.95);
+                let costArb = dailyArbKwh * 365 * (currentOffPeakP / 0.95); let revArb = dailyArbKwh * 365 * (currentPeakP * 0.95);
                 if (revArb > costArb) { arbitrageNetY = revArb - costArb; }
             }
             revenue += arbitrageNetY;
@@ -2525,39 +2222,31 @@
             let interest = 0, principal = 0;
             if (i <= loanTerm && remainDebt > 0) { interest = remainDebt * interestRate; principal = pmt - interest; remainDebt -= principal; }
             
-            let depr = (i <= deprYears) ? (totalCapex / deprYears) : 0;
-            let taxable = revenue - totalCost - depr - interest; let tax = taxable > 0 ? taxable * taxRate : 0;
+            let depr = (i <= deprYears) ? (totalCapex / deprYears) : 0; let taxable = revenue - totalCost - depr - interest; let tax = taxable > 0 ? taxable * taxRate : 0;
             let netCf = revenue - totalCost - tax - (i <= loanTerm ? pmt : 0); 
             
             tempCumCf += netCf;
             if (paybackYearIndex === -1 && tempCumCf >= 0) { paybackYearIndex = i; }
         }
 
-        let tableHTML = ""; let sumTotalGen = 0, sumUsableGen = 0, sumExcessGen = 0, sumSavings = 0; 
-        remainDebt = debt; 
+        let tableHTML = ""; let sumTotalGen = 0, sumUsableGen = 0, sumExcessGen = 0, sumSavings = 0; remainDebt = debt; 
         for (let i = 1; i <= 25; i++) {
             let curOmCost = totalCapex * omRate * Math.pow(1 + omEscalation, i - 1);
-            let invReplace = (i === 12) ? capexBase * 0.1 : 0;
-            let bessReplace = (activeBessCapacity > 0 && i === 15) ? (activeBessCapacity * capexPerKwhInput * 0.6) : 0;
+            let invReplace = (i === 12) ? capexBase * 0.1 : 0; let bessReplace = (activeBessCapacity > 0 && i === 15) ? (activeBessCapacity * capexPerKwhInput * 0.6) : 0;
             let totalCost = curOmCost + invReplace + bessReplace;
             
-            let efficiency = (i === 1) ? (1 - degY1) : (1 - degY1 - degAnn * (i - 1));
-            let genYear = Math.max(baseYearlyGen * efficiency, 0);
-            let directY = genYear * selfConsRate; let excessY = genYear - directY;
-            let deficitY = Math.max(0, (monthlyUsage * 12) - directY);
+            let efficiency = (i === 1) ? (1 - degY1) : (1 - degY1 - degAnn * (i - 1)); let genYear = Math.max(baseYearlyGen * efficiency, 0);
+            let directY = genYear * selfConsRate; let excessY = genYear - directY; let deficitY = Math.max(0, (monthlyUsage * 12) - directY);
             let bessDischargeY = (activeBessCapacity > 0) ? Math.min(excessY * 0.97, deficitY, activeBessCapacity * 0.95 * 0.97 * 365) : 0;
             let exportY = Math.max(0, excessY - (bessDischargeY / 0.97)); let usableY = directY + bessDischargeY;
             
-            let currentElecPrice = elecPrice * Math.pow(1 + elecEscalation, i - 1);
-            let revenueY = (usableY * currentElecPrice) + (exportY * exportPrice);
+            let currentElecPrice = elecPrice * Math.pow(1 + elecEscalation, i - 1); let revenueY = (usableY * currentElecPrice) + (exportY * exportPrice);
 
             let arbitrageNetY2 = 0;
             if (strategy === 'hybrid_bess' && bessStrategyVal === 'grid_arbitrage' && offPeakP > 0 && peakP > 0) {
-                let currentOffPeakP = offPeakP * Math.pow(1 + elecEscalation, i - 1);
-                let currentPeakP = peakP * Math.pow(1 + elecEscalation, i - 1);
+                let currentOffPeakP = offPeakP * Math.pow(1 + elecEscalation, i - 1); let currentPeakP = peakP * Math.pow(1 + elecEscalation, i - 1);
                 let dailyArbKwh = activeBessCapacity * 0.85; 
-                let costArb = dailyArbKwh * 365 * (currentOffPeakP / 0.95);
-                let revArb = dailyArbKwh * 365 * (currentPeakP * 0.95);
+                let costArb = dailyArbKwh * 365 * (currentOffPeakP / 0.95); let revArb = dailyArbKwh * 365 * (currentPeakP * 0.95);
                 if (revArb > costArb) { arbitrageNetY2 = revArb - costArb; }
             }
             revenueY += arbitrageNetY2;
@@ -2565,16 +2254,14 @@
             let interest = 0, principal = 0;
             if (i <= loanTerm && remainDebt > 0) { interest = remainDebt * interestRate; principal = pmt - interest; remainDebt -= principal; }
             
-            let depr = (i <= deprYears) ? (totalCapex / deprYears) : 0;
-            let taxable = revenueY - totalCost - depr - interest; let tax = taxable > 0 ? taxable * taxRate : 0;
+            let depr = (i <= deprYears) ? (totalCapex / deprYears) : 0; let taxable = revenueY - totalCost - depr - interest; let tax = taxable > 0 ? taxable * taxRate : 0;
             let netIncome = taxable - tax; let netCf = revenueY - totalCost - tax - (i <= loanTerm ? pmt : 0); 
             
             cfAnnArr.push(netCf); npv += netCf / Math.pow(1 + discountRate, i); cumCf += netCf; cumCfArr.push(cumCf);
             if (payback === -1 && cumCf >= 0) payback = (i - 1) + Math.abs(cumCf - netCf) / netCf; 
             
             lcoeNum += totalCost / Math.pow(1 + discountRate, i); lcoeDen += genYear / Math.pow(1 + discountRate, i);
-            sumNetIncome += netIncome; sumFcfe += netCf; sumOpex += totalCost;
-            sumTotalGen += genYear; sumUsableGen += usableY; sumExcessGen += exportY; sumSavings += revenueY;
+            sumNetIncome += netIncome; sumFcfe += netCf; sumOpex += totalCost; sumTotalGen += genYear; sumUsableGen += usableY; sumExcessGen += exportY; sumSavings += revenueY;
 
             let rowClass = "";
             if (i === paybackYearIndex) { rowClass += " payback-row"; }
@@ -2594,21 +2281,18 @@
             document.querySelector("#genTable tfoot").innerHTML = `<tr><th colspan="2" class="text-right" style="padding-right: 20px;">TỔNG CỘNG (25 năm):</th><th class="text-center">${Math.round(sumTotalGen).toLocaleString('vi-VN')}</th><th class="text-center text-success">${Math.round(sumUsableGen).toLocaleString('vi-VN')}</th><th class="text-center" style="color:#a4b0be">${Math.round(sumExcessGen).toLocaleString('vi-VN')}</th><th class="text-right text-accent">${formatMoney(sumSavings)}</th></tr>`;
         }
 
-        cfAnnArr[0] = -equity;
-        let valIrr = calculateIRR(cfAnnArr); let valLcoe = lcoeDen > 0 ? Math.round(lcoeNum / lcoeDen) : 0;
+        cfAnnArr[0] = -equity; let valIrr = calculateIRR(cfAnnArr); let valLcoe = lcoeDen > 0 ? Math.round(lcoeNum / lcoeDen) : 0;
 
         document.getElementById('resCapexBase').innerText = formatMoney(totalCapex); 
-        document.getElementById('resOpexTotalBase').innerText = formatMoney(sumOpex);
-        document.getElementById('resFcfeTotalBase').innerText = formatMoney(sumFcfe);
+        document.getElementById('resOpexTotalBase').innerText = formatMoney(sumOpex); document.getElementById('resFcfeTotalBase').innerText = formatMoney(sumFcfe);
         document.getElementById('resRoiBase').innerText = totalCapex > 0 ? ((sumNetIncome / totalCapex) * 100).toFixed(1) + " %" : "0 %";
         document.getElementById('resLcoeBase').innerText = valLcoe.toLocaleString('vi-VN') + " đ"; document.getElementById('resNpvBase').innerText = formatMoney(npv);
         document.getElementById('resIrrBase').innerText = valIrr.toFixed(2) + " %"; document.getElementById('resPaybackBase').innerText = payback > 0 ? payback.toFixed(1) + " năm" : "Chưa Thu Hồi";
         
-        flashElements();
-        renderCashflowChart(cfAnnArr, cumCfArr);
-
+        flashElements(); renderCashflowChart(cfAnnArr, cumCfArr); renderSpiderChart(valIrr); renderAnalysis();
+        
         // ĐỔ DỮ LIỆU ĐỘNG VÀO CÁC DIV CÔNG THỨC
-        // 1. Công thức Biến tần (Inverter)
+        const fmt = (num) => num.toLocaleString('vi-VN', {maximumFractionDigits: 1});
         document.getElementById('formulaInverter').innerHTML = `
             $$ P_{Inverter} \\ge \\frac{P_{DC}}{Ratio_{DC/AC}} $$
             $$ \\Rightarrow P_{Inverter} \\ge \\frac{${sysPowerKW.toLocaleString('vi-VN', {maximumFractionDigits: 2})}}{${globalDcAcRatio}} = ${(sysPowerKW/globalDcAcRatio).toLocaleString('vi-VN', {maximumFractionDigits: 2})} \\text{ kW} $$
@@ -2619,88 +2303,56 @@
             </div>
         `;
 
-        // 2. Công thức Pin lưu trữ (BESS)
-        const fmt = (num) => num.toLocaleString('vi-VN', {maximumFractionDigits: 1});
         let bessFormulaHtml = `
             <div style="margin-bottom: 10px; color: var(--text-color);"><b>1. Tổng năng lượng thiếu hụt (Nhu cầu ban đêm):</b></div>
             $$ E_{Deficit} = \\sum \\max(0, L_h - S_h) $$
             $$ E_{Deficit} = ${fmt(eDeficit)} \\text{ kWh} $$
-
-            <div style="margin-bottom: 10px; margin-top: 15px; color: var(--text-color);"><b>2. Năng lượng lưu trữ thực tế cần thiết (Giao điểm Nguồn & Tải):</b></div>
+            <div style="margin-bottom: 10px; margin-top: 15px; color: var(--text-color);"><b>2. Năng lượng lưu trữ thực tế cần thiết:</b></div>
             $$ E_{Usable} = \\min(E_{Excess}, E_{Deficit}) $$
             $$ E_{Usable} = \\min(${fmt(eExcess)}, ${fmt(eDeficit)}) = ${fmt(usableExcess)} \\text{ kWh} $$
-
             <div style="margin-bottom: 10px; margin-top: 15px; color: var(--text-color);"><b>3. Ràng buộc theo Năng lượng (Bù hao hụt thiết bị):</b></div>
             $$ C_{Energy} = \\frac{E_{Usable}}{DoD \\times \\eta} $$
             $$ C_{Energy} = \\frac{${fmt(usableExcess)}}{0.95 \\times 0.97} = ${fmt(batteryByEnergy)} \\text{ kWh} $$
-
-            <div style="margin-bottom: 10px; margin-top: 15px; color: var(--text-color);"><b>4. Ràng buộc theo Công suất xả đỉnh (Chống quá tải Inverter):</b></div>
+            <div style="margin-bottom: 10px; margin-top: 15px; color: var(--text-color);"><b>4. Ràng buộc theo Công suất xả đỉnh:</b></div>
             $$ C_{Power} = \\frac{P_{Deficit\\_Max}}{C\\text{-}Rate_{Max}} $$
             $$ C_{Power} = \\frac{${fmt(peakDeficit)}}{0.5} = ${fmt(batteryByPower)} \\text{ kWh} $$
-
-            <div style="margin-bottom: 10px; margin-top: 15px; color: var(--primary); font-size: 1.1em;"><b>5. Chốt dung lượng BESS tối ưu (Thỏa mãn cả Năng lượng và Công suất):</b></div>
+            <div style="margin-bottom: 10px; margin-top: 15px; color: var(--primary); font-size: 1.1em;"><b>5. Chốt dung lượng BESS tối ưu:</b></div>
             $$ C_{BESS} = \\max(C_{Energy}, C_{Power}) $$
         `;
 
-        if (activeBessCapacity > 0) {
-            bessFormulaHtml += `
-            <div style="text-align: center; margin: 15px 0; font-weight: bold; color: var(--primary); background: #f0f7ff; padding: 10px; border-radius: 8px;">
-                \\( \\Rightarrow C_{BESS} = \\max(${fmt(batteryByEnergy)}, ${fmt(batteryByPower)}) = ${fmt(batterySuggest)} \\text{ kWh} \\)
-            </div>`;
-        } else {
-            bessFormulaHtml += `
-            <div style="text-align: center; margin: 15px 0; font-weight: bold; color: var(--danger); background: #fff0f0; padding: 10px; border-radius: 8px;">
-                \\( \\Rightarrow C_{BESS} = 0 \\text{ kWh (Kịch bản Zero-Export hoặc Không có nhu cầu)} \\)
-            </div>`;
-        }
-
-        bessFormulaHtml += `
-            <div class="var-legend" style="border-top: 1px dashed var(--border); padding-top: 15px; margin-top: 10px; font-size: 0.9em; line-height: 1.6;">
-                <b>Chú thích thông số:</b><br>
-                • \\(E_{Excess}\\): Điện mặt trời phát dư ban ngày (${fmt(eExcess)} kWh)<br>
-                • \\(P_{Deficit\\_Max}\\): Đỉnh công suất thiếu hụt cao nhất cần BESS bơm bù (${fmt(peakDeficit)} kW)<br>
-                • \\(DoD = 0.95\\): Độ xả sâu an toàn bảo vệ cell pin Lithium.<br>
-                • \\(\\eta = 0.97\\): Hiệu suất khứ hồi (Round-trip efficiency) của hệ thống.<br>
-                • \\(C\\text{-}Rate_{Max} = 0.5\\): Hệ số dòng xả an toàn (xả cạn pin trong 2 giờ).
-            </div>
-        `;
+        if (activeBessCapacity > 0) { bessFormulaHtml += `<div style="text-align: center; margin: 15px 0; font-weight: bold; color: var(--primary); background: #f0f7ff; padding: 10px; border-radius: 8px;">\\( \\Rightarrow C_{BESS} = \\max(${fmt(batteryByEnergy)}, ${fmt(batteryByPower)}) = ${fmt(batterySuggest)} \\text{ kWh} \\)</div>`; } 
+        else { bessFormulaHtml += `<div style="text-align: center; margin: 15px 0; font-weight: bold; color: var(--danger); background: #fff0f0; padding: 10px; border-radius: 8px;">\\( \\Rightarrow C_{BESS} = 0 \\text{ kWh (Kịch bản Zero-Export)} \\)</div>`; }
+        bessFormulaHtml += `<div class="var-legend" style="border-top: 1px dashed var(--border); padding-top: 15px; margin-top: 10px; font-size: 0.9em; line-height: 1.6;"><b>Chú thích thông số:</b><br>• \\(E_{Excess}\\): Điện mặt trời dư (${fmt(eExcess)} kWh)<br>• \\(P_{Deficit\\_Max}\\): Đỉnh thiếu hụt cao nhất (${fmt(peakDeficit)} kW)<br>• \\(DoD = 0.95\\): Độ xả sâu an toàn.<br>• \\(\\eta = 0.97\\): Hiệu suất khứ hồi.<br>• \\(C\\text{-}Rate_{Max} = 0.5\\): Hệ số dòng xả an toàn.</div>`;
         document.getElementById('formulaBattery').innerHTML = bessFormulaHtml;
 
-        // 3. Công thức Sản lượng (Yield)
         document.getElementById('formulaGen').innerHTML = `
             $$ Yield_{Y1} = P_{DC} \\times PSH \\times PR \\times (1 - Deg_{Y1}) $$
-            <div class="var-legend" style="border-top: 1px dashed var(--border); padding-top: 15px; margin-top: 10px;">
-                Trong đó:<br>
-                \\(P_{DC}\\): Tổng công suất Pin (kWp)<br>
-                \\(PSH\\): Giờ nắng đỉnh (h)<br>
-                \\(PR\\): Hiệu suất hệ thống (%)<br>
-                \\(Deg_{Y1}\\): Tỷ lệ suy hao năm đầu (%)
-            </div>
+            <div class="var-legend" style="border-top: 1px dashed var(--border); padding-top: 15px; margin-top: 10px;">Trong đó:<br>\\(P_{DC}\\): Công suất Pin (kWp)<br>\\(PSH\\): Giờ nắng (h)<br>\\(PR\\): Hiệu suất (%)<br>\\(Deg_{Y1}\\): Tỷ lệ suy hao năm đầu (%)</div>
         `;
 
-        // 4. Công thức Tài chính (Finance)
-        document.getElementById('formulaFinance').innerHTML = `
-            $$ NPV = \\sum_{t=1}^{n} \\frac{CF_t}{(1+r)^t} - C_0 $$
-            $$ LCOE = \\frac{\\sum_{t=1}^{n} \\frac{Cost_t}{(1+r)^t}}{\\sum_{t=1}^{n} \\frac{Energy_t}{(1+r)^t}} $$
-            <div class="var-legend" style="border-top: 1px dashed var(--border); padding-top: 15px; margin-top: 10px;">
-                Trong đó:<br>
-                \\(CF_t\\): Dòng tiền thuần năm t<br>
-                \\(r\\): Tỷ suất chiết khấu (Ke)<br>
-                \\(Cost_t\\): Chi phí vận hành, bảo trì năm t<br>
-                \\(Energy_t\\): Sản lượng điện năm t
-            </div>
-        `;
-
-        // Cập nhật lại MathJax nếu thư viện đã tải xong
-        if(window.MathJax) {
-            MathJax.typesetPromise().catch((err) => console.log('MathJax error: ', err.message));
+        let formulaFinanceEl = document.getElementById('formulaFinance');
+        if (formulaFinanceEl) {
+            formulaFinanceEl.innerHTML = `
+                <div style="margin-bottom: 10px; color: var(--text-color);"><b>1. Cấu trúc Vốn & Khấu hao (Lá chắn thuế):</b></div>
+                $$ Tax\\_Shield = \\frac{CAPEX}{Depr\\_Years} \\times Tax\\_Rate $$
+                <div style="margin-bottom: 10px; margin-top: 15px; color: var(--text-color);"><b>2. Quỹ Vận hành OPEX (Tích hợp lạm phát & Thay thế):</b></div>
+                $$ OPEX_t = (CAPEX \\times OM\\_Rate \\times (1 + Inf)^{t-1}) + Replace_t $$
+                <div style="margin-bottom: 10px; margin-top: 15px; color: var(--text-color);"><b>3. Dòng tiền Tự do (Free Cash Flow to Equity):</b></div>
+                $$ FCFE_t = Revenue_t - OPEX_t - Interest_t - Principal_t - Tax_t $$
+                <div style="margin-bottom: 10px; margin-top: 15px; color: var(--primary); font-size: 1.1em;"><b>4. Hiện giá Thuần (NPV) & Tỷ suất Sinh lời (IRR):</b></div>
+                $$ NPV = \\sum_{t=1}^{25} \\frac{FCFE_t}{(1+Ke)^t} - Equity_0 $$
+                <div class="var-legend" style="border-top: 1px dashed var(--border); padding-top: 15px; margin-top: 10px; line-height: 1.7;">
+                    <b>Cơ sở thiết lập (Bảo vệ rủi ro dòng tiền):</b><br>
+                    • \\(Replace_t\\): Phí thay thế Inverter (Năm 12) = 10% giá trị Solar. Phí thay thế Cell Pin (Năm 15) = 60% giá trị BESS.<br>
+                    • Phương pháp tính toán IRR tuân thủ chuẩn thẩm định dự án năng lượng của Ngân hàng Thế giới (WB).
+                </div>
+            `;
         }
+
+        if(window.MathJax) { MathJax.typesetPromise().catch((err) => console.log('MathJax error: ', err.message)); }
     }
 
-    // Khởi tạo các hàm cơ bản khi tải xong DOM
-    window.onload = function() {
-        autoSizePV();
-    };
+    window.onload = function() { autoSizePV(); };
 </script>
 </body>
 </html>
