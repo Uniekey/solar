@@ -1494,9 +1494,9 @@
         </div>
     </div>
 </div>
-<script>
+ <script>
     // --- 1. BIẾN TOÀN CỤC & TRẠNG THÁI ---
-    const APP_PASSWORD = "123";
+    const APP_PASSWORD = "2109004";
     let isAppUnlocked = false;
     let totalBeforeTaxValue = 0;
     let loadChartInstance = null;
@@ -1554,7 +1554,7 @@
         isLcaExpanded = !isLcaExpanded;
         let btn = document.getElementById('btnToggleLca');
         if(isLcaExpanded) { btn.innerHTML = '▲ Thu gọn Bảng Mô Phỏng ▲'; } else { btn.innerHTML = '▼ Xem chi tiết toàn bộ 25 năm ▼'; document.getElementById('genTable').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-        calculate(); 
+        if(isAppUnlocked) calculate(); 
     }
 
     function toggleLanguage() { document.body.classList.toggle('lang-en'); }
@@ -1619,7 +1619,7 @@
 
     function checkPassword() {
         const pwd = document.getElementById('unlockPwd').value; const err = document.getElementById('lockError');
-        if (pwd === APP_PASSWORD || pwd === "2109004") { // Tích hợp cả password mới và cũ của anh
+        if (pwd === APP_PASSWORD || pwd === "2109004") {
             err.style.display = 'none'; setLockState(false);
             const lockBox = document.getElementById('lockContainer');
             lockBox.style.opacity = '0'; setTimeout(() => { lockBox.style.display = 'none'; }, 300);
@@ -1627,14 +1627,20 @@
         } else { err.style.display = 'inline-block'; }
     }
 
-    // --- 4. THUẬT TOÁN ĐỌC & PARSE FILE EVN CSV & EXCEL ---
+    // --- 4. THUẬT TOÁN ĐỌC & PARSE FILE EVN CSV & EXCEL (AUTO-DETECT HEURISTIC) ---
     function handleEvnUpload(event) {
         const file = event.target.files[0]; if (!file) return; const ext = file.name.split('.').pop().toLowerCase();
         if (ext === 'csv') {
             Papa.parse(file, { header: false, skipEmptyLines: true, complete: function(results) { processEvnDataArray(results.data); } });
         } else if (ext === 'xlsx' || ext === 'xls') {
             const reader = new FileReader();
-            reader.onload = function(e) { const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, {type: 'array'}); const sheetName = workbook.SheetNames[0]; const jsonArr = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {header: 1}); processEvnDataArray(jsonArr); };
+            reader.onload = function(e) { 
+                const data = new Uint8Array(e.target.result); 
+                const workbook = XLSX.read(data, {type: 'array'}); 
+                const sheetName = workbook.SheetNames[0]; 
+                const jsonArr = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {header: 1}); 
+                processEvnDataArray(jsonArr); 
+            };
             reader.readAsArrayBuffer(file);
         } else { alert("❌ Vui lòng tải file định dạng .csv hoặc .xlsx"); }
     }
@@ -1642,11 +1648,43 @@
     function processEvnDataArray(rows) {
         let hourlyData = Array.from({length: 24}, () => ({ sum_kW: 0, count: 0 })); let maxKw = 0; let maxKwTime = ""; 
 
-        for (let i = 2; i < rows.length; i++) {
-            let row = rows[i]; if (!row || row.length < 4) continue;
-            let timeStr = row[1]; let pGiaoRaw = row[3] !== undefined ? row[3].toString().replace(',', '.') : ''; let pGiaoKw = parseFloat(pGiaoRaw); 
+        // Thuật toán quét và dò tìm tọa độ (Auto-Detect Indexing)
+        let timeColIdx = -1; let pColIdx = -1; let startRowIdx = 2;
+        
+        for (let i = 0; i < Math.min(6, rows.length); i++) {
+            let row = rows[i]; if (!row) continue;
+            for (let j = 0; j < row.length; j++) {
+                let cell = String(row[j] || '').toLowerCase().trim();
+                if (cell === 'thời gian' || cell === 'time') timeColIdx = j;
+                if (cell === 'p (kw)' || cell.includes('p giao') || cell.includes('công suất')) pColIdx = j;
+            }
+            if (timeColIdx !== -1 && pColIdx !== -1) {
+                // Nhận diện cấu trúc EVNHES nhiều tầng (A, B, C, Tổng)
+                if (i + 1 < rows.length) {
+                    let nextRow = rows[i+1];
+                    for (let k = pColIdx; k <= pColIdx + 5 && k < nextRow.length; k++) {
+                        let subCell = String(nextRow[k] || '').toLowerCase().trim();
+                        if (subCell === 'tổng' || subCell === 'total') { pColIdx = k; break; }
+                    }
+                }
+                startRowIdx = i + 2; break; 
+            }
+        }
+        
+        // Cơ chế Fallback an toàn nếu không dò được header chuẩn
+        if (timeColIdx === -1) timeColIdx = 1;
+        if (pColIdx === -1) pColIdx = 3;
+
+        for (let i = startRowIdx; i < rows.length; i++) {
+            let row = rows[i]; if (!row || row.length <= Math.max(timeColIdx, pColIdx)) continue;
+            let timeStr = row[timeColIdx]; 
+            let pGiaoRaw = row[pColIdx] !== undefined ? row[pColIdx].toString().replace(',', '.') : ''; 
+            let pGiaoKw = parseFloat(pGiaoRaw); 
+            
+            // Try-Catch ngầm: Bỏ qua các dòng NaN/Null do cảm biến cẩu ngừng trích xuất
             if (timeStr && !isNaN(pGiaoKw)) {
-                let parts = timeStr.toString().trim().split(' '); let timePart = parts.length > 1 ? parts[1] : parts[0]; 
+                let parts = timeStr.toString().trim().split(' '); 
+                let timePart = parts.length > 1 ? parts[1] : parts[0]; 
                 let hourStr = timePart.split(':')[0]; let hour = parseInt(hourStr, 10);
                 if (!isNaN(hour) && hour >= 0 && hour <= 23) {
                     hourlyData[hour].sum_kW += pGiaoKw; hourlyData[hour].count += 1;
@@ -1655,7 +1693,10 @@
             }
         }
 
-        if (hourlyData.every(h => h.count === 0)) { alert("❌ File không đúng định dạng EVN AMR (Cần cột Thời gian ở vị trí 2 và Cột P Giao ở vị trí 4)."); return; }
+        if (hourlyData.every(h => h.count === 0)) { 
+            alert("❌ File tải lên không đúng cấu trúc đo đếm EVN (AMR/HES). Vui lòng kiểm tra lại định dạng xuất file."); 
+            return; 
+        }
 
         actual24hLoadProfile = hourlyData.map(h => h.count > 0 ? (h.sum_kW / h.count) : 0);
         let sumS1 = 0, sumS2 = 0, sumS3 = 0, sumS4 = 0; let dailyKwh = actual24hLoadProfile.reduce((a, b) => a + b, 0);
@@ -1683,7 +1724,7 @@
             if(el) { el.style.backgroundColor = '#ffeaa7'; setTimeout(() => { el.style.backgroundColor = id === 'peakLoad' ? '#f1f2f6' : ''; }, 2000); }
         });
 
-        alert(`✅ Đã phân tích thành công biểu đồ phụ tải.\nTải nền trung bình: ${Math.round(dailyKwh/24)} kW\nTải đỉnh lớn nhất ghi nhận: ${Math.round(maxKw)} kW (Lúc ${maxKwTime}).`);
+        alert(`✅ Đã đồng bộ & trích xuất thành công dữ liệu tải.\nTải nền trung bình: ${Math.round(dailyKwh/24)} kW\nTải đỉnh (Max Peak): ${Math.round(maxKw)} kW (Lúc ${maxKwTime}).`);
         calcAvgPrice(); 
     }
     
@@ -1804,8 +1845,7 @@
         globalDcAcRatio = dcAc; globalPanelLength = pLen; globalPanelWidth = pWid; globalPanelArea = (pLen * pWid) / 1000000;
         closeConfigModal(); autoSizePV();
     }
-    
-    function autoSizePV() {
+function autoSizePV() {
         if (!isAppUnlocked) return;
         const monthlyUsageCalc = getInt('monthlyUsage'); const strategy = document.getElementById('mainStrategy').value;
         let p1 = parseFloat(document.getElementById('pct1').value) || 0; let p2 = parseFloat(document.getElementById('pct2').value) || 0; 
@@ -2291,7 +2331,6 @@
         
         flashElements(); renderCashflowChart(cfAnnArr, cumCfArr); renderSpiderChart(valIrr); renderAnalysis();
         
-        // ĐỔ DỮ LIỆU ĐỘNG VÀO CÁC DIV CÔNG THỨC
         const fmt = (num) => num.toLocaleString('vi-VN', {maximumFractionDigits: 1});
         document.getElementById('formulaInverter').innerHTML = `
             $$ P_{Inverter} \\ge \\frac{P_{DC}}{Ratio_{DC/AC}} $$
