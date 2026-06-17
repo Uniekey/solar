@@ -1247,7 +1247,6 @@
 
 </div>
 
-<!-- Modal Báo giá BOQ -->
 <div class="modal-overlay" id="boqModal">
     <div class="modal-content">
         <div class="modal-header no-print">
@@ -1435,7 +1434,6 @@
     </div>
 </div>
 
-<!-- Modal Thiết lập Khung vật lý -->
 <div class="modal-overlay" id="configModal">
     <div class="modal-content" style="max-width: 650px; height: auto;">
         <div class="modal-header no-print">
@@ -1511,6 +1509,9 @@
     let globalPanelWidth = 1134;
     let globalPanelArea = 2.701188; 
     let globalRoofArea = 100;
+
+    // CỜ TRẠNG THÁI: KIỂM SOÁT OVERWRITE BẢNG BOQ
+    let isBoqEdited = false;
 
     const profilesPreset = {
         'hd_247': { pct1: 50, pct2: 10, pct3: 30, pct4: 10, name: 'Dân dụng / Biệt thự (Sinh hoạt 24/7)', desc: 'Gia đình có người ở nhà thường xuyên. Phụ tải chia khá đều đặn 24/24 giờ.' },
@@ -1845,6 +1846,7 @@
         globalDcAcRatio = dcAc; globalPanelLength = pLen; globalPanelWidth = pWid; globalPanelArea = (pLen * pWid) / 1000000;
         closeConfigModal(); autoSizePV();
     }
+    
 function autoSizePV() {
         if (!isAppUnlocked) return;
         const monthlyUsageCalc = getInt('monthlyUsage'); const strategy = document.getElementById('mainStrategy').value;
@@ -1956,33 +1958,51 @@ function autoSizePV() {
         let activeBessCapacity = (strategy === 'hybrid_bess') ? batterySuggest : 0;
         document.getElementById('lblBoqSysPower').innerText = `${sysPowerKW.toLocaleString('vi-VN', {maximumFractionDigits: 2})} kWp`;
         document.getElementById('lblBoqStrategy').innerText = `Áp dụng Kịch bản: ${strategy === 'hybrid_bess' ? "HỆ HYBRID BESS (LƯU TRỮ)" : "BÁM TẢI THUẦN (ZERO-EXPORT)"}`;
-        if(document.getElementById('boqQty_panel')) document.getElementById('boqQty_panel').value = panelCount;
+        
+        // CHỈ ĐIỀN DỮ LIỆU TỰ ĐỘNG NẾU NGƯỜI DÙNG CHƯA CHỈNH SỬA TAY
+        if (!isBoqEdited) {
+            if(document.getElementById('boqQty_panel')) document.getElementById('boqQty_panel').value = panelCount;
+            if(document.getElementById('boqPrice_inv')) document.getElementById('boqPrice_inv').value = Math.round(sysPowerKW * 1000000).toLocaleString('vi-VN');
+            if(document.getElementById('boqPrice_frame')) document.getElementById('boqPrice_frame').value = Math.round(sysPowerKW * 100000).toLocaleString('vi-VN');
+            if(document.getElementById('boqPrice_box')) document.getElementById('boqPrice_box').value = Math.round(sysPowerKW * 100000).toLocaleString('vi-VN');
+            if(document.getElementById('boqPrice_cable')) document.getElementById('boqPrice_cable').value = Math.round(sysPowerKW * 100000).toLocaleString('vi-VN');
+            if(document.getElementById('boqPrice_labor')) document.getElementById('boqPrice_labor').value = Math.round(sysPowerKW * 100000).toLocaleString('vi-VN');
+        }
+
         let bessRow = document.getElementById('row_boq_bess');
         if (strategy === 'zero_export') {
             if (bessRow) bessRow.style.display = 'none';
             if (document.getElementById('boqQty_bess')) document.getElementById('boqQty_bess').value = 0;
         } else {
             if (bessRow) bessRow.style.display = 'table-row';
-            if (document.getElementById('boqQty_bess')) document.getElementById('boqQty_bess').value = Math.round(activeBessCapacity);
-            if (document.getElementById('boqPrice_bess')) document.getElementById('boqPrice_bess').value = getInt('capexPerKwh').toLocaleString('vi-VN');
+            if (!isBoqEdited) {
+                if (document.getElementById('boqQty_bess')) document.getElementById('boqQty_bess').value = Math.round(activeBessCapacity);
+                if (document.getElementById('boqPrice_bess')) document.getElementById('boqPrice_bess').value = getInt('capexPerKwh').toLocaleString('vi-VN');
+            }
         }
 
-        if(document.getElementById('boqPrice_inv')) document.getElementById('boqPrice_inv').value = Math.round(sysPowerKW * 1000000).toLocaleString('vi-VN');
-        if(document.getElementById('boqPrice_frame')) document.getElementById('boqPrice_frame').value = Math.round(sysPowerKW * 100000).toLocaleString('vi-VN');
-        if(document.getElementById('boqPrice_box')) document.getElementById('boqPrice_box').value = Math.round(sysPowerKW * 100000).toLocaleString('vi-VN');
-        if(document.getElementById('boqPrice_cable')) document.getElementById('boqPrice_cable').value = Math.round(sysPowerKW * 100000).toLocaleString('vi-VN');
-        if(document.getElementById('boqPrice_labor')) document.getElementById('boqPrice_labor').value = Math.round(sysPowerKW * 100000).toLocaleString('vi-VN');
-
-        document.querySelectorAll('.boq-item-row').forEach(row => { if(row.style.display !== 'none') calcBOQRow(row.querySelector('.qty-input')); });
+        document.querySelectorAll('.boq-item-row').forEach(row => { 
+            if(row.style.display !== 'none') {
+                let qtyInput = row.querySelector('.qty-input');
+                if (qtyInput) _calcBOQRowSilent(qtyInput);
+            }
+        });
         document.getElementById('boqModal').style.display = 'flex';
     }
 
     function closeBOQModal() { document.body.classList.remove('print-boq-only'); document.getElementById('boqModal').style.display = 'none'; }
-    function calcBOQRow(el) {
+    
+    function _calcBOQRowSilent(el) {
         let row = el.closest('tr'); if(row.style.display === 'none') return;
         let qty = parseFloat(row.querySelector('.qty-input').value) || 0; let price = parseFloat(row.querySelector('.price-input').value.replace(/[^0-9]/g, '')) || 0;
         row.querySelector('.row-total').innerText = Math.round(qty * price).toLocaleString('vi-VN'); calcGrandTotal();
     }
+
+    function calcBOQRow(el) {
+        isBoqEdited = true; // BẬT CỜ CHẶN AUTO-FILL
+        _calcBOQRowSilent(el);
+    }
+    
     function calcGrandTotal() {
         let sumBeforeTax = 0;
         document.querySelectorAll('.boq-item-row').forEach(row => {
@@ -1998,25 +2018,42 @@ function autoSizePV() {
         document.getElementById('boqVatAmount').innerText = Math.round(vatAmount).toLocaleString('vi-VN');
         document.getElementById('boqGrandTotal').innerText = Math.round(grandTotal).toLocaleString('vi-VN');
     }
+    
     function addBOQRow() {
         let tbody = document.querySelector('#boqTable tbody'); let tr = document.createElement('tr'); tr.className = 'boq-item-row';
         tr.innerHTML = `<td class="text-center row-num valign-middle"></td><td><textarea class="item-name" rows="2" placeholder="Tên hạng mục..." oninput="autoResize(this)"></textarea></td><td><textarea class="item-spec" rows="2" placeholder="Nhập thông số kỹ thuật..." oninput="autoResize(this)"></textarea></td><td class="text-center valign-middle"><input type="text" value="Gói" class="text-center"></td><td class="valign-middle"><input type="number" class="qty-input" value="1" oninput="calcBOQRow(this)"></td><td class="valign-middle"><input type="text" class="price-input" value="0" oninput="formatInt(this); calcBOQRow(this)"></td><td class="text-right font-bold valign-middle row-total">0</td><td class="no-print text-center valign-middle"><button class="btn-remove action-btn" onclick="removeBOQRow(this)">✖</button></td>`;
         tbody.appendChild(tr); updateRowNumbers(); calcGrandTotal();
     }
+    
     function removeBOQRow(btn) { btn.closest('tr').remove(); updateRowNumbers(); calcGrandTotal(); }
+    
     function updateRowNumbers() {
         let rows = document.querySelectorAll('#boqTable tbody tr.boq-item-row'); let count = 1;
         rows.forEach((row) => { if(row.style.display !== 'none') row.querySelector('.row-num').innerText = count++; });
     }
+    
     function applyBOQ() {
         const strategy = document.getElementById('mainStrategy').value; const panelPwr = parseFloat(document.getElementById('panelPower').value) || 0;
         const panelCount = parseFloat(document.getElementById('panelCount').value) || 0; const sysPowerKW = (panelPwr * panelCount) / 1000;
-        let bessRow = document.querySelector('#boqQty_bess'); let bessTotal = 0;
-        if(bessRow && strategy === 'hybrid_bess') {
-            let bQty = parseFloat(document.getElementById('boqQty_bess').value) || 0; let bPrice = parseInt(document.getElementById('boqPrice_bess').value.replace(/[^0-9]/g, '')) || 0;
-            bessTotal = bQty * bPrice; document.getElementById('capexPerKwh').value = bPrice.toLocaleString('vi-VN');
-        }
-        let solarTotalBeforeTax = totalBeforeTaxValue - bessTotal;
+        
+        let actualSumBeforeTax = 0;
+        let bessTotal = 0;
+
+        // QUÉT TRỰC TIẾP TỪ DOM ĐỂ ĐẢM BẢO REAL-TIME ACCURACY
+        document.querySelectorAll('.boq-item-row').forEach(row => {
+            if(row.style.display !== 'none') {
+                let qty = parseFloat(row.querySelector('.qty-input').value) || 0; 
+                let price = parseFloat(row.querySelector('.price-input').value.replace(/[^0-9]/g, '')) || 0;
+                actualSumBeforeTax += (qty * price);
+
+                if (row.id === 'row_boq_bess' && strategy === 'hybrid_bess') {
+                    bessTotal = (qty * price);
+                    document.getElementById('capexPerKwh').value = price.toLocaleString('vi-VN');
+                }
+            }
+        });
+
+        let solarTotalBeforeTax = actualSumBeforeTax - bessTotal;
         if (sysPowerKW > 0) { document.getElementById('capexPerKw').value = Math.round(solarTotalBeforeTax / sysPowerKW).toLocaleString('vi-VN'); }
         closeBOQModal(); calculate(); 
     }
