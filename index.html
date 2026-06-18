@@ -54,896 +54,1031 @@
         <span class="lang-en">🌤️ Solar Technical & Financial Assessment Report</span>
     </h1>
 
-    <div class="section-header" id="section-tech">
-        <span class="lang-vi">Phần I: Khảo Sát, Cấu Hình & Thiết Bị</span>
-        <span class="lang-en">Part I: Site Survey, Sizing & Equipment</span>
+    <div class="section-header" id="section-tech" onclick="toggleSection('content-tech', 'btn-tech')">
+        <div>
+            <span class="lang-vi">Phần I: Khảo Sát, Cấu Hình & Thiết Bị</span>
+            <span class="lang-en">Part I: Site Survey, Sizing & Equipment</span>
+        </div>
+        <span id="btn-tech" class="toggle-btn">➕</span>
     </div>
     
-    <div class="card" style="margin-bottom: 30px;">
-        <div class="card-title text-primary">
-            <span class="lang-vi">1. THÔNG TIN DỰ ÁN & HỒ SƠ TIÊU THỤ ĐIỆN</span>
-            <span class="lang-en">1. PROJECT & ENERGY CONSUMPTION PROFILE</span>
-        </div>
-        
-        <div class="grid-2" style="gap: 30px;">
-            <div>
-                <table class="project-info-table">
-                    <tr>
-                        <th colspan="2">
-                            <span class="lang-vi">Thông tin Khách hàng</span>
-                            <span class="lang-en">Client Information</span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lang-vi">Khách hàng</span>
-                            <span class="lang-en">Client Name</span>
-                        </td>
-                        <td>
-                            <input type="text" id="projCustomer" value="Văn phòng Điều Hành - CLA" oninput="updateCover()">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lang-vi">Vị trí</span>
-                            <span class="lang-en">Address</span>
-                        </td>
-                        <td>
-                            <input type="text" id="projAddress" value="Cần Giuộc, Tây Ninh" oninput="updateCover()">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lang-vi">Loại hình <sup class="help-tip no-print" title="Hệ số quy đổi tỷ lệ sử dụng mái thực tế (đã trừ hành lang, cục nóng máy lạnh...): Công nghiệp ~80%, Thương mại & Dân dụng ~70%.">[?]</sup></span>
-                            <span class="lang-en">Segment</span>
-                        </td>
-                        <td>
-                            <select id="projSegment" class="inline-select" onchange="autoSizePV()">
-                                <option value="residential">🏡 Dân dụng (Hộ gia đình/Biệt thự)</option>
-                                <option value="cni_small" selected>🏢 Thương mại (Tòa nhà/Văn Phòng)</option>
-                                <option value="cni_large">🏭 Công nghiệp (Nhà máy/ Cảng)</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lang-vi">Diện tích mái khả dụng (m²) <sup class="help-tip no-print" title="Dùng để tính giới hạn số lượng tấm pin tối đa có thể lắp đặt lên mái. Nút 'Cấu hình thiết bị' để thay đổi số này.">[?]</sup></span>
-                            <span class="lang-en">Usable Roof Area</span>
-                        </td>
-                        <td>
-                            <input type="text" id="projRoof" value="100 m²" readonly style="background:#f1f2f6; cursor:not-allowed;" title="Sử dụng nút CẤU HÌNH THIẾT BỊ để thay đổi thông số này">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lang-vi">Cấp điện áp</span>
-                            <span class="lang-en">Grid Voltage</span>
-                        </td>
-                        <td>
-                            <select id="projVoltage" class="inline-select">
-                                <option value="1p220">⚡ 1 Pha 220V (Sinh hoạt)</option>
-                                <option value="3p380" selected>⚡ 3 Pha 380V (Hạ thế)</option>
-                                <option value="22kv">⚡ < 22kV (Trung thế)</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lang-vi">Công suất TBA (kVA) <sup class="help-tip no-print" title="Giới hạn lưới điện: Tổng công suất Inverter không được phép vượt quá 80-100% công suất của Trạm Biến Áp để tránh quá dòng phát ngược.">[?]</sup></span>
-                            <span class="lang-en">Transformer (kVA)</span>
-                        </td>
-                        <td>
-                            <input type="text" id="projTransformer" value="1500 kVA">
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div>
-                <table class="project-info-table">
-                    <tr>
-                        <th colspan="2">
-                            <span class="lang-vi">Dữ liệu tiêu thụ điện</span>
-                            <span class="lang-en">Billing Baseline</span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lang-vi">Hóa đơn điện TB hàng tháng <sup class="help-tip no-print" title="Mức chi trả bình quân mỗi tháng, dùng làm căn cứ tự động quy đổi ra Tổng lượng điện năng tiêu thụ (Sản lượng quy đổi).">[?]</sup></span>
-                            <span class="lang-en">Avg. Monthly Bill</span>
-                        </td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <input type="text" id="infoBill" class="input-peak text-accent" value="79.000.000" style="background: #fffafa;" oninput="formatInt(this); syncFromBill()">
-                                <span class="font-bold text-dark">VNĐ</span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="valign-top" style="padding-top: 15px;">
-                            <span class="lang-vi">Đơn giá điện trung bình - EVN <sup class="help-tip no-print" title="Giá gia quyền (đã chia trung bình) được tự động nội suy từ biểu giá điện 3 khung giờ hoặc biểu giá bậc thang bên dưới theo tỷ trọng sử dụng.">[?]</sup></span>
-                            <span class="lang-en">Avg Grid Price</span>
-                        </td>
-                        <td style="padding-top: 15px;">
-                            <select id="priceType" onchange="calcAvgPrice()" class="inline-select" style="margin-bottom: 8px; font-size: 14px; border: 1px solid #dcdde1; background: #f8f9fa;">
-                                <option value="ind_mv">🏭 Sản xuất - Trung thế</option>
-                                <option value="ind_lv">🏭 Sản xuất - Hạ thế</option>
-                                <option value="com_mv" selected>🏢 Kinh doanh - Trung thế</option>
-                                <option value="com_lv">🏢 Kinh doanh - Hạ thế</option>
-                                <option value="res_tier">🏡 Sinh hoạt - Bậc thang</option>
-                                <option value="custom">⚙️ Tùy chỉnh</option>
-                            </select>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <input type="text" id="electricityPrice" class="input-peak" value="2.830" style="background: #f0f7ff;" oninput="formatInt(this); document.getElementById('priceType').value='custom'; syncFromPrice();">
-                                <span class="font-bold text-dark">VNĐ/kWh</span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lang-vi">Sản lượng quy đổi <sup class="help-tip no-print" title="Mức tiêu thụ năng lượng hàng tháng (kWh). Tự động tính: Hóa đơn / Đơn giá điện trung bình.">[?]</sup></span>
-                            <span class="lang-en">Monthly Usage</span>
-                            <span class="formula-desc lang-vi">Công thức: (Hóa đơn / Đơn giá điện)</span>
-                        </td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <input type="text" id="monthlyUsage" class="input-peak" value="23.000" style="background: #f0fdf4;" oninput="formatInt(this); syncFromUsage()">
-                                <span class="font-bold text-dark">kWh</span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lang-vi">Công suất đỉnh (Peak Load) <sup class="help-tip no-print" title="Mức sử dụng cao nhất. Mặc định là Ước tính, sẽ được thay thế bằng Số liệu chính xác nếu Import file EVN.">[?]</sup></span>
-                            <span class="lang-en">Peak Load</span>
-                            <span class="formula-desc lang-vi">Ước tính hoặc trích xuất từ file EVN</span>
-                        </td>
-                        <td>
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <input type="text" id="peakLoad" class="input-peak text-primary" value="150" readonly style="background:#f1f2f6; cursor:not-allowed;" title="Thông số tự động">
-                                    <span class="font-bold text-dark">kW</span>
-                                </div>
-                                <span id="peakTime" style="font-size: 12.5px; color: #d35400; font-weight: 600; display: none;"></span>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        
-        <div class="no-print" style="margin-top: 35px; padding-top: 30px; border-top: 1px dashed var(--border);">
-            
-            <div style="background: #eafbf6; border: 1px dashed var(--success); padding: 20px; border-radius: var(--radius-sm); margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                    <strong style="color: var(--success); font-size: 15.5px;">📈 Phân tích Phụ tải Thực tế từ file EVN (AMR / CSV / Excel) <sup class="help-tip no-print" title="Hệ thống tự động đọc và phân tích dữ liệu 24h để vẽ chính xác Biểu đồ tải và tính toán hiệu suất dự án.">[?]</sup></strong>
-                    <p style="font-size: 14px; color: #636e72; margin: 6px 0 0 0;">Upload file .csv hoặc .xlsx xuất từ hệ thống đo xa để thuật toán tự động bóc tách phân bổ thời gian thực.</p>
-                </div>
-                <div>
-                    <input type="file" id="evnFileUpload" accept=".csv, .xlsx, .xls" style="display: none;" onchange="handleEvnUpload(event)">
-                    <button class="btn action-btn" style="background: var(--success); color: white; box-shadow: var(--shadow-sm);" onclick="document.getElementById('evnFileUpload').click()">
-                        📂 IMPORT FILE EVN
-                    </button>
-                </div>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <label style="margin: 0; color: var(--primary); text-transform: uppercase; font-size: 15px;">
-                    <span class="lang-vi">⚙️ ĐẶC TUYẾN TẢI & GIÁ ĐIỆN <sup class="help-tip no-print" title="Cấu trúc biểu giá EVN hiện hành (áp dụng cho Khung giờ) và cách thức Nhà máy/Khách hàng đang phân bổ việc tiêu thụ điện năng. Việc chọn đúng Phân bổ tải ảnh hưởng đến 90% độ chính xác của Mô hình Đầu tư.">[?]</sup></span>
-                    <span class="lang-en">⚙️ LOAD PROFILE & TOU TARIFF CONFIG</span>
-                </label>
-                <button class="btn action-btn" style="background:#dfe6e9; color:#2d3436; padding: 8px 14px; font-size: 13px; margin: 0;" onclick="calcAvgPrice()">
-                    🔄 <span class="lang-vi">Cập nhật Giá trung bình</span>
-                </button>
+    <div id="content-tech" class="collapsible-content" style="display: none;">
+        <div class="card" style="margin-bottom: 30px;">
+            <div class="card-title text-primary">
+                <span class="lang-vi">1. THÔNG TIN DỰ ÁN & HỒ SƠ TIÊU THỤ ĐIỆN</span>
+                <span class="lang-en">1. PROJECT & ENERGY CONSUMPTION PROFILE</span>
             </div>
             
-            <div class="grid-config">
+            <div class="grid-2" style="gap: 30px;">
                 <div>
-                    <div style="overflow-x: auto; margin-bottom: 15px;">
-                        <table class="evn-compact-table">
-                            <tr>
-                                <th style="width: 32%; text-align: left; padding-left: 15px;">Khung giờ (QĐ 963/QĐ-BCT)</th>
-                                <th style="width: 17%;">SX - Trung Thế</th>
-                                <th style="width: 17%;">SX - Hạ Thế</th>
-                                <th style="width: 17%;">KD - Trung Thế</th>
-                                <th style="width: 17%;">KD - Hạ Thế</th>
-                            </tr>
-                            <tr>
-                                <td class="font-bold text-success" style="text-align: left; padding-left: 15px;">
-                                    Thấp điểm<br><span style="font-size: 12px; font-weight: normal; color: #7f8fa6;">(00h - 06h)</span>
-                                </td>
-                                <td><input type="number" id="p_ind_mv_off" value="1190" class="evn-compact-input" oninput="calcAvgPrice()"></td>
-                                <td><input type="number" id="p_ind_lv_off" value="1300" class="evn-compact-input" oninput="calcAvgPrice()"></td>
-                                <td><input type="number" id="p_com_mv_off" value="1609" class="evn-compact-input" oninput="calcAvgPrice()"></td>
-                                <td><input type="number" id="p_com_lv_off" value="1918" class="evn-compact-input" oninput="calcAvgPrice()"></td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold text-primary" style="text-align: left; padding-left: 15px;">
-                                    Bình thường<br><span style="font-size: 12px; font-weight: normal; color: #7f8fa6;">(06h - 17h30, 22h30 - 24h)</span>
-                                </td>
-                                <td><input type="number" id="p_ind_mv_nor" value="1833" class="evn-compact-input" oninput="calcAvgPrice()"></td>
-                                <td><input type="number" id="p_ind_lv_nor" value="1987" class="evn-compact-input" oninput="calcAvgPrice()"></td>
-                                <td><input type="number" id="p_com_mv_nor" value="2887" class="evn-compact-input" oninput="calcAvgPrice()"></td>
-                                <td><input type="number" id="p_com_lv_nor" value="3152" class="evn-compact-input" oninput="calcAvgPrice()"></td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold text-accent" style="text-align: left; padding-left: 15px;">
-                                    Cao điểm<br><span style="font-size: 12px; font-weight: normal; color: #7f8fa6;">(17h30 - 22h30)</span>
-                                </td>
-                                <td><input type="number" id="p_ind_mv_peak" value="3398" class="evn-compact-input text-accent" oninput="calcAvgPrice()"></td>
-                                <td><input type="number" id="p_ind_lv_peak" value="3640" class="evn-compact-input text-accent" oninput="calcAvgPrice()"></td>
-                                <td><input type="number" id="p_com_mv_peak" value="5025" class="evn-compact-input text-accent" oninput="calcAvgPrice()"></td>
-                                <td><input type="number" id="p_com_lv_peak" value="5422" class="evn-compact-input text-accent" oninput="calcAvgPrice()"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 15px;">
-                    <table class="evn-compact-table" style="height: auto;">
+                    <table class="project-info-table">
                         <tr>
-                            <th colspan="4" style="background: #e17055;">Điện Sinh Hoạt - Bậc Thang (VNĐ/kWh)</th>
+                            <th colspan="2">
+                                <span class="lang-vi">Thông tin Khách hàng</span>
+                                <span class="lang-en">Client Information</span>
+                            </th>
                         </tr>
                         <tr>
-                            <td class="font-bold" style="background:#fdfdfd; width: 25%;">B1 (0-50)</td>
-                            <td style="width: 25%;"><input type="number" id="p_res_1" value="1984" class="evn-compact-input" oninput="calcAvgPrice()"></td>
-                            <td class="font-bold" style="background:#fdfdfd; width: 25%;">B2 (51-100)</td>
-                            <td style="width: 25%;"><input type="number" id="p_res_2" value="2050" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                            <td>
+                                <span class="lang-vi">Khách hàng</span>
+                                <span class="lang-en">Client Name</span>
+                            </td>
+                            <td>
+                                <input type="text" id="projCustomer" value="Văn phòng Điều Hành - CLA" oninput="updateCover()">
+                            </td>
                         </tr>
                         <tr>
-                            <td class="font-bold" style="background:#fdfdfd;">B3 (101-200)</td>
-                            <td><input type="number" id="p_res_3" value="2380" class="evn-compact-input" oninput="calcAvgPrice()"></td>
-                            <td class="font-bold" style="background:#fdfdfd;">B4 (201-300)</td>
-                            <td><input type="number" id="p_res_4" value="2998" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                            <td>
+                                <span class="lang-vi">Vị trí</span>
+                                <span class="lang-en">Address</span>
+                            </td>
+                            <td>
+                                <input type="text" id="projAddress" value="Cần Giuộc, Tây Ninh" oninput="updateCover()">
+                            </td>
                         </tr>
                         <tr>
-                            <td class="font-bold" style="color:#d35400; background:#fdfdfd;">B5 (301-400)</td>
-                            <td><input type="number" id="p_res_5" value="3350" class="evn-compact-input" style="color:#d35400;" oninput="calcAvgPrice()"></td>
-                            <td class="font-bold text-accent" style="background:#fdfdfd;">B6 (Từ 401)</td>
-                            <td><input type="number" id="p_res_6" value="3460" class="evn-compact-input text-accent" oninput="calcAvgPrice()"></td>
+                            <td>
+                                <span class="lang-vi">Loại hình <sup class="help-tip no-print" title="Hệ số quy đổi tỷ lệ sử dụng mái thực tế (đã trừ hành lang, cục nóng máy lạnh...): Công nghiệp ~80%, Thương mại & Dân dụng ~70%.">[?]</sup></span>
+                                <span class="lang-en">Segment</span>
+                            </td>
+                            <td>
+                                <select id="projSegment" class="inline-select" onchange="autoSizePV()">
+                                    <option value="residential">🏡 Dân dụng (Hộ gia đình/Biệt thự)</option>
+                                    <option value="cni_small" selected>🏢 Thương mại (Tòa nhà/Văn Phòng)</option>
+                                    <option value="cni_large">🏭 Công nghiệp (Nhà máy/ Cảng)</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="lang-vi">Diện tích mái khả dụng (m²) <sup class="help-tip no-print" title="Dùng để tính giới hạn số lượng tấm pin tối đa có thể lắp đặt lên mái. Nút 'Cấu hình thiết bị' để thay đổi số này.">[?]</sup></span>
+                                <span class="lang-en">Usable Roof Area</span>
+                            </td>
+                            <td>
+                                <input type="text" id="projRoof" value="100 m²" readonly style="background:#f1f2f6; cursor:not-allowed;" title="Sử dụng nút CẤU HÌNH THIẾT BỊ để thay đổi thông số này">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="lang-vi">Cấp điện áp</span>
+                                <span class="lang-en">Grid Voltage</span>
+                            </td>
+                            <td>
+                                <select id="projVoltage" class="inline-select">
+                                    <option value="1p220">⚡ 1 Pha 220V (Sinh hoạt)</option>
+                                    <option value="3p380" selected>⚡ 3 Pha 380V (Hạ thế)</option>
+                                    <option value="22kv">⚡ < 22kV (Trung thế)</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="lang-vi">Công suất TBA (kVA) <sup class="help-tip no-print" title="Giới hạn lưới điện: Tổng công suất Inverter không được phép vượt quá 80-100% công suất của Trạm Biến Áp để tránh quá dòng phát ngược.">[?]</sup></span>
+                                <span class="lang-en">Transformer (kVA)</span>
+                            </td>
+                            <td>
+                                <input type="text" id="projTransformer" value="1500 kVA">
+                            </td>
                         </tr>
                     </table>
+                </div>
 
-                    <select id="loadProfile" onchange="applyProfilePreset()" style="font-weight: 600; color: var(--primary); padding: 10px 12px; font-size: 15px; border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow-sm);">
-                        <option value="custom">⚙️ Tùy chỉnh thủ công</option>
-                        <option value="hd_247">🏡 Dân dụng 24/7 (Có người ban ngày)</option>
-                        <option value="hd_dem">🌙 Dân dụng (Sinh hoạt chủ yếu Tối/Đêm)</option>
-                        <option value="vp_hc" selected>🏢 Tòa nhà VP (Tập trung giờ hành chính)</option>
-                        <option value="nm_hc">🏭 Nhà máy ca ngày (7h - 17h)</option>
-                        <option value="nm_247">🏭 Nhà máy 3 ca (Hoạt động 24/24)</option>
-                        <option value="cang">🚢 Cảng biển / Logistics (7h - 23h)</option>
-                        <option value="tttm">🛒 Trung tâm Thương mại (9h - 22h)</option>
-                    </select>
-                </div>
-            </div>         
-            
-            <p style="font-size: 14.5px; color: #4b6584; font-weight: 600; margin-top: 15px; margin-bottom: -5px;">⏱️ CHIA TỶ TRỌNG TẢI THEO ĐẶC TUYẾN BỨC XẠ MẶT TRỜI:</p>
-            <div class="time-inputs">
-                <div class="time-block">
-                    <span class="time-label">🌙 ĐÊM (18-06h) <sup class="help-tip no-print" title="Tỷ trọng dùng điện từ chập tối qua đêm đến sáng sớm (12 tiếng). Nhu cầu cao là cơ sở bắt buộc đầu tư BESS.">[?]</sup></span>
-                    <div class="input-wrap">
-                        <input type="number" id="pct1" value="15" min="0" max="100" oninput="setCustomProfile()">
-                        <span class="unit">%</span>
-                    </div>
-                </div>
-                <div class="time-block">
-                    <span class="time-label">🌅 SÁNG (06-09h) <sup class="help-tip no-print" title="Tỷ trọng sử dụng điện đầu giờ sáng (3 tiếng). Nắng bắt đầu lên, PV khởi động gánh một phần tải.">[?]</sup></span>
-                    <div class="input-wrap">
-                        <input type="number" id="pct2" value="10" min="0" max="100" oninput="setCustomProfile()">
-                        <span class="unit">%</span>
-                    </div>
-                </div>
-                <div class="time-block">
-                    <span class="time-label">☀️ TRƯA (09-15h) <sup class="help-tip no-print" title="Tỷ trọng sử dụng điện giữa trưa (6 tiếng). Bức xạ đạt đỉnh, quyết định lượng điện Tự Dùng Trực Tiếp lớn nhất.">[?]</sup></span>
-                    <div class="input-wrap">
-                        <input type="number" id="pct3" value="60" min="0" max="100" oninput="setCustomProfile()">
-                        <span class="unit">%</span>
-                    </div>
-                </div>
-                <div class="time-block">
-                    <span class="time-label">🌆 CHIỀU (15-18h) <sup class="help-tip no-print" title="Tỷ trọng dùng điện chiều muộn (3 tiếng). Bức xạ giảm dần, PV tắt nắng nhường chỗ cho lưới hoặc BESS xả.">[?]</sup></span>
-                    <div class="input-wrap">
-                        <input type="number" id="pct4" value="15" min="0" max="100" oninput="setCustomProfile()">
-                        <span class="unit">%</span>
-                    </div>
+                <div>
+                    <table class="project-info-table">
+                        <tr>
+                            <th colspan="2">
+                                <span class="lang-vi">Dữ liệu tiêu thụ điện</span>
+                                <span class="lang-en">Billing Baseline</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="lang-vi">Hóa đơn điện TB hàng tháng <sup class="help-tip no-print" title="Mức chi trả bình quân mỗi tháng, dùng làm căn cứ tự động quy đổi ra Tổng lượng điện năng tiêu thụ (Sản lượng quy đổi).">[?]</sup></span>
+                                <span class="lang-en">Avg. Monthly Bill</span>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="text" id="infoBill" class="input-peak text-accent" value="79.000.000" style="background: #fffafa;" oninput="formatInt(this); syncFromBill()">
+                                    <span class="font-bold text-dark">VNĐ</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="valign-top" style="padding-top: 15px;">
+                                <span class="lang-vi">Đơn giá điện trung bình - EVN <sup class="help-tip no-print" title="Giá gia quyền (đã chia trung bình) được tự động nội suy từ biểu giá điện 3 khung giờ hoặc biểu giá bậc thang bên dưới theo tỷ trọng sử dụng.">[?]</sup></span>
+                                <span class="lang-en">Avg Grid Price</span>
+                            </td>
+                            <td style="padding-top: 15px;">
+                                <select id="priceType" onchange="calcAvgPrice()" class="inline-select" style="margin-bottom: 8px; font-size: 14px; border: 1px solid #dcdde1; background: #f8f9fa;">
+                                    <option value="ind_mv">🏭 Sản xuất - Trung thế</option>
+                                    <option value="ind_lv">🏭 Sản xuất - Hạ thế</option>
+                                    <option value="com_mv" selected>🏢 Kinh doanh - Trung thế</option>
+                                    <option value="com_lv">🏢 Kinh doanh - Hạ thế</option>
+                                    <option value="res_tier">🏡 Sinh hoạt - Bậc thang</option>
+                                    <option value="custom">⚙️ Tùy chỉnh</option>
+                                </select>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="text" id="electricityPrice" class="input-peak" value="2.830" style="background: #f0f7ff;" oninput="formatInt(this); document.getElementById('priceType').value='custom'; syncFromPrice();">
+                                    <span class="font-bold text-dark">VNĐ/kWh</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="lang-vi">Sản lượng quy đổi <sup class="help-tip no-print" title="Mức tiêu thụ năng lượng hàng tháng (kWh). Tự động tính: Hóa đơn / Đơn giá điện trung bình.">[?]</sup></span>
+                                <span class="lang-en">Monthly Usage</span>
+                                <span class="formula-desc lang-vi">Công thức: (Hóa đơn / Đơn giá điện)</span>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="text" id="monthlyUsage" class="input-peak" value="23.000" style="background: #f0fdf4;" oninput="formatInt(this); syncFromUsage()">
+                                    <span class="font-bold text-dark">kWh</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="lang-vi">Công suất đỉnh (Peak Load) <sup class="help-tip no-print" title="Mức sử dụng cao nhất. Mặc định là Ước tính, sẽ được thay thế bằng Số liệu chính xác nếu Import file EVN.">[?]</sup></span>
+                                <span class="lang-en">Peak Load</span>
+                                <span class="formula-desc lang-vi">Ước tính hoặc trích xuất từ file EVN</span>
+                            </td>
+                            <td>
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="text" id="peakLoad" class="input-peak text-primary" value="150" readonly style="background:#f1f2f6; cursor:not-allowed;" title="Thông số tự động">
+                                        <span class="font-bold text-dark">kW</span>
+                                    </div>
+                                    <span id="peakTime" style="font-size: 12.5px; color: #d35400; font-weight: 600; display: none;"></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="grid-2">
-        <div class="card">
-            <div class="card-title">
-                <span class="lang-vi">2. Cấu hình Hệ thống & Thuật toán Sizing</span>
-                <span class="lang-en">2. System Parameters & PV Sizing</span>
-            </div>
             
-            <div style="background: #f8f9fa; padding: 25px; border-radius: var(--radius-sm); border: 1px dashed var(--primary); margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; gap: 25px; flex-wrap: wrap; box-shadow: inset 0 0 8px rgba(0,0,0,0.02);">
-                <div style="flex: 1; min-width: 260px;">
-                    <label style="color: var(--primary); text-transform: uppercase; margin-bottom: 8px; font-size: 14px; font-weight: 800;">⚙️ ĐỊNH HƯỚNG SIZING (SCENARIO) <sup class="help-tip no-print" title="Zero-Export: Không phát ngược lên lưới, chỉ dùng ban ngày, điện sinh ra mà tải không dùng hết sẽ bị cắt bỏ (Curtailment).&#10;Hybrid BESS: Dùng thêm hệ thống Pin Lưu trữ để giữ lại điện mặt trời dư ban ngày, xả ra dùng vào ban đêm.">[?]</sup>:</label>
-                    <select id="mainStrategy" onchange="calculate()" style="border-color: var(--primary); color: var(--primary); font-weight: bold; font-size: 15.5px; width: 100%; box-shadow: var(--shadow-sm); background: #f0f7ff; padding: 12px 15px;">
-                        <option value="zero_export" selected>⚡BÁM TẢI (Zero-Export): Tối ưu CAPEX, phủ tải ban ngày.</option>
-                        <option value="hybrid_bess">🔋LƯU TRỮ (Hybrid BESS): Phủ 100% hóa đơn.</option>
-                    </select>
-                    
-                    <div id="bessStrategyGroup" style="display: none; margin-top: 15px; background: #fffaf0; padding: 12px 15px; border-radius: 8px; border: 1px dashed #fdcb6e; box-shadow: inset 0 0 5px rgba(0,0,0,0.02); animation: flashAnim 0.5s ease-out;">
-                        <label style="color: #d35400; font-size: 13.5px; font-weight: 800; margin-bottom: 5px;">
-                            🔋 CHẾ ĐỘ VẬN HÀNH BESS:
-                        </label>
-                        <select id="bessStrategy" onchange="calculate()" style="width: 100%; padding: 8px; border: 1px solid #ffeaa7; border-radius: 6px; font-weight: 700; color: #d35400; font-size: 14px; background: #fff;">
-                            <option value="solar_only" selected>☀️ Chỉ sạc từ Điện mặt trời dư (Tối ưu tuổi thọ)</option>
-                            <option value="grid_arbitrage">⚡ Sạc lưới Thấp điểm - Xả Cao điểm (Tối ưu Lợi nhuận)</option>
+            <div class="no-print" style="margin-top: 35px; padding-top: 30px; border-top: 1px dashed var(--border);">
+                
+                <div style="background: #eafbf6; border: 1px dashed var(--success); padding: 20px; border-radius: var(--radius-sm); margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <strong style="color: var(--success); font-size: 15.5px;">📈 Phân tích Phụ tải Thực tế từ file EVN (AMR / CSV / Excel) <sup class="help-tip no-print" title="Hệ thống tự động đọc và phân tích dữ liệu 24h để vẽ chính xác Biểu đồ tải và tính toán hiệu suất dự án.">[?]</sup></strong>
+                        <p style="font-size: 14px; color: #636e72; margin: 6px 0 0 0;">Upload file .csv hoặc .xlsx xuất từ hệ thống đo xa để thuật toán tự động bóc tách phân bổ thời gian thực.</p>
+                    </div>
+                    <div>
+                        <input type="file" id="evnFileUpload" accept=".csv, .xlsx, .xls" style="display: none;" onchange="handleEvnUpload(event)">
+                        <button class="btn action-btn" style="background: var(--success); color: white; box-shadow: var(--shadow-sm);" onclick="document.getElementById('evnFileUpload').click()">
+                            📂 IMPORT FILE EVN
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <label style="margin: 0; color: var(--primary); text-transform: uppercase; font-size: 15px;">
+                        <span class="lang-vi">⚙️ ĐẶC TUYẾN TẢI & GIÁ ĐIỆN <sup class="help-tip no-print" title="Cấu trúc biểu giá EVN hiện hành (áp dụng cho Khung giờ) và cách thức Nhà máy/Khách hàng đang phân bổ việc tiêu thụ điện năng. Việc chọn đúng Phân bổ tải ảnh hưởng đến 90% độ chính xác của Mô hình Đầu tư.">[?]</sup></span>
+                        <span class="lang-en">⚙️ LOAD PROFILE & TOU TARIFF CONFIG</span>
+                    </label>
+                    <button class="btn action-btn" style="background:#dfe6e9; color:#2d3436; padding: 8px 14px; font-size: 13px; margin: 0;" onclick="calcAvgPrice()">
+                        🔄 <span class="lang-vi">Cập nhật Giá trung bình</span>
+                    </button>
+                </div>
+                
+                <div class="grid-config">
+                    <div>
+                        <div style="overflow-x: auto; margin-bottom: 15px;">
+                            <table class="evn-compact-table">
+                                <tr>
+                                    <th style="width: 32%; text-align: left; padding-left: 15px;">Khung giờ (QĐ 963/QĐ-BCT)</th>
+                                    <th style="width: 17%;">SX - Trung Thế</th>
+                                    <th style="width: 17%;">SX - Hạ Thế</th>
+                                    <th style="width: 17%;">KD - Trung Thế</th>
+                                    <th style="width: 17%;">KD - Hạ Thế</th>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-success" style="text-align: left; padding-left: 15px;">
+                                        Thấp điểm<br><span style="font-size: 12px; font-weight: normal; color: #7f8fa6;">(00h - 06h)</span>
+                                    </td>
+                                    <td><input type="number" id="p_ind_mv_off" value="1190" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                                    <td><input type="number" id="p_ind_lv_off" value="1300" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                                    <td><input type="number" id="p_com_mv_off" value="1609" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                                    <td><input type="number" id="p_com_lv_off" value="1918" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-primary" style="text-align: left; padding-left: 15px;">
+                                        Bình thường<br><span style="font-size: 12px; font-weight: normal; color: #7f8fa6;">(06h - 17h30, 22h30 - 24h)</span>
+                                    </td>
+                                    <td><input type="number" id="p_ind_mv_nor" value="1833" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                                    <td><input type="number" id="p_ind_lv_nor" value="1987" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                                    <td><input type="number" id="p_com_mv_nor" value="2887" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                                    <td><input type="number" id="p_com_lv_nor" value="3152" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-accent" style="text-align: left; padding-left: 15px;">
+                                        Cao điểm<br><span style="font-size: 12px; font-weight: normal; color: #7f8fa6;">(17h30 - 22h30)</span>
+                                    </td>
+                                    <td><input type="number" id="p_ind_mv_peak" value="3398" class="evn-compact-input text-accent" oninput="calcAvgPrice()"></td>
+                                    <td><input type="number" id="p_ind_lv_peak" value="3640" class="evn-compact-input text-accent" oninput="calcAvgPrice()"></td>
+                                    <td><input type="number" id="p_com_mv_peak" value="5025" class="evn-compact-input text-accent" oninput="calcAvgPrice()"></td>
+                                    <td><input type="number" id="p_com_lv_peak" value="5422" class="evn-compact-input text-accent" oninput="calcAvgPrice()"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <table class="evn-compact-table" style="height: auto;">
+                            <tr>
+                                <th colspan="4" style="background: #e17055;">Điện Sinh Hoạt - Bậc Thang (VNĐ/kWh)</th>
+                            </tr>
+                            <tr>
+                                <td class="font-bold" style="background:#fdfdfd; width: 25%;">B1 (0-50)</td>
+                                <td style="width: 25%;"><input type="number" id="p_res_1" value="1984" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                                <td class="font-bold" style="background:#fdfdfd; width: 25%;">B2 (51-100)</td>
+                                <td style="width: 25%;"><input type="number" id="p_res_2" value="2050" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold" style="background:#fdfdfd;">B3 (101-200)</td>
+                                <td><input type="number" id="p_res_3" value="2380" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                                <td class="font-bold" style="background:#fdfdfd;">B4 (201-300)</td>
+                                <td><input type="number" id="p_res_4" value="2998" class="evn-compact-input" oninput="calcAvgPrice()"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold" style="color:#d35400; background:#fdfdfd;">B5 (301-400)</td>
+                                <td><input type="number" id="p_res_5" value="3350" class="evn-compact-input" style="color:#d35400;" oninput="calcAvgPrice()"></td>
+                                <td class="font-bold text-accent" style="background:#fdfdfd;">B6 (Từ 401)</td>
+                                <td><input type="number" id="p_res_6" value="3460" class="evn-compact-input text-accent" oninput="calcAvgPrice()"></td>
+                            </tr>
+                        </table>
+
+                        <select id="loadProfile" onchange="applyProfilePreset()" style="font-weight: 600; color: var(--primary); padding: 10px 12px; font-size: 15px; border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow-sm);">
+                            <option value="custom">⚙️ Tùy chỉnh thủ công</option>
+                            <option value="hd_247">🏡 Dân dụng 24/7 (Có người ban ngày)</option>
+                            <option value="hd_dem">🌙 Dân dụng (Sinh hoạt chủ yếu Tối/Đêm)</option>
+                            <option value="vp_hc" selected>🏢 Tòa nhà VP (Tập trung giờ hành chính)</option>
+                            <option value="nm_hc">🏭 Nhà máy ca ngày (7h - 17h)</option>
+                            <option value="nm_247">🏭 Nhà máy 3 ca (Hoạt động 24/24)</option>
+                            <option value="cang">🚢 Cảng biển / Logistics (7h - 23h)</option>
+                            <option value="tttm">🛒 Trung tâm Thương mại (9h - 22h)</option>
                         </select>
                     </div>
+                </div>         
+                
+                <p style="font-size: 14.5px; color: #4b6584; font-weight: 600; margin-top: 15px; margin-bottom: -5px;">⏱️ CHIA TỶ TRỌNG TẢI THEO ĐẶC TUYẾN BỨC XẠ MẶT TRỜI:</p>
+                <div class="time-inputs">
+                    <div class="time-block">
+                        <span class="time-label">🌙 ĐÊM (18-06h) <sup class="help-tip no-print" title="Tỷ trọng dùng điện từ chập tối qua đêm đến sáng sớm (12 tiếng). Nhu cầu cao là cơ sở bắt buộc đầu tư BESS.">[?]</sup></span>
+                        <div class="input-wrap">
+                            <input type="number" id="pct1" value="15" min="0" max="100" oninput="setCustomProfile()">
+                            <span class="unit">%</span>
+                        </div>
+                    </div>
+                    <div class="time-block">
+                        <span class="time-label">🌅 SÁNG (06-09h) <sup class="help-tip no-print" title="Tỷ trọng sử dụng điện đầu giờ sáng (3 tiếng). Nắng bắt đầu lên, PV khởi động gánh một phần tải.">[?]</sup></span>
+                        <div class="input-wrap">
+                            <input type="number" id="pct2" value="10" min="0" max="100" oninput="setCustomProfile()">
+                            <span class="unit">%</span>
+                        </div>
+                    </div>
+                    <div class="time-block">
+                        <span class="time-label">☀️ TRƯA (09-15h) <sup class="help-tip no-print" title="Tỷ trọng sử dụng điện giữa trưa (6 tiếng). Bức xạ đạt đỉnh, quyết định lượng điện Tự Dùng Trực Tiếp lớn nhất.">[?]</sup></span>
+                        <div class="input-wrap">
+                            <input type="number" id="pct3" value="60" min="0" max="100" oninput="setCustomProfile()">
+                            <span class="unit">%</span>
+                        </div>
+                    </div>
+                    <div class="time-block">
+                        <span class="time-label">🌆 CHIỀU (15-18h) <sup class="help-tip no-print" title="Tỷ trọng dùng điện chiều muộn (3 tiếng). Bức xạ giảm dần, PV tắt nắng nhường chỗ cho lưới hoặc BESS xả.">[?]</sup></span>
+                        <div class="input-wrap">
+                            <input type="number" id="pct4" value="15" min="0" max="100" oninput="setCustomProfile()">
+                            <span class="unit">%</span>
+                        </div>
+                    </div>
                 </div>
-                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn action-btn no-print" style="background:var(--highlight); color:white; box-shadow: var(--shadow-sm); white-space: nowrap; height: fit-content;" onclick="openConfigModal()">
-                        ⚙️ CẤU HÌNH THIẾT BỊ
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-title">
+                    <span class="lang-vi">2. Cấu hình Hệ thống & Thuật toán Sizing</span>
+                    <span class="lang-en">2. System Parameters & PV Sizing</span>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 25px; border-radius: var(--radius-sm); border: 1px dashed var(--primary); margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; gap: 25px; flex-wrap: wrap; box-shadow: inset 0 0 8px rgba(0,0,0,0.02);">
+                    <div style="flex: 1; min-width: 260px;">
+                        <label style="color: var(--primary); text-transform: uppercase; margin-bottom: 8px; font-size: 14px; font-weight: 800;">⚙️ ĐỊNH HƯỚNG SIZING (SCENARIO) <sup class="help-tip no-print" title="Zero-Export: Không phát ngược lên lưới, chỉ dùng ban ngày, điện sinh ra mà tải không dùng hết sẽ bị cắt bỏ (Curtailment).&#10;Hybrid BESS: Dùng thêm hệ thống Pin Lưu trữ để giữ lại điện mặt trời dư ban ngày, xả ra dùng vào ban đêm.">[?]</sup>:</label>
+                        <select id="mainStrategy" onchange="calculate()" style="border-color: var(--primary); color: var(--primary); font-weight: bold; font-size: 15.5px; width: 100%; box-shadow: var(--shadow-sm); background: #f0f7ff; padding: 12px 15px;">
+                            <option value="zero_export" selected>⚡BÁM TẢI (Zero-Export): Tối ưu CAPEX, phủ tải ban ngày.</option>
+                            <option value="hybrid_bess">🔋LƯU TRỮ (Hybrid BESS): Phủ 100% hóa đơn.</option>
+                        </select>
+                        
+                        <div id="bessStrategyGroup" style="display: none; margin-top: 15px; background: #fffaf0; padding: 12px 15px; border-radius: 8px; border: 1px dashed #fdcb6e; box-shadow: inset 0 0 5px rgba(0,0,0,0.02); animation: flashAnim 0.5s ease-out;">
+                            <label style="color: #d35400; font-size: 13.5px; font-weight: 800; margin-bottom: 5px;">
+                                🔋 CHẾ ĐỘ VẬN HÀNH BESS:
+                            </label>
+                            <select id="bessStrategy" onchange="calculate()" style="width: 100%; padding: 8px; border: 1px solid #ffeaa7; border-radius: 6px; font-weight: 700; color: #d35400; font-size: 14px; background: #fff;">
+                                <option value="solar_only" selected>☀️ Chỉ sạc từ Điện mặt trời dư (Tối ưu tuổi thọ)</option>
+                                <option value="grid_arbitrage">⚡ Sạc lưới Thấp điểm - Xả Cao điểm (Tối ưu Lợi nhuận)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button class="btn action-btn no-print" style="background:var(--highlight); color:white; box-shadow: var(--shadow-sm); white-space: nowrap; height: fit-content;" onclick="openConfigModal()">
+                            ⚙️ CẤU HÌNH THIẾT BỊ
+                        </button>
+                        <button class="btn action-btn no-print" style="background:var(--success); color:white; box-shadow: 0 4px 10px rgba(0, 184, 148, 0.3); white-space: nowrap; height: fit-content;" onclick="autoSizePV()">
+                            📐 TỰ ĐỘNG TÍNH SỐ TẤM PIN
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-vi">Công suất Tấm Pin (Wp) <sup class="help-tip no-print" title="Công suất danh định (Wp) của 1 tấm pin mặt trời trong điều kiện đo tiêu chuẩn (STC).">[?]</sup>:</span>
+                            <span class="lang-en">Panel Power (Wp):</span>
+                        </label>
+                        <input type="number" id="panelPower" value="650" title="Đã được khóa, thay đổi trong mục CẤU HÌNH THIẾT BỊ" readonly style="background:#f1f2f6; cursor:not-allowed;" class="text-right">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-vi">Số lượng (Pcs) <sup class="help-tip no-print" title="Tổng số lượng tấm pin cấu thành nên hệ thống. Có thể bấm 'Tự động tính' để máy tính toán cỡ số lượng tối ưu dựa trên hóa đơn điện hoặc tối đa diện tích mái.">[?]</sup>:</span>
+                            <span class="lang-en">Panel Count:</span>
+                        </label>
+                        <input type="number" id="panelCount" value="308" title="200kW System config" oninput="calculate()" style="font-weight: 800; color: var(--primary); border-color: var(--primary); background: #f0f7ff;" class="text-right">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-vi">Giờ nắng đỉnh (PSH) <sup class="help-tip no-print" title="Peak Sun Hours: Tổng năng lượng bức xạ mặt trời trong ngày quy đổi thành số giờ có cường độ mạnh (1000 W/m2). Thông số này ảnh hưởng trực tiếp đến sản lượng điện sinh ra theo từng vùng địa lý.">[?]</sup>:</span>
+                            <span class="lang-en">Peak Sun Hours (PSH):</span>
+                        </label>
+                        <select id="region" onchange="calculate()">
+                            <option value="4.8">Nam Trung Bộ (4.8 h)</option>
+                            <option value="4.6" selected>Nam Bộ (4.6 h)</option>
+                            <option value="4.1">Trung Bộ (4.1 h)</option>
+                            <option value="3.5">Bắc Bộ (3.5 h)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-vi">Suy hao Tấm Pin năm 1 (%) <sup class="help-tip no-print" title="Mức độ giảm hiệu suất quang năng (Degradation) xảy ra mạnh trong năm đầu tiên vận hành (hiện tượng LID/PID). Thường từ 1.5 - 2%.">[?]</sup>:</span>
+                            <span class="lang-en">1st Year Degradation (%):</span>
+                        </label>
+                        <input type="number" id="degY1" value="1.5" step="0.1" oninput="calculate()" class="text-right">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-vi">Suy hao các năm tiếp (%) <sup class="help-tip no-print" title="Tốc độ thoái hóa của tấm pin kể từ năm thứ 2 trở đi do tác động của nhiệt độ và lão hóa vật liệu (thường từ 0.35 - 0.5% mỗi năm).">[?]</sup>:</span>
+                            <span class="lang-en">Annual Degradation (%):</span>
+                        </label>
+                        <input type="number" id="degAnn" value="0.35" step="0.01" oninput="calculate()" class="text-right">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-vi">Hệ số PR (Hiệu suất %) <sup class="help-tip no-print" title="Performance Ratio: Tỷ lệ điện năng thực tế thu được (điện lưới AC) sau khi đã trừ đi hao hụt do cáp dẫn, bụi bẩn, bóng râm, suy hao nhiệt và hiệu suất chuyển đổi của Biến tần.">[?]</sup>:</span>
+                            <span class="lang-en">Performance Ratio (PR %):</span>
+                        </label>
+                        <input type="number" id="prRate" value="85" step="1" oninput="calculate()" class="text-right">
+                    </div>
+                </div>
+                
+                <div class="mini-chart-container" style="margin-top: 35px;">
+                    <div style="font-size: 14.5px; font-weight: 800; text-align: center; margin-bottom: 20px; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.5px;">
+                        <span class="lang-vi">BIỂU ĐỒ TƯƠNG QUAN CÔNG SUẤT BỨC XẠ & PHỤ TẢI (kW)</span>
+                        <span class="lang-en">IRRADIANCE & LOAD MATCHING CURVE (kW)</span>
+                    </div>
+                    <canvas id="loadChart"></canvas>
+                </div>
+
+                <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleAlgorithmExpl()">
+                    <span id="algoToggleText">➕ Giải thích Biểu đồ</span>
+                </button>
+
+                <div id="algorithmExplBox" class="result-box-expanded no-print" style="display: none; border-left: 5px solid #f1c40f; margin-top: 20px; background: #fff; padding: 30px;">
+                    <div class="tech-note text-justify" style="margin-top: 0; border-top: none; padding-top: 0; font-size: 15px; line-height: 1.8;">
+                        <strong>📐 1. Hàm Cường độ Bức xạ (Solar Curve - Đường vàng):</strong><br> 
+                        <span style="font-size: 14px; color: #4b6584;">Phân phối năng lượng mặt trời sinh ra trong ngày được mô phỏng theo dạng phân phối chuẩn (Normal Distribution - Hình quả chuông) đạt đỉnh quanh giữa trưa:</span>
+                        <div class="formula-container" style="background: transparent; border: none; box-shadow: none; padding: 10px 0; margin-top: 0;">
+                            $$ S_h = E_{Daily} \times \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(h-\mu)^2}{2\sigma^2}} $$
+                        </div>
+                        
+                        <strong>📐 2. Hàm Phụ tải (Load Curve - Đường xanh):</strong><br>
+                        <span style="font-size: 14px; color: #4b6584;">Phân bổ điện năng tiêu thụ (\(E_{Daily\_Load}\)) rải đều theo từng khung giờ (\(Block_i\)) dựa trên tỷ lệ phần trăm đã cấu hình:</span>
+                        <div class="formula-container" style="background: transparent; border: none; box-shadow: none; padding: 10px 0; margin-top: 0;">
+                            $$ L_h = \frac{E_{Daily\_Load} \times \%Block_i}{Hours\_in\_Block_i} $$
+                        </div>
+                        
+                        <strong>📐 3. Tích phân Phân bổ Năng lượng (Energy Allocation):</strong>
+                        <div class="formula-container" style="background: transparent; border: none; box-shadow: none; padding: 10px 0; margin-top: 0;">
+                            $$ E_{Direct} = \sum_{h=1}^{24} \min(S_h, L_h) $$
+                            $$ E_{Excess} = \sum_{h=1}^{24} \max(0, S_h - L_h) $$
+                        </div>
+                        <div class="var-legend" style="border-top: 1px dashed var(--border); padding-top: 20px; margin-top: 10px; color: var(--secondary);">
+                            Trong đó: \(S_h\) là Công suất phát của Solar tại giờ \(h\); \(L_h\) là Công suất tiêu thụ của Tải tại giờ \(h\).<br><br>
+                            <strong>💡 Phân tích Tích phân:</strong> Tại bất kỳ thời điểm nào, lượng điện <strong>Tự dùng trực tiếp</strong> (\(E_{Direct}\)) luôn bị giới hạn bởi giá trị nhỏ hơn giữa Nhu cầu tải và Khả năng phát của Pin. Phần năng lượng mặt trời phát vượt quá nhu cầu tải gọi là <strong>Điện năng dư thừa</strong> (\(E_{Excess}\)). Lượng dư này sẽ bị lãng phí/cắt giảm (Curtailment) nếu chạy chế độ Zero-Export, hoặc được giữ lại nếu có lắp đặt hệ thống Lưu trữ BESS.
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span class="lang-vi">Tính Toán Thông Số Thiết bị</span>
+                    <span class="lang-en">Technical Output & Equipment Sizing</span>
+                </div>
+                
+                <div class="result-box" style="padding-bottom: 12px;">
+                    <span>
+                        <span class="lang-vi">Tổng Công suất Tấm Pin (DC) <sup class="help-tip no-print" title="Là công suất cực đại ở phía một chiều (DC), xác định quy margin chính của dự án. Bằng: Công suất 1 tấm pin x Tổng số tấm.">[?]</sup>:</span>
+                        <span class="lang-en">Solar Array Capacity (DC):</span>
+                    </span> 
+                    <span class="result-val highlight-val" id="resPower">---</span>
+                </div>
+
+                <div class="result-box-expanded" style="border-left: 5px solid var(--accent);">
+                    <div class="flex-row">
+                        <span>
+                            <span class="lang-vi">🔌 Công suất Biến tần (Inverter AC) <sup class="help-tip no-print" title="Công suất đẩy ra phía điện xoay chiều. Luôn được cấu hình nhỏ hơn Tổng công suất Pin (DC) để tạo ép tải (Overclock) nhằm giúp Inverter đạt hiệu suất cao ngay cả khi nắng yếu.">[?]</sup>:</span>
+                            <span class="lang-en">🔌 Inverter Capacity (AC):</span>
+                        </span> 
+                        <span class="equip-val" id="resInverter">---</span>
+                    </div>
+                    <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleAcAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f0f7ff; border-color: var(--primary); color: var(--primary);">
+                        <span id="acToggleText">➕ Xem cơ sở thiết kế AC</span>
                     </button>
-                    <button class="btn action-btn no-print" style="background:var(--success); color:white; box-shadow: 0 4px 10px rgba(0, 184, 148, 0.3); white-space: nowrap; height: fit-content;" onclick="autoSizePV()">
-                        📐 TỰ ĐỘNG TÍNH SỐ TẤM PIN
+
+                    <div id="acAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed var(--primary); padding-top: 15px;">
+                        <span class="lang-vi"><strong>📐 Cơ sở thiết kế AC (Overclocking Ratio):</strong> Thuật toán tự động cấu hình Công suất Inverter AC nhỏ hơn Công suất Pin DC. Việc ép tải này (DC/AC Ratio > 1) giúp Inverter luôn vận hành ở dải hiệu suất cao nhất ngay cả vào những ngày mây mù hoặc bức xạ yếu, bù đắp lại các tổn hao vật lý thực tế. Hiện tượng "cắt xén đỉnh" (Clipping Loss) giữa trưa sẽ xảy ra nhưng được chứng minh là mang lại hiệu quả kinh tế (LCOE) tốt hơn.</span>
+                        <div id="formulaInverter" class="formula-container">---</div>
+                    </div>
+                </div>
+
+                <div class="result-box-expanded" id="bessResultBox" style="border-left: 5px solid var(--primary); transition: background 0.3s;">
+                    <div class="flex-row">
+                        <span>
+                            <span class="lang-vi">🔋 Dung lượng BESS (Lưu trữ) <sup class="help-tip no-print" title="Tính bằng Tổng lượng điện mặt trời sinh ra bị dư thừa chia cho tỷ lệ an toàn của Pin (DoD) và hiệu suất nạp xả.">[?]</sup>:</span>
+                            <span class="lang-en">🔋 Recommended BESS Capacity:</span>
+                        </span> 
+                        <span class="equip-val text-primary" id="resBattery">---</span>
+                    </div>
+                    <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleBessAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f0fdf4; border-color: #00b894; color: #00b894;">
+                        <span id="bessToggleText">➕ Xem cơ sở thiết kế BESS</span>
                     </button>
-                </div>
-            </div>
 
-            <div class="grid-3">
-                <div class="form-group">
-                    <label>
-                        <span class="lang-vi">Công suất Tấm Pin (Wp) <sup class="help-tip no-print" title="Công suất danh định (Wp) của 1 tấm pin mặt trời trong điều kiện đo tiêu chuẩn (STC).">[?]</sup>:</span>
-                        <span class="lang-en">Panel Power (Wp):</span>
-                    </label>
-                    <input type="number" id="panelPower" value="650" title="Đã được khóa, thay đổi trong mục CẤU HÌNH THIẾT BỊ" readonly style="background:#f1f2f6; cursor:not-allowed;" class="text-right">
+                    <div id="bessAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed #00b894; padding-top: 15px;">
+                        <span class="lang-vi"><strong>📐 Thuật toán Sizing BESS:</strong> Dựa vào đặc tuyến tải phân tích ở trên, hệ thống tính toán chính xác tổng phần diện tích năng lượng dư thừa (\(E_{Excess}\)). Dung lượng Pin Lithium thiết kế phải đủ lớn để chứa toàn bộ lượng dư này mà vẫn chừa lại biên độ bảo vệ xả sâu DoD nhằm kéo dài tuổi thọ cell pin.</span>
+                        <div id="formulaBattery" class="formula-container">---</div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>
-                        <span class="lang-vi">Số lượng (Pcs) <sup class="help-tip no-print" title="Tổng số lượng tấm pin cấu thành nên hệ thống. Có thể bấm 'Tự động tính' để máy tính toán cỡ số lượng tối ưu dựa trên hóa đơn điện hoặc tối đa diện tích mái.">[?]</sup>:</span>
-                        <span class="lang-en">Panel Count:</span>
-                    </label>
-                    <input type="number" id="panelCount" value="308" title="200kW System config" oninput="calculate()" style="font-weight: 800; color: var(--primary); border-color: var(--primary); background: #f0f7ff;" class="text-right">
-                </div>
-                <div class="form-group">
-                    <label>
-                        <span class="lang-vi">Giờ nắng đỉnh (PSH) <sup class="help-tip no-print" title="Peak Sun Hours: Tổng năng lượng bức xạ mặt trời trong ngày quy đổi thành số giờ có cường độ mạnh (1000 W/m2). Thông số này ảnh hưởng trực tiếp đến sản lượng điện sinh ra theo từng vùng địa lý.">[?]</sup>:</span>
-                        <span class="lang-en">Peak Sun Hours (PSH):</span>
-                    </label>
-                    <select id="region" onchange="calculate()">
-                        <option value="4.8">Nam Trung Bộ (4.8 h)</option>
-                        <option value="4.6" selected>Nam Bộ (4.6 h)</option>
-                        <option value="4.1">Trung Bộ (4.1 h)</option>
-                        <option value="3.5">Bắc Bộ (3.5 h)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>
-                        <span class="lang-vi">Suy hao Tấm Pin năm 1 (%) <sup class="help-tip no-print" title="Mức độ giảm hiệu suất quang năng (Degradation) xảy ra mạnh trong năm đầu tiên vận hành (hiện tượng LID/PID). Thường từ 1.5 - 2%.">[?]</sup>:</span>
-                        <span class="lang-en">1st Year Degradation (%):</span>
-                    </label>
-                    <input type="number" id="degY1" value="1.5" step="0.1" oninput="calculate()" class="text-right">
-                </div>
-                <div class="form-group">
-                    <label>
-                        <span class="lang-vi">Suy hao các năm tiếp (%) <sup class="help-tip no-print" title="Tốc độ thoái hóa của tấm pin kể từ năm thứ 2 trở đi do tác động của nhiệt độ và lão hóa vật liệu (thường từ 0.35 - 0.5% mỗi năm).">[?]</sup>:</span>
-                        <span class="lang-en">Annual Degradation (%):</span>
-                    </label>
-                    <input type="number" id="degAnn" value="0.35" step="0.01" oninput="calculate()" class="text-right">
-                </div>
-                <div class="form-group">
-                    <label>
-                        <span class="lang-vi">Hệ số PR (Hiệu suất %) <sup class="help-tip no-print" title="Performance Ratio: Tỷ lệ điện năng thực tế thu được (điện lưới AC) sau khi đã trừ đi hao hụt do cáp dẫn, bụi bẩn, bóng râm, suy hao nhiệt và hiệu suất chuyển đổi của Biến tần.">[?]</sup>:</span>
-                        <span class="lang-en">Performance Ratio (PR %):</span>
-                    </label>
-                    <input type="number" id="prRate" value="85" step="1" oninput="calculate()" class="text-right">
-                </div>
-            </div>
-            
-            <div class="mini-chart-container" style="margin-top: 35px;">
-                <div style="font-size: 14.5px; font-weight: 800; text-align: center; margin-bottom: 20px; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.5px;">
-                    <span class="lang-vi">BIỂU ĐỒ TƯƠNG QUAN CÔNG SUẤT BỨC XẠ & PHỤ TẢI (kW)</span>
-                    <span class="lang-en">IRRADIANCE & LOAD MATCHING CURVE (kW)</span>
-                </div>
-                <canvas id="loadChart"></canvas>
-            </div>
 
-            <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleAlgorithmExpl()">
-                <span id="algoToggleText">➕ Giải thích Biểu đồ</span>
-            </button>
+                <div class="result-box-expanded" style="border-left: 5px solid #a4b0be; background: #fff;">
+                    <div class="flex-row" style="margin-bottom: 15px;">
+                        <span>
+                            <span class="lang-vi">Tổng sản lượng Năm đầu tiên <sup class="help-tip no-print" title="Sản lượng điện tối đa thu được (Đã bao gồm điện dùng trực tiếp và điện dư thừa), tính bằng Công suất DC x Số giờ nắng x PR x Tỷ lệ suy hao.">[?]</sup>:</span>
+                            <span class="lang-en">Total Theoretical Yield (Year 1):</span>
+                        </span> 
+                        <span class="result-val highlight-val" id="resGenY1">---</span>
+                    </div>
+                    <div class="flex-row" style="margin-bottom: 20px; border-bottom: 1px dotted var(--border); padding-bottom: 20px;">
+                        <span>
+                            <span class="lang-vi">Sản lượng bình quân tháng <sup class="help-tip no-print" title="Số lượng kWh sinh ra trung bình 1 tháng trong năm đầu tiên.">[?]</sup>:</span>
+                            <span class="lang-en">Average Monthly Yield:</span>
+                        </span> 
+                        <span class="result-val highlight-val text-primary" id="resGenMonth">---</span>
+                    </div>
+                    <div class="flex-row" style="margin-top: 20px; margin-bottom: 15px;">
+                        <span>
+                            <span class="lang-vi">Khả năng Hấp thụ (Dùng trực tiếp + BESS) <sup class="help-tip no-print" title="Lượng điện năng sinh ra được TIÊU THỤ THỰC TẾ bởi tải (bao gồm dùng ngay lúc có nắng và xả bù từ Pin lưu trữ). Đây là lượng điện mang lại lợi ích quy ra dòng tiền.">[?]</sup>:</span>
+                            <span class="lang-en">Usable Yield (Direct + BESS):</span>
+                        </span> 
+                        <span class="result-val highlight-val text-success" id="resOffset">---</span>
+                    </div>
+                    <div class="flex-row">
+                        <span>
+                            <span class="lang-vi">Sản lượng Dư thừa phát ngược (Excess Loss) <sup class="help-tip no-print" title="Trong mô hình Zero-Export: Lượng điện sinh ra mà tải nhà máy dùng không hết nên phải cắt bỏ (cấm đẩy lên lưới). Trong mô hình BESS: Lượng điện vượt quá cả sức chứa của cục Pin. Bị tính là lãng phí trắng.">[?]</sup>:</span>
+                            <span class="lang-en">Excess Generation (Zero-Export loss):</span>
+                        </span> 
+                        <span class="result-val" style="color:#7f8fa6" id="resExcess">---</span>
+                    </div>
+                    <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleYieldAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f1f2f6; border-color: #a4b0be; color: #636e72;">
+                        <span id="yieldToggleText">➕ Xem thuật toán Sản lượng</span>
+                    </button>
 
-            <div id="algorithmExplBox" class="result-box-expanded no-print" style="display: none; border-left: 5px solid #f1c40f; margin-top: 20px; background: #fff; padding: 30px;">
-                <div class="tech-note text-justify" style="margin-top: 0; border-top: none; padding-top: 0; font-size: 15px; line-height: 1.8;">
-                    <strong>📐 1. Hàm Cường độ Bức xạ (Solar Curve - Đường vàng):</strong><br> 
-                    <span style="font-size: 14px; color: #4b6584;">Phân phối năng lượng mặt trời sinh ra trong ngày được mô phỏng theo dạng phân phối chuẩn (Normal Distribution - Hình quả chuông) đạt đỉnh quanh giữa trưa:</span>
-                    <div class="formula-container" style="background: transparent; border: none; box-shadow: none; padding: 10px 0; margin-top: 0;">
-                        $$ S_h = E_{Daily} \times \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(h-\mu)^2}{2\sigma^2}} $$
-                    </div>
-                    
-                    <strong>📐 2. Hàm Phụ tải (Load Curve - Đường xanh):</strong><br>
-                    <span style="font-size: 14px; color: #4b6584;">Phân bổ điện năng tiêu thụ (\(E_{Daily\_Load}\)) rải đều theo từng khung giờ (\(Block_i\)) dựa trên tỷ lệ phần trăm đã cấu hình:</span>
-                    <div class="formula-container" style="background: transparent; border: none; box-shadow: none; padding: 10px 0; margin-top: 0;">
-                        $$ L_h = \frac{E_{Daily\_Load} \times \%Block_i}{Hours\_in\_Block_i} $$
-                    </div>
-                    
-                    <strong>📐 3. Tích phân Phân bổ Năng lượng (Energy Allocation):</strong>
-                    <div class="formula-container" style="background: transparent; border: none; box-shadow: none; padding: 10px 0; margin-top: 0;">
-                        $$ E_{Direct} = \sum_{h=1}^{24} \min(S_h, L_h) $$
-                        $$ E_{Excess} = \sum_{h=1}^{24} \max(0, S_h - L_h) $$
-                    </div>
-                    <div class="var-legend" style="border-top: 1px dashed var(--border); padding-top: 20px; margin-top: 10px; color: var(--secondary);">
-                        Trong đó: \(S_h\) là Công suất phát của Solar tại giờ \(h\); \(L_h\) là Công suất tiêu thụ của Tải tại giờ \(h\).<br><br>
-                        <strong>💡 Phân tích Tích phân:</strong> Tại bất kỳ thời điểm nào, lượng điện <strong>Tự dùng trực tiếp</strong> (\(E_{Direct}\)) luôn bị giới hạn bởi giá trị nhỏ hơn giữa Nhu cầu tải và Khả năng phát của Pin. Phần năng lượng mặt trời phát vượt quá nhu cầu tải gọi là <strong>Điện năng dư thừa</strong> (\(E_{Excess}\)). Lượng dư này sẽ bị lãng phí/cắt giảm (Curtailment) nếu chạy chế độ Zero-Export, hoặc được giữ lại nếu có lắp đặt hệ thống Lưu trữ BESS.
+                    <div id="yieldAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed #a4b0be; padding-top: 15px;">
+                        <span class="lang-vi"><strong>📐 Thuật toán Sản lượng (Yield Calculation):</strong> Áp dụng mô hình sản lượng chuẩn. Trong đó, hệ số Hiệu suất hệ thống PR (Performance Ratio) là tích số của chuỗi các suy hao vật lý: Suy hao chuyển đổi Inverter (thường ~98%) × Suy hao cáp AC/DC điện trở (~1%) × Suy hao do bóng râm & bụi bẩn (~2-3%) × Suy hao nhiệt độ cell pin.</span>
+                        <div id="formulaGen" class="formula-container">---</div>
                     </div>
                 </div>
             </div>
-            
         </div>
 
-        <div class="card">
-            <div class="card-title">
-                <span class="lang-vi">Tính Toán Thông Số Thiết bị</span>
-                <span class="lang-en">Technical Output & Equipment Sizing</span>
+        <div class="summary-box" id="part1Summary"></div>
+
+        <div class="card" style="margin-top: 35px; padding: 0; overflow: hidden;">
+            <div class="card-title" style="padding: 35px 35px 0 35px;">
+                <span class="lang-vi">Bảng Mô Phỏng Sản Lượng 25 Năm (Life-cycle Assessment)</span>
+                <span class="lang-en">25-Year Life-cycle Simulation Table (LCA)</span>
             </div>
-            
-            <div class="result-box" style="padding-bottom: 12px;">
-                <span>
-                    <span class="lang-vi">Tổng Công suất Tấm Pin (DC) <sup class="help-tip no-print" title="Là công suất cực đại ở phía một chiều (DC), xác định quy margin chính của dự án. Bằng: Công suất 1 tấm pin x Tổng số tấm.">[?]</sup>:</span>
-                    <span class="lang-en">Solar Array Capacity (DC):</span>
-                </span> 
-                <span class="result-val highlight-val" id="resPower">---</span>
+            <p style="font-size: 14.5px; color: #636e72; font-style: italic; margin-top: -15px; margin-bottom: 20px; padding: 0 35px;">
+                *Bảng dữ liệu đã được đồng bộ chuẩn xác theo Kịch bản cấu hình: <strong id="lblLcaStrategy" class="text-primary">---</strong>.
+            </p>
+            <div class="table-container" style="margin: 0; border: none; border-top: 1px solid var(--border); border-radius: 0;">
+                <table id="genTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 8%">Năm</th>
+                            <th style="width: 15%">Hiệu suất Module <sup class="help-tip no-print" title="Tính bằng: 100% - Suy hao năm 1 - (Suy hao các năm tiếp theo × (Năm - 1)).">[?]</sup></th>
+                            <th style="width: 17%">Tổng Sản Lượng (kWh)</th>
+                            <th style="width: 17%">Sử dụng (kWh) <sup class="help-tip no-print" title="Tổng điện năng hấp thụ được (Sinh ra dòng tiền trực tiếp)">[?]</sup></th>
+                            <th style="width: 17%">Cắt giảm / Lãng phí (kWh)</th>
+                            <th style="width: 26%">Dòng Tiền Doanh Thu (VNĐ) <sup class="help-tip no-print" title="Tiền điện tiết kiệm được từ số kWh sử dụng nhân với Đơn giá điện (có tính lạm phát)">[?]</sup></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot></tfoot>
+                </table>
             </div>
-
-            <div class="result-box-expanded" style="border-left: 5px solid var(--accent);">
-                <div class="flex-row">
-                    <span>
-                        <span class="lang-vi">🔌 Công suất Biến tần (Inverter AC) <sup class="help-tip no-print" title="Công suất đẩy ra phía điện xoay chiều. Luôn được cấu hình nhỏ hơn Tổng công suất Pin (DC) để tạo ép tải (Overclock) nhằm giúp Inverter đạt hiệu suất cao ngay cả khi nắng yếu.">[?]</sup>:</span>
-                        <span class="lang-en">🔌 Inverter Capacity (AC):</span>
-                    </span> 
-                    <span class="equip-val" id="resInverter">---</span>
-                </div>
-                <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleAcAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f0f7ff; border-color: var(--primary); color: var(--primary);">
-                    <span id="acToggleText">➕ Xem cơ sở thiết kế AC</span>
-                </button>
-
-                <div id="acAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed var(--primary); padding-top: 15px;">
-                    <span class="lang-vi"><strong>📐 Cơ sở thiết kế AC (Overclocking Ratio):</strong> Thuật toán tự động cấu hình Công suất Inverter AC nhỏ hơn Công suất Pin DC. Việc ép tải này (DC/AC Ratio > 1) giúp Inverter luôn vận hành ở dải hiệu suất cao nhất ngay cả vào những ngày mây mù hoặc bức xạ yếu, bù đắp lại các tổn hao vật lý thực tế. Hiện tượng "cắt xén đỉnh" (Clipping Loss) giữa trưa sẽ xảy ra nhưng được chứng minh là mang lại hiệu quả kinh tế (LCOE) tốt hơn.</span>
-                    <div id="formulaInverter" class="formula-container">---</div>
-                </div>
-            </div>
-
-            <div class="result-box-expanded" id="bessResultBox" style="border-left: 5px solid var(--primary); transition: background 0.3s;">
-                <div class="flex-row">
-                    <span>
-                        <span class="lang-vi">🔋 Dung lượng BESS (Lưu trữ) <sup class="help-tip no-print" title="Tính bằng Tổng lượng điện mặt trời sinh ra bị dư thừa chia cho tỷ lệ an toàn của Pin (DoD) và hiệu suất nạp xả.">[?]</sup>:</span>
-                        <span class="lang-en">🔋 Recommended BESS Capacity:</span>
-                    </span> 
-                    <span class="equip-val text-primary" id="resBattery">---</span>
-                </div>
-                <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleBessAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f0fdf4; border-color: #00b894; color: #00b894;">
-                    <span id="bessToggleText">➕ Xem cơ sở thiết kế BESS</span>
-                </button>
-
-                <div id="bessAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed #00b894; padding-top: 15px;">
-                    <span class="lang-vi"><strong>📐 Thuật toán Sizing BESS:</strong> Dựa vào đặc tuyến tải phân tích ở trên, hệ thống tính toán chính xác tổng phần diện tích năng lượng dư thừa (\(E_{Excess}\)). Dung lượng Pin Lithium thiết kế phải đủ lớn để chứa toàn bộ lượng dư này mà vẫn chừa lại biên độ bảo vệ xả sâu DoD nhằm kéo dài tuổi thọ cell pin.</span>
-                    <div id="formulaBattery" class="formula-container">---</div>
-                </div>
-            </div>
-
-            <div class="result-box-expanded" style="border-left: 5px solid #a4b0be; background: #fff;">
-                <div class="flex-row" style="margin-bottom: 15px;">
-                    <span>
-                        <span class="lang-vi">Tổng sản lượng Năm đầu tiên <sup class="help-tip no-print" title="Sản lượng điện tối đa thu được (Đã bao gồm điện dùng trực tiếp và điện dư thừa), tính bằng Công suất DC x Số giờ nắng x PR x Tỷ lệ suy hao.">[?]</sup>:</span>
-                        <span class="lang-en">Total Theoretical Yield (Year 1):</span>
-                    </span> 
-                    <span class="result-val highlight-val" id="resGenY1">---</span>
-                </div>
-                <div class="flex-row" style="margin-bottom: 20px; border-bottom: 1px dotted var(--border); padding-bottom: 20px;">
-                    <span>
-                        <span class="lang-vi">Sản lượng bình quân tháng <sup class="help-tip no-print" title="Số lượng kWh sinh ra trung bình 1 tháng trong năm đầu tiên.">[?]</sup>:</span>
-                        <span class="lang-en">Average Monthly Yield:</span>
-                    </span> 
-                    <span class="result-val highlight-val text-primary" id="resGenMonth">---</span>
-                </div>
-                <div class="flex-row" style="margin-top: 20px; margin-bottom: 15px;">
-                    <span>
-                        <span class="lang-vi">Khả năng Hấp thụ (Dùng trực tiếp + BESS) <sup class="help-tip no-print" title="Lượng điện năng sinh ra được TIÊU THỤ THỰC TẾ bởi tải (bao gồm dùng ngay lúc có nắng và xả bù từ Pin lưu trữ). Đây là lượng điện mang lại lợi ích quy ra dòng tiền.">[?]</sup>:</span>
-                        <span class="lang-en">Usable Yield (Direct + BESS):</span>
-                    </span> 
-                    <span class="result-val highlight-val text-success" id="resOffset">---</span>
-                </div>
-                <div class="flex-row">
-                    <span>
-                        <span class="lang-vi">Sản lượng Dư thừa phát ngược (Excess Loss) <sup class="help-tip no-print" title="Trong mô hình Zero-Export: Lượng điện sinh ra mà tải nhà máy dùng không hết nên phải cắt bỏ (cấm đẩy lên lưới). Trong mô hình BESS: Lượng điện vượt quá cả sức chứa của cục Pin. Bị tính là lãng phí trắng.">[?]</sup>:</span>
-                        <span class="lang-en">Excess Generation (Zero-Export loss):</span>
-                    </span> 
-                    <span class="result-val" style="color:#7f8fa6" id="resExcess">---</span>
-                </div>
-                <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleYieldAlgorithm()" style="margin-top: 15px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #f1f2f6; border-color: #a4b0be; color: #636e72;">
-                    <span id="yieldToggleText">➕ Xem thuật toán Sản lượng</span>
-                </button>
-
-                <div id="yieldAlgorithmBox" class="tech-note text-justify no-print" style="display: none; border-top: 1px dashed #a4b0be; padding-top: 15px;">
-                    <span class="lang-vi"><strong>📐 Thuật toán Sản lượng (Yield Calculation):</strong> Áp dụng mô hình sản lượng chuẩn. Trong đó, hệ số Hiệu suất hệ thống PR (Performance Ratio) là tích số của chuỗi các suy hao vật lý: Suy hao chuyển đổi Inverter (thường ~98%) × Suy hao cáp AC/DC điện trở (~1%) × Suy hao do bóng râm & bụi bẩn (~2-3%) × Suy hao nhiệt độ cell pin.</span>
-                    <div id="formulaGen" class="formula-container">---</div>
-                </div>
-            </div>
+            <button id="btnToggleLca" class="btn-toggle-lca no-print" onclick="toggleLcaTable()">▼ Xem chi tiết toàn bộ 25 năm ▼</button>
         </div>
-    </div>
-
-    <div class="summary-box" id="part1Summary"></div>
-
-    <div class="card" style="margin-top: 35px; padding: 0; overflow: hidden;">
-        <div class="card-title" style="padding: 35px 35px 0 35px;">
-            <span class="lang-vi">Bảng Mô Phỏng Sản Lượng 25 Năm (Life-cycle Assessment)</span>
-            <span class="lang-en">25-Year Life-cycle Simulation Table (LCA)</span>
+    </div> <div class="section-header finance" id="section-finance" onclick="toggleSection('content-finance', 'btn-finance')">
+        <div>
+            <span class="lang-vi">Phần II: Thẩm Định Hiệu Quả Đầu Tư (Financial & CAPEX Analysis)</span>
+            <span class="lang-en">Part II: Financial Feasibility & CAPEX Analysis</span>
         </div>
-        <p style="font-size: 14.5px; color: #636e72; font-style: italic; margin-top: -15px; margin-bottom: 20px; padding: 0 35px;">
-            *Bảng dữ liệu đã được đồng bộ chuẩn xác theo Kịch bản cấu hình: <strong id="lblLcaStrategy" class="text-primary">---</strong>.
-        </p>
-        <div class="table-container" style="margin: 0; border: none; border-top: 1px solid var(--border); border-radius: 0;">
-            <table id="genTable">
-                <thead>
-                    <tr>
-                        <th style="width: 8%">Năm</th>
-                        <th style="width: 15%">Hiệu suất Module <sup class="help-tip no-print" title="Tính bằng: 100% - Suy hao năm 1 - (Suy hao các năm tiếp theo × (Năm - 1)).">[?]</sup></th>
-                        <th style="width: 17%">Tổng Sản Lượng (kWh)</th>
-                        <th style="width: 17%">Sử dụng (kWh) <sup class="help-tip no-print" title="Tổng điện năng hấp thụ được (Sinh ra dòng tiền trực tiếp)">[?]</sup></th>
-                        <th style="width: 17%">Cắt giảm / Lãng phí (kWh)</th>
-                        <th style="width: 26%">Dòng Tiền Doanh Thu (VNĐ) <sup class="help-tip no-print" title="Tiền điện tiết kiệm được từ số kWh sử dụng nhân với Đơn giá điện (có tính lạm phát)">[?]</sup></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot></tfoot>
-            </table>
-        </div>
-        <button id="btnToggleLca" class="btn-toggle-lca no-print" onclick="toggleLcaTable()">▼ Xem chi tiết toàn bộ 25 năm ▼</button>
-    </div>
-<div class="section-header finance" id="section-finance">
-        <span class="lang-vi">Phần II: Thẩm Định Hiệu Quả Đầu Tư (Financial & CAPEX Analysis)</span>
-        <span class="lang-en">Part II: Financial Feasibility & CAPEX Analysis</span>
+        <span id="btn-finance" class="toggle-btn">➕</span>
     </div>
     
-    <div class="grid-2">
-        <div class="card">
-            <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border); padding-bottom: 20px;">
-                <span>
-                    <span class="lang-vi">4. Tham số Tài chính</span>
-                    <span class="lang-en">4. Macro Finance & OPEX</span>
-                </span>
-                <button class="btn btn-boq action-btn no-print" onclick="openBOQModal()">
-                    📝 <span class="lang-vi">BẢNG DỰ TOÁN </span>
-                        <span class="lang-en">CREATE BOQ</span>
-                </button>
-            </div>
-            
-            <div class="fin-grid-row fin-cols-3">
-                <div class="form-group compact">
-                    <label>
-                        <span class="lang-vi">Suất ĐT Solar (VNĐ/kWp) <sup class="help-tip no-print" title="Chi phí đầu tư trọn gói cho toàn bộ phần Năng lượng mặt trời chia cho Công suất (Bao gồm Vật tư, nhân công, cáp, khung kệ). Lấy dữ liệu chi tiết ở bảng BOQ.">[?]</sup>:</span>
-                    </label>
-                    <input type="text" id="capexPerKw" value="15.000.000" oninput="formatInt(this); calculate()" class="text-right" style="font-weight: 800; color: var(--accent); background: #fff5f5; border-color: #ffcccc;">
+    <div id="content-finance" class="collapsible-content" style="display: none;">
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border); padding-bottom: 20px;">
+                    <span>
+                        <span class="lang-vi">4. Tham số Tài chính</span>
+                        <span class="lang-en">4. Macro Finance & OPEX</span>
+                    </span>
+                    <button class="btn btn-boq action-btn no-print" onclick="openBOQModal()">
+                        📝 <span class="lang-vi">BẢNG DỰ TOÁN </span>
+                            <span class="lang-en">CREATE BOQ</span>
+                    </button>
                 </div>
                 
-                <div class="form-group compact" id="bessCapexGroup" style="transition: all 0.3s ease;">
-                    <label>
-                        <span class="lang-vi">Suất ĐT BESS (VNĐ/kWh) <sup class="help-tip no-print" title="Chi phí đầu tư cho 1 kWh dung lượng Pin lưu trữ Lithium (Cell pin + Hệ tủ bảo vệ chống cháy).">[?]</sup>:</span>
-                    </label>
-                    <input type="text" id="capexPerKwh" value="4.000.000" oninput="formatInt(this); calculate()" class="text-right">
+                <div class="fin-grid-row fin-cols-3">
+                    <div class="form-group compact">
+                        <label>
+                            <span class="lang-vi">Suất ĐT Solar (VNĐ/kWp) <sup class="help-tip no-print" title="Chi phí đầu tư trọn gói cho toàn bộ phần Năng lượng mặt trời chia cho Công suất (Bao gồm Vật tư, nhân công, cáp, khung kệ). Lấy dữ liệu chi tiết ở bảng BOQ.">[?]</sup>:</span>
+                        </label>
+                        <input type="text" id="capexPerKw" value="15.000.000" oninput="formatInt(this); calculate()" class="text-right" style="font-weight: 800; color: var(--accent); background: #fff5f5; border-color: #ffcccc;">
+                    </div>
+                    
+                    <div class="form-group compact" id="bessCapexGroup" style="transition: all 0.3s ease;">
+                        <label>
+                            <span class="lang-vi">Suất ĐT BESS (VNĐ/kWh) <sup class="help-tip no-print" title="Chi phí đầu tư cho 1 kWh dung lượng Pin lưu trữ Lithium (Cell pin + Hệ tủ bảo vệ chống cháy).">[?]</sup>:</span>
+                        </label>
+                        <input type="text" id="capexPerKwh" value="4.000.000" oninput="formatInt(this); calculate()" class="text-right">
+                    </div>
+                    
+                    <div class="form-group compact">
+                        <label>
+                            <span class="lang-vi">Giá FIT bán EVN (VNĐ) <sup class="help-tip no-print" title="Giá EVN mua lại phần điện mặt trời dư thừa không dùng hết (Hiện tại đa số là 0 do chưa có cơ chế mua bán mới).">[?]</sup>:</span>
+                        </label>
+                        <input type="text" id="exportPrice" value="0" oninput="formatInt(this); calculate()" class="text-right">
+                    </div>
+                </div>
+
+                <div class="fin-grid-row fin-cols-4">
+                    <div class="form-group compact">
+                        <label>OPEX năm 1 (%) <sup class="help-tip no-print" title="Chi phí Vận hành và Bảo dưỡng (Operation & Maintenance) ước tính cho năm đầu tiên, tính theo % của Tổng mức đầu tư (CAPEX). Thường từ 1-2%.">[?]</sup>:</label>
+                        <input type="number" id="omRate" value="1.0" step="0.1" oninput="calculate()" class="text-right">
+                    </div>
+                    <div class="form-group compact">
+                        <label>Trượt giá OPEX(%) <sup class="help-tip no-print" title="Tỷ lệ lạm phát hoặc tốc độ tăng chi phí vận hành bảo dưỡng hàng năm.">[?]</sup>:</label>
+                        <input type="number" id="omEscalation" value="0.5" step="0.5" oninput="calculate()" class="text-right">
+                    </div>
+                    <div class="form-group compact">
+                        <label style="color:var(--highlight)">
+                            <span class="lang-vi">Khấu hao (Năm) <sup class="help-tip no-print" title="Thời gian trích lập khấu hao tài sản cố định để tạo lá chắn thuế.">[?]</sup>:</span>
+                        </label>
+                        <select id="deprYears" onchange="calculate()" class="inline-select" style="font-weight:bold; color:var(--highlight); padding: 12px 16px; width: 100%; border: 1px solid #dcdde1; border-radius: 8px; font-size: 15px;">
+                            <option value="5">5 Năm</option>
+                            <option value="7">7 Năm</option>
+                            <option value="10" selected>10 Năm</option>
+                            <option value="15">15 Năm</option>
+                            <option value="20">20 Năm</option>
+                        </select>
+                    </div>
+                    <div class="form-group compact">
+                        <label>
+                            <span class="lang-vi">Thuế TNDN (%) <sup class="help-tip no-print" title="Thuế Thu nhập Doanh nghiệp đánh vào khoản lợi nhuận ròng có được từ việc cắt giảm chi phí tiền điện.">[?]</sup>:</span>
+                        </label>
+                        <div class="slider-wrapper" style="display:flex; justify-content: flex-end;">
+                            <input type="number" id="taxRate" value="20" oninput="calculate()" class="text-right" style="width: 100%; font-weight: bold;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fin-grid-row fin-cols-3">
+                    <div class="form-group compact" style="grid-column: span 3;">
+                        <label>
+                            <span class="lang-vi">Tỷ lệ Đòn bẩy (Debt %) <sup class="help-tip no-print" title="Phần trăm (%) Tổng mức đầu tư sử dụng Vốn đi vay từ Ngân hàng. Kéo thanh trượt để xem tác động đòn bẩy tài chính lên thời gian hoàn vốn.">[?]</sup>:</span>
+                        </label>
+                        <div class="slider-wrapper" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px dashed var(--border);">
+                            <input type="range" id="debtRatioSlider" min="0" max="100" step="5" value="0" oninput="document.getElementById('debtRatio').value = this.value; calculate()">
+                            <input type="number" id="debtRatio" value="0" oninput="document.getElementById('debtRatioSlider').value = this.value; calculate()" class="text-right font-bold text-primary" style="width: 90px; padding: 8px;">
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="form-group compact">
-                    <label>
-                        <span class="lang-vi">Giá FIT bán EVN (VNĐ) <sup class="help-tip no-print" title="Giá EVN mua lại phần điện mặt trời dư thừa không dùng hết (Hiện tại đa số là 0 do chưa có cơ chế mua bán mới).">[?]</sup>:</span>
-                    </label>
-                    <input type="text" id="exportPrice" value="0" oninput="formatInt(this); calculate()" class="text-right">
-                </div>
-            </div>
-
-            <div class="fin-grid-row fin-cols-4">
-                <div class="form-group compact">
-                    <label>OPEX năm 1 (%) <sup class="help-tip no-print" title="Chi phí Vận hành và Bảo dưỡng (Operation & Maintenance) ước tính cho năm đầu tiên, tính theo % của Tổng mức đầu tư (CAPEX). Thường từ 1-2%.">[?]</sup>:</label>
-                    <input type="number" id="omRate" value="1.0" step="0.1" oninput="calculate()" class="text-right">
-                </div>
-                <div class="form-group compact">
-                    <label>Trượt giá OPEX(%) <sup class="help-tip no-print" title="Tỷ lệ lạm phát hoặc tốc độ tăng chi phí vận hành bảo dưỡng hàng năm.">[?]</sup>:</label>
-                    <input type="number" id="omEscalation" value="0.5" step="0.5" oninput="calculate()" class="text-right">
-                </div>
-                <div class="form-group compact">
-                    <label style="color:var(--highlight)">
-                        <span class="lang-vi">Khấu hao (Năm) <sup class="help-tip no-print" title="Thời gian trích lập khấu hao tài sản cố định để tạo lá chắn thuế.">[?]</sup>:</span>
-                    </label>
-                    <select id="deprYears" onchange="calculate()" class="inline-select" style="font-weight:bold; color:var(--highlight); padding: 12px 16px; width: 100%; border: 1px solid #dcdde1; border-radius: 8px; font-size: 15px;">
-                        <option value="5">5 Năm</option>
-                        <option value="7">7 Năm</option>
-                        <option value="10" selected>10 Năm</option>
-                        <option value="15">15 Năm</option>
-                        <option value="20">20 Năm</option>
-                    </select>
-                </div>
-                <div class="form-group compact">
-                    <label>
-                        <span class="lang-vi">Thuế TNDN (%) <sup class="help-tip no-print" title="Thuế Thu nhập Doanh nghiệp đánh vào khoản lợi nhuận ròng có được từ việc cắt giảm chi phí tiền điện.">[?]</sup>:</span>
-                    </label>
-                    <div class="slider-wrapper" style="display:flex; justify-content: flex-end;">
-                        <input type="number" id="taxRate" value="20" oninput="calculate()" class="text-right" style="width: 100%; font-weight: bold;">
+                <div class="fin-grid-row fin-cols-3" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">
+                    <div class="form-group compact">
+                        <label>Lãi suất vay (%/năm) <sup class="help-tip no-print" title="Lãi suất vay vốn ngân hàng áp dụng cho phần Vốn vay (Debt) trong cấu trúc Vốn đầu tư.">[?]</sup>:</label>
+                        <input type="number" id="interestRate" value="10.5" step="0.1" oninput="calculate()" class="text-right">
                     </div>
-                </div>
-            </div>
-
-            <div class="fin-grid-row fin-cols-3">
-                <div class="form-group compact" style="grid-column: span 3;">
-                    <label>
-                        <span class="lang-vi">Tỷ lệ Đòn bẩy (Debt %) <sup class="help-tip no-print" title="Phần trăm (%) Tổng mức đầu tư sử dụng Vốn đi vay từ Ngân hàng. Kéo thanh trượt để xem tác động đòn bẩy tài chính lên thời gian hoàn vốn.">[?]</sup>:</span>
-                    </label>
-                    <div class="slider-wrapper" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px dashed var(--border);">
-                        <input type="range" id="debtRatioSlider" min="0" max="100" step="5" value="0" oninput="document.getElementById('debtRatio').value = this.value; calculate()">
-                        <input type="number" id="debtRatio" value="0" oninput="document.getElementById('debtRatioSlider').value = this.value; calculate()" class="text-right font-bold text-primary" style="width: 90px; padding: 8px;">
+                    <div class="form-group compact">
+                        <label>Kỳ hạn vay (Năm) <sup class="help-tip no-print" title="Thời gian trả nợ gốc và lãi cho khoản vay ngân hàng.">[?]</sup>:</label>
+                        <input type="number" id="loanTerm" value="5" oninput="calculate()" class="text-right">
                     </div>
-                </div>
-            </div>
-            
-            <div class="fin-grid-row fin-cols-3" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">
-                <div class="form-group compact">
-                    <label>Lãi suất vay (%/năm) <sup class="help-tip no-print" title="Lãi suất vay vốn ngân hàng áp dụng cho phần Vốn vay (Debt) trong cấu trúc Vốn đầu tư.">[?]</sup>:</label>
-                    <input type="number" id="interestRate" value="10.5" step="0.1" oninput="calculate()" class="text-right">
-                </div>
-                <div class="form-group compact">
-                    <label>Kỳ hạn vay (Năm) <sup class="help-tip no-print" title="Thời gian trả nợ gốc và lãi cho khoản vay ngân hàng.">[?]</sup>:</label>
-                    <input type="number" id="loanTerm" value="5" oninput="calculate()" class="text-right">
-                </div>
-                <div class="form-group compact">
-                    <style>
-                        .tooltip-ke-container { position: relative; display: inline-block; cursor: help; }
-                        .tooltip-ke-box { visibility: hidden; width: 330px; background-color: #fff; color: #2d3436; text-align: left; border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; bottom: 130%; right: -15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; font-weight: normal; font-family: var(--font-main); }
-                        .tooltip-ke-box::after { content: ""; position: absolute; top: 100%; right: 20px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
-                        .tooltip-ke-box::before { content: ""; position: absolute; top: 100%; right: 19px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
-                        .tooltip-ke-container:hover .tooltip-ke-box { visibility: visible; opacity: 1; }
-                    </style>
-                    <label>
-                        <span class="lang-vi">TS Chiết khấu (Ke%) 
-                            <div class="tooltip-ke-container no-print">
-                                <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
-                                <div class="tooltip-ke-box">
-                                    <strong style="color: var(--primary); font-size: 15px;">Tỷ suất chiết khấu (Ke%) là gì?</strong><br>
-                                    Đây là <em>"Chi phí cơ hội"</em> hay <em>"Lợi nhuận kỳ vọng tối thiểu"</em>. Đại diện cho số tiền lãi bạn chắc chắn nhận được nếu mang vốn đi gửi ngân hàng thay vì làm điện mặt trời.<br>
-                                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #f1c40f; margin: 12px 0;">
-                                        <strong style="color: var(--secondary); display: block;">Ví dụ thực tế:</strong> Đầu tư 10 tỷ, mỗi năm tiết kiệm 2 tỷ.<br>
-                                        <ul style="padding-left: 15px; margin-top: 5px; margin-bottom: 0;">
-                                            <li><strong>Chưa tính Ke%:</strong> Lấy 10/2 = 5 năm hoàn vốn (Danh nghĩa).</li>
-                                            <li><strong>Có tính Ke% (VD 10%):</strong> Do lỡ mất 10% tiền lãi ngân hàng mỗi năm, 2 tỷ thu về ở năm 5 bị trượt giá, ép về hiện tại chỉ còn <strong>1.24 tỷ</strong> (Thực tế).</li>
-                                        </ul>
+                    <div class="form-group compact">
+                        <style>
+                            .tooltip-ke-container { position: relative; display: inline-block; cursor: help; }
+                            .tooltip-ke-box { visibility: hidden; width: 330px; background-color: #fff; color: #2d3436; text-align: left; border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; bottom: 130%; right: -15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; font-weight: normal; font-family: var(--font-main); }
+                            .tooltip-ke-box::after { content: ""; position: absolute; top: 100%; right: 20px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
+                            .tooltip-ke-box::before { content: ""; position: absolute; top: 100%; right: 19px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
+                            .tooltip-ke-container:hover .tooltip-ke-box { visibility: visible; opacity: 1; }
+                        </style>
+                        <label>
+                            <span class="lang-vi">TS Chiết khấu (Ke%) 
+                                <div class="tooltip-ke-container no-print">
+                                    <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
+                                    <div class="tooltip-ke-box">
+                                        <strong style="color: var(--primary); font-size: 15px;">Tỷ suất chiết khấu (Ke%) là gì?</strong><br>
+                                        Đây là <em>"Chi phí cơ hội"</em> hay <em>"Lợi nhuận kỳ vọng tối thiểu"</em>. Đại diện cho số tiền lãi bạn chắc chắn nhận được nếu mang vốn đi gửi ngân hàng thay vì làm điện mặt trời.<br>
+                                        <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid #f1c40f; margin: 12px 0;">
+                                            <strong style="color: var(--secondary); display: block;">Ví dụ thực tế:</strong> Đầu tư 10 tỷ, mỗi năm tiết kiệm 2 tỷ.<br>
+                                            <ul style="padding-left: 15px; margin-top: 5px; margin-bottom: 0;">
+                                                <li><strong>Chưa tính Ke%:</strong> Lấy 10/2 = 5 năm hoàn vốn (Danh nghĩa).</li>
+                                                <li><strong>Có tính Ke% (VD 10%):</strong> Do lỡ mất 10% tiền lãi ngân hàng mỗi năm, 2 tỷ thu về ở năm 5 bị trượt giá, ép về hiện tại chỉ còn <strong>1.24 tỷ</strong> (Thực tế).</li>
+                                            </ul>
+                                        </div>
+                                        Hệ thống sẽ chiết khấu cộng dồn dòng tiền 25 năm:<br>
+                                        <span style="color: var(--success); display: block; margin-top: 5px;">✅ <strong>Tổng > 10 tỷ (IRR > Ke%):</strong> Sinh lời tốt hơn NH.</span>
+                                        <span style="color: var(--accent);">❌ <strong>Tổng < 10 tỷ (IRR < Ke%):</strong> Phá hủy giá trị, lỗ vốn.</span>
                                     </div>
-                                    Hệ thống sẽ chiết khấu cộng dồn dòng tiền 25 năm:<br>
-                                    <span style="color: var(--success); display: block; margin-top: 5px;">✅ <strong>Tổng > 10 tỷ (IRR > Ke%):</strong> Sinh lời tốt hơn NH.</span>
-                                    <span style="color: var(--accent);">❌ <strong>Tổng < 10 tỷ (IRR < Ke%):</strong> Phá hủy giá trị, lỗ vốn.</span>
-                                </div>
-                            </div>:
-                        </span>
-                    </label>
-                    <input type="number" id="discountRate" value="10" oninput="calculate()" class="text-right">
+                                </div>:
+                            </span>
+                        </label>
+                        <input type="number" id="discountRate" value="10" oninput="calculate()" class="text-right">
+                    </div>
                 </div>
-            </div>
-            <div class="fin-grid-row fin-cols-3" style="margin-top: 24px; border-top: 1px dashed var(--border); padding-top: 24px;">
-                <div class="form-group compact">
-                    <label>
-                        <span class="lang-vi">Trượt giá điện (%/năm) <sup class="help-tip no-print" title="Dự phòng tỷ lệ tăng giá điện trung bình của EVN hàng năm (Thường ~2-3%).">[?]</sup>:</span>
-                    </label>
-                    <input type="number" id="elecEscalation" value="2.0" step="0.1" oninput="calculate()" class="text-right" style="font-weight: 700; color: #e67e22; background: #fffaf0;">
+                <div class="fin-grid-row fin-cols-3" style="margin-top: 24px; border-top: 1px dashed var(--border); padding-top: 24px;">
+                    <div class="form-group compact">
+                        <label>
+                            <span class="lang-vi">Trượt giá điện (%/năm) <sup class="help-tip no-print" title="Dự phòng tỷ lệ tăng giá điện trung bình của EVN hàng năm (Thường ~2-3%).">[?]</sup>:</span>
+                        </label>
+                        <input type="number" id="elecEscalation" value="2.0" step="0.1" oninput="calculate()" class="text-right" style="font-weight: 700; color: #e67e22; background: #fffaf0;">
+                    </div>
+                </div>
+
+                <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleFinanceAlgorithm()" style="margin-top: 30px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #fff5f5; border-color: var(--accent); color: var(--accent);">
+                    <span id="financeToggleText">➕ Xem cơ sở tính toán Tài chính</span>
+                </button>
+
+                <div id="financeAlgorithmBox" class="tech-note text-justify no-print" style="display: none; margin-top: 15px; border-top: 1px dashed var(--accent); padding-top: 15px;">
+                    <span class="lang-vi">
+                        <strong>📐 Cơ sở Tính toán Tài chính & OPEX:</strong> Mô hình Dòng tiền FCFE (Free Cash Flow to Equity) được tính toán tỉ mỉ cho chu kỳ 25 năm. Trong đó, chi phí Vận hành (OPEX) tăng tiến theo lạm phát, đi kèm Quỹ dự phòng thay thế thiết bị cốt lõi. Dòng tiền đã bao gồm tác động của <strong>Lá chắn Thuế (Tax Shield)</strong> - Lợi ích tài chính lớn từ việc khấu hao tài sản.
+                    </span>
+                    <div id="formulaFinance" class="formula-container" style="text-align: left !important; padding: 25px; margin-top: 20px;">---</div>
                 </div>
             </div>
 
-            <button class="btn btn-toggle-algo no-print action-btn" onclick="toggleFinanceAlgorithm()" style="margin-top: 30px; padding: 8px 15px; font-size: 13.5px; width: auto; background: #fff5f5; border-color: var(--accent); color: var(--accent);">
-                <span id="financeToggleText">➕ Xem cơ sở tính toán Tài chính</span>
-            </button>
-
-            <div id="financeAlgorithmBox" class="tech-note text-justify no-print" style="display: none; margin-top: 15px; border-top: 1px dashed var(--accent); padding-top: 15px;">
-                <span class="lang-vi">
-                    <strong>📐 Cơ sở Tính toán Tài chính & OPEX:</strong> Mô hình Dòng tiền FCFE (Free Cash Flow to Equity) được tính toán tỉ mỉ cho chu kỳ 25 năm. Trong đó, chi phí Vận hành (OPEX) tăng tiến theo lạm phát, đi kèm Quỹ dự phòng thay thế thiết bị cốt lõi. Dòng tiền đã bao gồm tác động của <strong>Lá chắn Thuế (Tax Shield)</strong> - Lợi ích tài chính lớn từ việc khấu hao tài sản.
-                </span>
-                <div id="formulaFinance" class="formula-container" style="text-align: left !important; padding: 25px; margin-top: 20px;">---</div>
+            <div>
+                <div class="card" style="margin-bottom: 24px; height: 100%;">
+                    <div class="card-title text-primary">
+                        <span class="lang-vi">KẾT QUẢ MÔ PHỎNG TÀI CHÍNH</span>
+                        <span class="lang-en">FINANCIAL SIMULATION RESULTS</span>
+                    </div>
+                    <p style="font-size: 14.5px; color: #636e72; font-style: italic; margin-top: -15px; margin-bottom: 15px;">
+                        *Áp dụng trực tiếp cho Kịch bản: <strong id="lblFinStrategy" class="text-primary">---</strong>.
+                    </p>
+                    <table class="fin-table" style="margin-bottom: 0;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="lang-vi">Tổng mức Đầu tư (CAPEX) <sup class="help-tip no-print" title="Tổng Vốn khởi điểm ban đầu cho toàn bộ hệ thống (Bằng Suất đầu tư x Quy mô công suất).">[?]</sup></span>
+                                    <span class="metric-desc lang-vi" id="resCapexDescVi" style="color: var(--primary); font-weight: 600;">Vốn tự có: --- | Vốn vay: ---</span>
+                                </td>
+                                <td id="resCapexBase">---</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="lang-vi" style="color: #00b894;">Tổng Lá chắn Thuế (Tax Shield) <sup class="help-tip no-print" title="Lá chắn thuế (Tax Shield) là khoản tiền tiết kiệm được từ việc giảm trừ nghĩa vụ Thuế TNDN nhờ việc ghi nhận Chi phí Khấu hao tài sản cố định hàng năm.">[?]</sup></span>
+                                    <span class="metric-desc lang-vi" style="color: #00b894;">Tiết kiệm nhờ Khấu hao (Depr. × Tax Rate)</span>
+                                </td>
+                                <td id="resTaxShieldBase" style="color: #00b894;">---</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="lang-vi">Tổng Chi phí Vận hành (OPEX) <sup class="help-tip no-print" title="Tổng chi phí Vận hành, Bảo trì, Vệ sinh (O&M) cộng dồn trong 25 năm. Bao gồm chi phí thay thế Inverter và BESS.">[?]</sup></span>
+                                    <span class="metric-desc lang-vi">Chi phí O&M và Thay thế thiết bị trong 25 năm</span>
+                                </td>
+                                <td id="resOpexTotalBase" style="color: #e17055;">---</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="lang-vi">Tổng Dòng tiền Sinh lời (FCFE) <sup class="help-tip no-print" title="Lợi nhuận ròng cuối cùng của Chủ đầu tư cộng dồn trong 25 năm, sau khi đã thanh toán OPEX, Lãi vay, Thuế TNDN.">[?]</sup></span>
+                                    <span class="metric-desc lang-vi">Lợi nhuận gộp sau khi trừ Thuế, Lãi vay, OPEX</span>
+                                </td>
+                                <td id="resFcfeTotalBase" style="color:var(--highlight)">---</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="lang-vi">Biên Lợi nhuận (ROI) <sup class="help-tip no-print" title="Return on Investment: Tỷ suất sinh lời thuần túy (Không triết khấu) = Tổng Lợi nhuận / Tổng Vốn đầu tư ban đầu.">[?]</sup></span>
+                                    <span class="metric-desc lang-vi">Tổng Lợi nhuận / CAPEX</span>
+                                </td>
+                                <td id="resRoiBase">---</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="lang-vi">Thời gian Hoàn vốn Thuần <sup class="help-tip no-print" title="Số năm hệ thống tạo ra dòng tiền dương tích lũy đủ để bù đắp toàn bộ Vốn đầu tư ban đầu.">[?]</sup></span>
+                                    <span class="metric-desc lang-vi">Thời điểm Tích lũy Dòng tiền ≥ 0</span>
+                                </td>
+                                <td id="resPaybackBase" style="transition: background-color 0.5s;">---</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <style>
+                                        .tooltip-irr-container { position: relative; display: inline-block; cursor: help; }
+                                        .tooltip-irr-box { visibility: hidden; width: 350px; background-color: #fff; color: #2d3436; text-align: left; border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; bottom: 130%; left: -50px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; font-weight: normal; font-family: var(--font-main); }
+                                        .tooltip-irr-box::after { content: ""; position: absolute; top: 100%; left: 55px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
+                                        .tooltip-irr-box::before { content: ""; position: absolute; top: 100%; left: 54px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
+                                        .tooltip-irr-container:hover .tooltip-irr-box { visibility: visible; opacity: 1; }
+                                    </style>
+                                    <span class="lang-vi">Tỷ suất Sinh lời Nội bộ (IRR) 
+                                        <div class="tooltip-irr-container no-print">
+                                            <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
+                                            <div class="tooltip-irr-box">
+                                                <strong style="color: var(--success); font-size: 15px;">Tỷ suất sinh lời nội bộ (IRR) là gì?</strong><br>
+                                                Chỉ số IRR chính là <strong>mức lãi suất bình quân mỗi năm</strong> của dự án.<br>
+                                                <div style="background: #f0fdf4; padding: 12px; border-radius: 6px; border-left: 3px solid var(--success); margin: 12px 0;">
+                                                    <strong style="color: var(--secondary); display: block;">Ý nghĩa thực tế:</strong> 
+                                                    Nếu hệ thống tính ra IRR = 15%, nghĩa là số tiền đầu tư ban đầu đang tự động sinh lời tương đương với việc mang tiền đi gửi ngân hàng với mức lãi suất 15%/năm đều đặn suốt 25 năm.
+                                                </div>
+                                                <span style="color: var(--success); display: block;">✅ <strong>IRR > Ke% (Chi phí vốn):</strong> Dự án sinh lời cao hơn mức lợi nhuận kỳ vọng, RẤT ĐÁNG ĐẦU TƯ.</span>
+                                                <span style="color: var(--accent); display: block; margin-top: 5px;">❌ <strong>IRR < Ke%:</strong> Rủi ro cao, nên mang tiền đi gửi ngân hàng.</span>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <span class="metric-desc lang-vi">Chỉ số quyết định hiệu quả đầu tư</span>
+                                </td>
+                                <td id="resIrrBase" class="text-success" style="font-size: 22px; transition: background-color 0.5s;">---</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <style>
+                                        .tooltip-npv-container { position: relative; display: inline-block; cursor: help; }
+                                        .tooltip-npv-box { visibility: hidden; width: 350px; background-color: #fff; color: #2d3436; text-align: left; border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; bottom: 130%; left: -50px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; font-weight: normal; font-family: var(--font-main); }
+                                        .tooltip-npv-box::after { content: ""; position: absolute; top: 100%; left: 55px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
+                                        .tooltip-npv-box::before { content: ""; position: absolute; top: 100%; left: 54px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
+                                        .tooltip-npv-container:hover .tooltip-npv-box { visibility: visible; opacity: 1; }
+                                    </style>
+                                    <span class="lang-vi">Hiện giá Thuần (NPV) 
+                                        <div class="tooltip-npv-container no-print">
+                                            <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
+                                            <div class="tooltip-npv-box">
+                                                <strong style="color: var(--highlight); font-size: 15px;">Hiện giá thuần (NPV) là gì?</strong><br>
+                                                Đây là tổng <strong>Số tiền Lãi Ròng (VNĐ)</strong> bạn cầm chắc trong tay sau 25 năm, nhưng <em>đã được ép lùi về giá trị của đồng tiền ở thời điểm hiện tại</em> (đã trừ hao lạm phát, trượt giá và mọi chi phí cơ hội).<br>
+                                                <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid var(--highlight); margin: 12px 0;">
+                                                    <strong style="color: var(--secondary); display: block;">Ví dụ thực tế:</strong> 
+                                                    Đầu tư 10 tỷ. Tổng thu về sau 25 năm là 30 tỷ. Giả sử chiết khấu là 10%/năm, 30 tỷ của 25 năm sau chỉ tương đương sức mua của 15 tỷ ngày hôm nay.<br>
+                                                    👉 <strong>NPV = 15 tỷ - 10 tỷ (vốn ban đầu) = +5 tỷ.</strong>
+                                                </div>
+                                                <span style="color: var(--success); display: block;">✅ <strong>NPV > 0:</strong> Đồng tiền sinh sôi, tạo ra tài sản thặng dư dương.</span>
+                                                <span style="color: var(--accent); display: block; margin-top: 5px;">❌ <strong>NPV < 0:</strong> Đồng tiền bị mất giá trị sức mua.</span>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <span class="metric-desc lang-vi">Đã chiết khấu dòng tiền tương lai về hiện tại</span>
+                                </td>
+                                <td id="resNpvBase" style="transition: background-color 0.5s;">---</td>
+                            </tr>                        
+                            <tr>
+                                <td>
+                                    <span class="lang-vi">Chi phí Sản xuất Điện (LCOE) <sup class="help-tip no-print" title="Levelized Cost of Energy: Giá vốn trung bình để sản xuất ra 1 kWh điện, cộng dồn mọi chi phí (Đầu tư, Vận hành, Thay thế) chia cho tổng Sản lượng điện sinh ra trong suốt 25 năm vòng đời dự án.">[?]</sup></span>
+                                    <span class="metric-desc lang-vi">Giá vốn 1 kWh điện tạo ra trong 25 năm</span>
+                                </td>
+                                <td id="resLcoeBase" class="text-accent" style="font-size: 19px;">---</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div>
-            <div class="card" style="margin-bottom: 24px; height: 100%;">
-                <div class="card-title text-primary">
-                    <span class="lang-vi">KẾT QUẢ MÔ PHỎNG TÀI CHÍNH</span>
-                    <span class="lang-en">FINANCIAL SIMULATION RESULTS</span>
+        <div class="grid-2" style="margin-top: 30px; align-items: stretch;">
+            <div class="card" style="margin: 0; padding: 30px;">
+                <div class="card-title text-primary" style="margin-bottom: 20px; font-size: 16px; border-bottom: none; padding-bottom: 0;">
+                    <span class="lang-vi">Biểu đồ Dòng tiền FCFE & Thời gian Hoàn vốn</span>
                 </div>
-                <p style="font-size: 14.5px; color: #636e72; font-style: italic; margin-top: -15px; margin-bottom: 15px;">
-                    *Áp dụng trực tiếp cho Kịch bản: <strong id="lblFinStrategy" class="text-primary">---</strong>.
-                </p>
-                <table class="fin-table" style="margin-bottom: 0;">
+                <div style="height: 340px; position: relative;">
+                    <div id="chartOverlay" class="chart-lock-overlay">
+                        <span style="font-size: 28px; margin-bottom: 10px;">🔒</span>
+                        <span class="lang-vi">Biểu đồ đã bị khóa bản quyền</span>
+                    </div>
+                    <canvas id="cashflowChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card" style="margin: 0; padding: 30px;">
+                <div class="card-title text-highlight" style="margin-bottom: 20px; font-size: 16px; border-bottom: none; padding-bottom: 0;">
+                    <span class="lang-vi">Biểu đồ Phân tích Độ nhạy (Sensitivity)</span>
+                    <sup class="help-tip no-print" title="Biểu đồ Đường thể hiện sự biến động của Tỷ suất Sinh lời IRR khi các yếu tố vĩ mô như Chi phí Đầu tư (CAPEX), Sản lượng (Yield) và Chi phí Vận hành (OPEX) thay đổi lên/xuống 10-20%.">[?]</sup>
+                </div>
+                <div style="height: 340px; position: relative;">
+                    <canvas id="spiderChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div> <div class="section-header analysis" id="section-analysis" onclick="toggleSection('content-analysis', 'btn-analysis')">
+        <div>
+            <span class="lang-vi">Phần III: Phân Tích & Đề Xuất</span>
+            <span class="lang-en">Part III: Scenario Analysis & Recommendation</span>
+        </div>
+        <span id="btn-analysis" class="toggle-btn">➕</span>
+    </div>
+    
+    <div id="content-analysis" class="collapsible-content" style="display: none;">
+        <div class="card analysis-card">
+            <div class="card-title" style="color: var(--highlight); font-size: 19px; border-bottom-color: rgba(108, 92, 231, 0.2);">
+            </div>
+            <p id="lblProfileDesc" class="text-justify" style="font-size: 16px; margin-bottom: 15px; color: #4b6584; line-height: 1.8;"></p>
+            
+            <div class="scenario-box" id="scenarioAnalysisBox"></div>
+            <div id="part3Summary" class="recommendation-box text-justify"></div>
+        </div>
+    </div> <div class="section-header reference" id="section-reference" onclick="toggleSection('content-reference', 'btn-reference')">
+        <div>
+            <span class="lang-vi">Phần IV: Căn Cứ & Tiêu Chuẩn Áp Dụng</span>
+            <span class="lang-en">Part IV: Technical Basis & Applied Standards</span>
+        </div>
+        <span id="btn-reference" class="toggle-btn">➕</span>
+    </div>
+    
+    <div id="content-reference" class="collapsible-content" style="display: none;">
+        <div class="card" style="margin-bottom: 25px;">
+            <div class="grid-3">
+                <div>
+                    <h4 class="text-primary" style="margin-top:0; font-size: 16px; border-bottom: 1px dashed var(--border); padding-bottom: 12px;">
+                        🌐 Tiêu chuẩn Quốc tế (IEC/IEEE)
+                    </h4>
+                    <ul class="text-justify" style="font-size: 14.5px; color: #4b6584; padding-left: 20px; line-height: 1.7; margin-bottom: 0;">
+                        <li><strong>IEC 61724:</strong> Phương pháp đánh giá hiệu suất hệ thống quang điện (PR, Yield, Degradation).</li>
+                        <li><strong>IEC 61215 & IEC 61730:</strong> Tiêu chuẩn kiểm định chất lượng, thiết kế cơ học và an toàn điện cho module NLMT.</li>
+                        <li><strong>IEEE 1547:</strong> Quy chuẩn kết nối và tương tác hòa lưới áp dụng cho các nguồn điện phân phân tán (DERs).</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-success" style="margin-top:0; font-size: 16px; border-bottom: 1px dashed var(--border); padding-bottom: 12px;">
+                        🔋 Tiêu chuẩn Lưu trữ (BESS)
+                    </h4>
+                    <ul class="text-justify" style="font-size: 14.5px; color: #4b6584; padding-left: 20px; line-height: 1.7; margin-bottom: 0;">
+                        <li><strong>IEC 62619:</strong> Tiêu chuẩn kiểm thử an toàn và hiệu suất chu kỳ đối với cell pin Lithium công nghiệp.</li>
+                        <li><strong>UL 1973 / UL 9540:</strong> Chuẩn an toàn chống cháy nổ và quản lý nhiệt độ (Thermal Runaway) cho cụm hệ thống BESS.</li>
+                        <li><strong>BESS Sizing Rule:</strong> Thuật toán nội suy duy trì Độ xả sâu (DoD) tối đa 95% nhằm đảm bảo vòng đời > 8000 chu kỳ.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-accent" style="margin-top:0; font-size: 16px; border-bottom: 1px dashed var(--border); padding-bottom: 12px;">
+                        🇻🇳 Tiêu Chuẩn Việt Nam
+                    </h4>
+                    <ul class="text-justify" style="font-size: 14.5px; color: #4b6584; padding-left: 20px; line-height: 1.7; margin-bottom: 0;">
+                        <li><strong>Quy hoạch Điện VIII:</strong> Căn cứ định hướng phát triển điện mặt trời mái nhà theo mô hình tự sản tự tiêu (Zero-Export System).</li>
+                        <li><strong>TCVN 11856:2017:</strong> Yêu cầu an toàn kỹ thuật, thông số bảo vệ Relay và chất lượng điện năng đối với Inverter hòa lưới.</li>
+                        <li><strong>Quyết định 963/QĐ-BCT:</strong> Quy định khung giờ cao điểm, thấp điểm của hệ thống điện quốc gia.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> <div class="section-header reference no-print" id="section-hidden" onclick="toggleSection('content-hidden', 'btn-hidden')">
+        <div>
+            <span class="lang-vi">Phần V: Diễn Giải Các Giả Định & Tham Số Ẩn (Hidden Assumptions)</span>
+            <span class="lang-en">Part V: Hidden Assumptions & Parameters</span>
+        </div>
+        <span id="btn-hidden" class="toggle-btn">➕</span>
+    </div>
+    
+    <div id="content-hidden" class="collapsible-content no-print" style="display: none;">
+        <div class="card" style="margin-bottom: 25px; padding: 0; overflow: hidden;">
+            <div class="card-title" style="padding: 35px 35px 0 35px;">
+                <span class="lang-vi">Bảng Minh Bạch Tham Số Lõi Của Hệ Thống (White-box Model)</span>
+                <span class="lang-en">Core Algorithm Parameters Transparency</span>
+            </div>
+            <p style="font-size: 14.5px; color: #636e72; font-style: italic; margin-top: -15px; margin-bottom: 20px; padding: 0 35px; text-align: justify;">
+                *Bảng kê chi tiết các tham số hằng số (Constants) và bộ quy tắc nội suy được lập trình ngầm (hard-coded) trong thuật toán, nhằm giả lập chính xác điều kiện kỹ thuật và tài chính trong suốt vòng đời 25 năm của dự án.
+            </p>
+
+            <div class="table-container" style="margin: 0; border: none; border-top: 1px solid var(--border); border-radius: 0;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 14.5px; text-align: left;">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%; background-color: #f1f2f6; padding: 15px;">Hạng mục / Cấu phần</th>
+                            <th style="width: 15%; background-color: #f1f2f6; padding: 15px; text-align: center;">Giá trị ẩn</th>
+                            <th style="width: 30%; background-color: #f1f2f6; padding: 15px;">Phương pháp / Logic tính toán</th>
+                            <th style="width: 30%; background-color: #f1f2f6; padding: 15px;">Ý nghĩa & Rủi ro Quản trị</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                <span class="lang-vi">Tổng mức Đầu tư (CAPEX) <sup class="help-tip no-print" title="Tổng Vốn khởi điểm ban đầu cho toàn bộ hệ thống (Bằng Suất đầu tư x Quy mô công suất).">[?]</sup></span>
-                                <span class="metric-desc lang-vi" id="resCapexDescVi" style="color: var(--primary); font-weight: 600;">Vốn tự có: --- | Vốn vay: ---</span>
-                            </td>
-                            <td id="resCapexBase">---</td>
+                            <th colspan="4" style="background: #eafbf6; color: #00b894; padding: 10px 15px; font-size: 14px; text-transform: uppercase;">1. Hệ thống Kỹ thuật & Vận hành (Solar & BESS)</th>
                         </tr>
                         <tr>
-                            <td>
-                                <span class="lang-vi" style="color: #00b894;">Tổng Lá chắn Thuế (Tax Shield) <sup class="help-tip no-print" title="Lá chắn thuế (Tax Shield) là khoản tiền tiết kiệm được từ việc giảm trừ nghĩa vụ Thuế TNDN nhờ việc ghi nhận Chi phí Khấu hao tài sản cố định hàng năm.">[?]</sup></span>
-                                <span class="metric-desc lang-vi" style="color: #00b894;">Tiết kiệm nhờ Khấu hao (Depr. × Tax Rate)</span>
-                            </td>
-                            <td id="resTaxShieldBase" style="color: #00b894;">---</td>
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Đặc tuyến Bức xạ (Solar Curve)</td>
+                            <td class="text-center text-primary font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">Hàm quả chuông<br>(Bell Curve)</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">Điện lượng rải theo 24h: <code>[0h..6h: 0], [7h: 2/244], [12h: đỉnh 38/244], [17h: 3/244]...</code></td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Mô phỏng chính xác sự thay đổi của nắng trong ngày, chống lại sai số cục bộ nếu chỉ chia trung bình sản lượng bằng phép chia đều.</td>
                         </tr>
                         <tr>
-                            <td>
-                                <span class="lang-vi">Tổng Chi phí Vận hành (OPEX) <sup class="help-tip no-print" title="Tổng chi phí Vận hành, Bảo trì, Vệ sinh (O&M) cộng dồn trong 25 năm. Bao gồm chi phí thay thế Inverter và BESS.">[?]</sup></span>
-                                <span class="metric-desc lang-vi">Chi phí O&M và Thay thế thiết bị trong 25 năm</span>
-                            </td>
-                            <td id="resOpexTotalBase" style="color: #e17055;">---</td>
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Chuẩn hóa Inverter</td>
+                            <td class="text-center text-primary font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">Tự động Snap</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">Sau khi tính công suất lý thuyết, hệ thống tự làm tròn lên dải công suất thực tế: <code>[5,10...50,60,100,110,150,200...] kW</code>.</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Đảm bảo báo giá phản ánh thiết bị tồn tại thực tế trên thị trường (Ví dụ Huawei/Sungrow), không báo giá các Inverter "ảo" như 112.5 kW.</td>
                         </tr>
                         <tr>
-                            <td>
-                                <span class="lang-vi">Tổng Dòng tiền Sinh lời (FCFE) <sup class="help-tip no-print" title="Lợi nhuận ròng cuối cùng của Chủ đầu tư cộng dồn trong 25 năm, sau khi đã thanh toán OPEX, Lãi vay, Thuế TNDN.">[?]</sup></span>
-                                <span class="metric-desc lang-vi">Lợi nhuận gộp sau khi trừ Thuế, Lãi vay, OPEX</span>
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Hiệu suất Lưu trữ (Tự dùng)</td>
+                            <td class="text-center text-primary font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">DoD: 95%<br>RTE: 97%</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">
+                                Giới hạn độ xả sâu (DoD) ở 95%. Hiệu suất khứ hồi điện năng (RTE) hao hụt 3% do đổi điện.
                             </td>
-                            <td id="resFcfeTotalBase" style="color:var(--highlight)">---</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Kiểm soát chặt chẽ dung lượng BESS cần mua. Nếu nạp 100 kWh từ mặt trời, thực tế chỉ xả ra được ~92 kWh.</td>
                         </tr>
                         <tr>
-                            <td>
-                                <span class="lang-vi">Biên Lợi nhuận (ROI) <sup class="help-tip no-print" title="Return on Investment: Tỷ suất sinh lời thuần túy (Không triết khấu) = Tổng Lợi nhuận / Tổng Vốn đầu tư ban đầu.">[?]</sup></span>
-                                <span class="metric-desc lang-vi">Tổng Lợi nhuận / CAPEX</span>
-                            </td>
-                            <td id="resRoiBase">---</td>
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Kịch bản BESS (Sạc/Xả Lưới)</td>
+                            <td class="text-center text-primary font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">Usable: 85%<br>Eff: 95%</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">Cơ chế Arbitrage ép dung lượng xả mỗi ca xuống 85%, với hiệu suất nạp/xả riêng lẻ mỗi chiều là 95%.</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Bảo vệ vòng đời cell pin khi dùng ở chu kỳ khắc nghiệt (vét cạn chênh lệch giá). Tránh mô hình báo lãi ảo.</td>
                         </tr>
                         <tr>
-                            <td>
-                                <span class="lang-vi">Thời gian Hoàn vốn Thuần <sup class="help-tip no-print" title="Số năm hệ thống tạo ra dòng tiền dương tích lũy đủ để bù đắp toàn bộ Vốn đầu tư ban đầu.">[?]</sup></span>
-                                <span class="metric-desc lang-vi">Thời điểm Tích lũy Dòng tiền ≥ 0</span>
-                            </td>
-                            <td id="resPaybackBase" style="transition: background-color 0.5s;">---</td>
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Hệ số Dòng xả (C-Rate)</td>
+                            <td class="text-center text-primary font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">Max 0.5 C</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">Công suất xả tức thời không vượt quá phân nửa dung lượng tổng (Hệ 1MWh chỉ xả tối đa 500kW).</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Bảo vệ an toàn nhiệt (Thermal Runaway) cho chuỗi Cell pin khi phải bù các đỉnh tải lớn đột biến từ các thiết bị nâng hạ.</td>
+                        </tr>
+
+                        <tr>
+                            <th colspan="4" style="background: #fff0f0; color: #d63031; padding: 10px 15px; font-size: 14px; text-transform: uppercase;">2. Mô hình Tài chính & OPEX</th>
                         </tr>
                         <tr>
-                            <td>
-                                <style>
-                                    .tooltip-irr-container { position: relative; display: inline-block; cursor: help; }
-                                    .tooltip-irr-box { visibility: hidden; width: 350px; background-color: #fff; color: #2d3436; text-align: left; border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; bottom: 130%; left: -50px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; font-weight: normal; font-family: var(--font-main); }
-                                    .tooltip-irr-box::after { content: ""; position: absolute; top: 100%; left: 55px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
-                                    .tooltip-irr-box::before { content: ""; position: absolute; top: 100%; left: 54px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
-                                    .tooltip-irr-container:hover .tooltip-irr-box { visibility: visible; opacity: 1; }
-                                </style>
-                                <span class="lang-vi">Tỷ suất Sinh lời Nội bộ (IRR) 
-                                    <div class="tooltip-irr-container no-print">
-                                        <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
-                                        <div class="tooltip-irr-box">
-                                            <strong style="color: var(--success); font-size: 15px;">Tỷ suất sinh lời nội bộ (IRR) là gì?</strong><br>
-                                            Chỉ số IRR chính là <strong>mức lãi suất bình quân mỗi năm</strong> của dự án.<br>
-                                            <div style="background: #f0fdf4; padding: 12px; border-radius: 6px; border-left: 3px solid var(--success); margin: 12px 0;">
-                                                <strong style="color: var(--secondary); display: block;">Ý nghĩa thực tế:</strong> 
-                                                Nếu hệ thống tính ra IRR = 15%, nghĩa là số tiền đầu tư ban đầu đang tự động sinh lời tương đương với việc mang tiền đi gửi ngân hàng với mức lãi suất 15%/năm đều đặn suốt 25 năm.
-                                            </div>
-                                            <span style="color: var(--success); display: block;">✅ <strong>IRR > Ke% (Chi phí vốn):</strong> Dự án sinh lời cao hơn mức lợi nhuận kỳ vọng, RẤT ĐÁNG ĐẦU TƯ.</span>
-                                            <span style="color: var(--accent); display: block; margin-top: 5px;">❌ <strong>IRR < Ke%:</strong> Rủi ro cao, nên mang tiền đi gửi ngân hàng.</span>
-                                        </div>
-                                    </div>
-                                </span>
-                                <span class="metric-desc lang-vi">Chỉ số quyết định hiệu quả đầu tư</span>
-                            </td>
-                            <td id="resIrrBase" class="text-success" style="font-size: 22px; transition: background-color 0.5s;">---</td>
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Thay thế Inverter (Biến tần)</td>
+                            <td class="text-center text-accent font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">Năm thứ 12</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">Chi phí thay mới = <strong>10%</strong> giá trị cấu phần Solar CAPEX ban đầu.</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Bắt buộc phải dự phóng chi phí này vào năm 12 để đảm bảo dòng tiền FCFE không bị gãy gập khi biến tần hết hạn sử dụng.</td>
                         </tr>
                         <tr>
-                            <td>
-                                <style>
-                                    .tooltip-npv-container { position: relative; display: inline-block; cursor: help; }
-                                    .tooltip-npv-box { visibility: hidden; width: 350px; background-color: #fff; color: #2d3436; text-align: left; border-radius: 8px; padding: 18px; position: absolute; z-index: 1000; bottom: 130%; left: -50px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); opacity: 0; transition: opacity 0.3s, visibility 0.3s; font-size: 13.5px; line-height: 1.6; font-weight: normal; font-family: var(--font-main); }
-                                    .tooltip-npv-box::after { content: ""; position: absolute; top: 100%; left: 55px; border-width: 8px; border-style: solid; border-color: #fff transparent transparent transparent; }
-                                    .tooltip-npv-box::before { content: ""; position: absolute; top: 100%; left: 54px; border-width: 9px; border-style: solid; border-color: var(--border) transparent transparent transparent; }
-                                    .tooltip-npv-container:hover .tooltip-npv-box { visibility: visible; opacity: 1; }
-                                </style>
-                                <span class="lang-vi">Hiện giá Thuần (NPV) 
-                                    <div class="tooltip-npv-container no-print">
-                                        <sup class="help-tip" style="margin-left: 2px;">[?]</sup>
-                                        <div class="tooltip-npv-box">
-                                            <strong style="color: var(--highlight); font-size: 15px;">Hiện giá thuần (NPV) là gì?</strong><br>
-                                            Đây là tổng <strong>Số tiền Lãi Ròng (VNĐ)</strong> bạn cầm chắc trong tay sau 25 năm, nhưng <em>đã được ép lùi về giá trị của đồng tiền ở thời điểm hiện tại</em> (đã trừ hao lạm phát, trượt giá và mọi chi phí cơ hội).<br>
-                                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; border-left: 3px solid var(--highlight); margin: 12px 0;">
-                                                <strong style="color: var(--secondary); display: block;">Ví dụ thực tế:</strong> 
-                                                Đầu tư 10 tỷ. Tổng thu về sau 25 năm là 30 tỷ. Giả sử chiết khấu là 10%/năm, 30 tỷ của 25 năm sau chỉ tương đương sức mua của 15 tỷ ngày hôm nay.<br>
-                                                👉 <strong>NPV = 15 tỷ - 10 tỷ (vốn ban đầu) = +5 tỷ.</strong>
-                                            </div>
-                                            <span style="color: var(--success); display: block;">✅ <strong>NPV > 0:</strong> Đồng tiền sinh sôi, tạo ra tài sản thặng dư dương.</span>
-                                            <span style="color: var(--accent); display: block; margin-top: 5px;">❌ <strong>NPV < 0:</strong> Đồng tiền bị mất giá trị sức mua.</span>
-                                        </div>
-                                    </div>
-                                </span>
-                                <span class="metric-desc lang-vi">Đã chiết khấu dòng tiền tương lai về hiện tại</span>
-                            </td>
-                            <td id="resNpvBase" style="transition: background-color 0.5s;">---</td>
-                        </tr>                        
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Thay thế Cell Pin (BESS)</td>
+                            <td class="text-center text-accent font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">Năm thứ 15</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">Chi phí thay Cell = <strong>60%</strong> giá trị hệ BESS ban đầu (Giữ lại vỏ tủ, cáp, bộ PCS).</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Dựa trên suy hao tuyến tính của hóa học LFP sau ~5000-8000 chu kỳ nạp xả thực tế tại dự án.</td>
+                        </tr>
                         <tr>
-                            <td>
-                                <span class="lang-vi">Chi phí Sản xuất Điện (LCOE) <sup class="help-tip no-print" title="Levelized Cost of Energy: Giá vốn trung bình để sản xuất ra 1 kWh điện, cộng dồn mọi chi phí (Đầu tư, Vận hành, Thay thế) chia cho tổng Sản lượng điện sinh ra trong suốt 25 năm vòng đời dự án.">[?]</sup></span>
-                                <span class="metric-desc lang-vi">Giá vốn 1 kWh điện tạo ra trong 25 năm</span>
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Thuật toán Tính gốc lãi</td>
+                            <td class="text-center text-accent font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">Annuity (PMT)</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">Dùng hàm Niên kim (PMT): Tổng gốc + lãi trả ngân hàng là một số tiền cố định bằng nhau mỗi năm. Dư nợ giảm dần.</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Chuẩn hóa thuật toán thẩm định tín dụng, giúp doanh nghiệp dễ dàng cân đối ngân lưu (Cash Management).</td>
+                        </tr>
+
+                        <tr>
+                            <th colspan="4" style="background: #f0f7ff; color: #0984e3; padding: 10px 15px; font-size: 14px; text-transform: uppercase;">3. Khảo sát Vật lý & Bảng BOQ</th>
+                        </tr>
+                        <tr>
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Ước tính Tải Đỉnh (Peak Load)</td>
+                            <td class="text-center text-highlight font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">Hệ số 1.5</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">Nếu chưa Import file, tải đỉnh = <br><code>(Sản lượng tháng / 30 ngày / 8 giờ) × 1.5</code>.</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Khởi tạo bộ đệm công suất để ngăn máy tính tính toán hệ thống quá nhỏ, không chịu nổi dòng khởi động thiết bị.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Hệ số Phủ mái (Roof Usability)</td>
+                            <td class="text-center text-highlight font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">80% / 70%</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">Công nghiệp: 80%. Thương mại: 70%. Căn cứ trên Kích thước Panel mặc định (2.7 m²).</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Giới hạn giới hạn vật lý, chừa lối đi vận hành vệ sinh O&M, cục nóng máy lạnh và giếng trời bảo vệ PCCC.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold" style="padding: 15px; border-bottom: 1px solid var(--border); background: #fafafa;">Mục tiêu Zero-Export</td>
+                            <td class="text-center text-highlight font-bold" style="padding: 15px; border-bottom: 1px solid var(--border);">1.2x Tải ngày</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); color: #4b6584;">Bắt buộc số lượng pin phải phủ 120% nhu cầu tải của khung giờ Ban Ngày.</td>
+                            <td style="padding: 15px; border-bottom: 1px solid var(--border); font-size: 13.5px;">Cố tình thiết kế dư 20% để "ép tải" Inverter (Overclocking). Chấp nhận vứt bỏ một ít điện giữa trưa để tối đa hóa sản lượng gánh tải vào rạng sáng và chiều tối.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold" style="padding: 15px; border-bottom: none; background: #fafafa;">Định mức Tự động điền BOQ</td>
+                            <td class="text-center font-bold" style="padding: 15px; border-bottom: none; color: var(--secondary);">Auto Fill Base</td>
+                            <td style="padding: 15px; border-bottom: none; color: #4b6584;">
+                                • Inverter: ~ 1 Tr VNĐ / kWp.<br>
+                                • Khung, Cáp, Tủ, Thi công: ~ 100k VNĐ / kWp.<br>
+                                • Logistics: Fix cứng <strong>2,000,000 VNĐ</strong>.
                             </td>
-                            <td id="resLcoeBase" class="text-accent" style="font-size: 19px;">---</td>
+                            <td style="padding: 15px; border-bottom: none; font-size: 13.5px;">Cấu trúc nền tảng giúp ra ngay báo giá trong 3 giây. Ngay khi người dùng sửa tay (Edit), cơ chế này bị khóa vĩnh viễn cho đến khi reset.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
-
-    <div class="grid-2" style="margin-top: 30px; align-items: stretch;">
-        <div class="card" style="margin: 0; padding: 30px;">
-            <div class="card-title text-primary" style="margin-bottom: 20px; font-size: 16px; border-bottom: none; padding-bottom: 0;">
-                <span class="lang-vi">Biểu đồ Dòng tiền FCFE & Thời gian Hoàn vốn</span>
-            </div>
-            <div style="height: 340px; position: relative;">
-                <div id="chartOverlay" class="chart-lock-overlay">
-                    <span style="font-size: 28px; margin-bottom: 10px;">🔒</span>
-                    <span class="lang-vi">Biểu đồ đã bị khóa bản quyền</span>
-                </div>
-                <canvas id="cashflowChart"></canvas>
-            </div>
-        </div>
-
-        <div class="card" style="margin: 0; padding: 30px;">
-            <div class="card-title text-highlight" style="margin-bottom: 20px; font-size: 16px; border-bottom: none; padding-bottom: 0;">
-                <span class="lang-vi">Biểu đồ Phân tích Độ nhạy (Sensitivity)</span>
-                <sup class="help-tip no-print" title="Biểu đồ Đường thể hiện sự biến động của Tỷ suất Sinh lời IRR khi các yếu tố vĩ mô như Chi phí Đầu tư (CAPEX), Sản lượng (Yield) và Chi phí Vận hành (OPEX) thay đổi lên/xuống 10-20%.">[?]</sup>
-            </div>
-            <div style="height: 340px; position: relative;">
-                <canvas id="spiderChart"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <div class="section-header analysis" id="section-analysis">
-        <span class="lang-vi">Phần III: Phân Tích & Đề Xuất</span>
-        <span class="lang-en">Part III: Scenario Analysis & Recommendation</span>
-    </div>
-    
-    <div class="card analysis-card">
-        <div class="card-title" style="color: var(--highlight); font-size: 19px; border-bottom-color: rgba(108, 92, 231, 0.2);">
-        </div>
-        <p id="lblProfileDesc" class="text-justify" style="font-size: 16px; margin-bottom: 15px; color: #4b6584; line-height: 1.8;"></p>
-        
-        <div class="scenario-box" id="scenarioAnalysisBox"></div>
-        <div id="part3Summary" class="recommendation-box text-justify"></div>
-    </div>
-
-    <div class="section-header reference" id="section-reference">
-        <span class="lang-vi">Phần IV: Căn Cứ & Tiêu Chuẩn Áp Dụng</span>
-        <span class="lang-en">Part IV: Technical Basis & Applied Standards</span>
-    </div>
-    
-    <div class="card" style="margin-bottom: 25px;">
-        <div class="grid-3">
-            <div>
-                <h4 class="text-primary" style="margin-top:0; font-size: 16px; border-bottom: 1px dashed var(--border); padding-bottom: 12px;">
-                    🌐 Tiêu chuẩn Quốc tế (IEC/IEEE)
-                </h4>
-                <ul class="text-justify" style="font-size: 14.5px; color: #4b6584; padding-left: 20px; line-height: 1.7; margin-bottom: 0;">
-                    <li><strong>IEC 61724:</strong> Phương pháp đánh giá hiệu suất hệ thống quang điện (PR, Yield, Degradation).</li>
-                    <li><strong>IEC 61215 & IEC 61730:</strong> Tiêu chuẩn kiểm định chất lượng, thiết kế cơ học và an toàn điện cho module NLMT.</li>
-                    <li><strong>IEEE 1547:</strong> Quy chuẩn kết nối và tương tác hòa lưới áp dụng cho các nguồn điện phân phân tán (DERs).</li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-success" style="margin-top:0; font-size: 16px; border-bottom: 1px dashed var(--border); padding-bottom: 12px;">
-                    🔋 Tiêu chuẩn Lưu trữ (BESS)
-                </h4>
-                <ul class="text-justify" style="font-size: 14.5px; color: #4b6584; padding-left: 20px; line-height: 1.7; margin-bottom: 0;">
-                    <li><strong>IEC 62619:</strong> Tiêu chuẩn kiểm thử an toàn và hiệu suất chu kỳ đối với cell pin Lithium công nghiệp.</li>
-                    <li><strong>UL 1973 / UL 9540:</strong> Chuẩn an toàn chống cháy nổ và quản lý nhiệt độ (Thermal Runaway) cho cụm hệ thống BESS.</li>
-                    <li><strong>BESS Sizing Rule:</strong> Thuật toán nội suy duy trì Độ xả sâu (DoD) tối đa 95% nhằm đảm bảo vòng đời > 8000 chu kỳ.</li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-accent" style="margin-top:0; font-size: 16px; border-bottom: 1px dashed var(--border); padding-bottom: 12px;">
-                    🇻🇳 Tiêu Chuẩn Việt Nam
-                </h4>
-                <ul class="text-justify" style="font-size: 14.5px; color: #4b6584; padding-left: 20px; line-height: 1.7; margin-bottom: 0;">
-                    <li><strong>Quy hoạch Điện VIII:</strong> Căn cứ định hướng phát triển điện mặt trời mái nhà theo mô hình tự sản tự tiêu (Zero-Export System).</li>
-                    <li><strong>TCVN 11856:2017:</strong> Yêu cầu an toàn kỹ thuật, thông số bảo vệ Relay và chất lượng điện năng đối với Inverter hòa lưới.</li>
-                    <li><strong>Quyết định 963/QĐ-BCT:</strong> Quy định khung giờ cao điểm, thấp điểm của hệ thống điện quốc gia.</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    
-    <div class="bottom-controls-panel no-print">
+    </div> <div class="bottom-controls-panel no-print">
         <div id="lockContainer" class="compact-lock">
             <span class="font-bold text-accent" style="font-size: 15px;">🔒 Password:</span>
             <input type="password" id="unlockPwd" placeholder="Nhập Password..." onkeypress="if(event.key === 'Enter') checkPassword()">
