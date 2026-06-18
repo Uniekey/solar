@@ -280,3 +280,26 @@ mjx-container[display="true"] { margin: 12px 0 !important; text-align: center !i
     body.print-boq-only .boq-table textarea { height: auto !important; white-space: pre-wrap !important; overflow: visible !important; }
     body.print-boq-only .boq-table .boq-grand-total th { background: #dcdde1 !important; color: #000 !important; }
 }
+/* Tùy chỉnh hiệu ứng Đóng/Mở (Accordion) cho các Phần */
+.section-header { 
+    cursor: pointer; 
+    justify-content: space-between; 
+    transition: all 0.2s ease; 
+    user-select: none; 
+}
+.section-header:hover { 
+    filter: brightness(1.1); 
+    transform: translateX(5px); 
+}
+.toggle-btn { 
+    font-size: 18px; 
+    margin-left: auto; 
+    transition: transform 0.3s ease; 
+}
+
+/* Quy tắc bắt buộc hiển thị toàn bộ nội dung khi In/Xuất PDF */
+@media print {
+    .collapsible-content { display: block !important; }
+    .toggle-btn { display: none !important; }
+    #section-hidden, #content-hidden { display: none !important; } /* Khóa triệt để Phần V khỏi PDF */
+}
