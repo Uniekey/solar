@@ -44,7 +44,29 @@ window.addEventListener('scroll', function() {
     sections.forEach((sec) => { const sectionTop = sec.offsetTop; if (pageYOffset >= sectionTop - 100) { current = sec.getAttribute('id'); } });
     navLinks.forEach((link) => { link.classList.remove('active'); if (link.getAttribute('href').includes(current) && current !== "") { link.classList.add('active'); } });
 });
-
+// --- HÀM XỬ LÝ ĐÓNG/MỞ KHỐI NỘI DUNG (ACCORDION) ---
+function toggleSection(contentId, btnId) {
+    const content = document.getElementById(contentId);
+    const btn = document.getElementById(btnId);
+    
+    // Nếu khối nội dung đang ẩn, tiến hành mở rộng và render lại đồ thị
+    if (content.style.display === 'none' || content.style.display === '') {
+        content.style.display = 'block';
+        btn.innerText = '➖';
+        
+        // Khắc phục rủi ro vỡ/giật tỷ lệ biểu đồ Chart.js khi Parent DIV bị ẩn từ trước
+        if (contentId === 'content-tech' && loadChartInstance) {
+            loadChartInstance.update();
+        }
+        if (contentId === 'content-finance') {
+            if (cashflowChartInstance) cashflowChartInstance.update();
+            if (spiderChartInstance) spiderChartInstance.update();
+        }
+    } else {
+        content.style.display = 'none';
+        btn.innerText = '➕';
+    }
+}
 function highlightNav(el) { document.querySelectorAll('.floating-nav a').forEach(a => a.classList.remove('active')); el.classList.add('active'); }
 
 // --- 2. HÀM TIỆN ÍCH LÕI ---
